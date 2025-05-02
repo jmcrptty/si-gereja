@@ -145,13 +145,13 @@
 <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <div class="d-block w-100 hero-slide" style="background-image: url('/img/gereja.jpg');"></div>
+      <div class="d-block w-100 hero-slide" style="background-image: url('/img/patung.png');"></div>
     </div>
     <div class="carousel-item">
-      <div class="d-block w-100 hero-slide" style="background-image: url('/img/gereja2.png');"></div>
+      <div class="d-block w-100 hero-slide" style="background-image: url('/img/gereja1.jpg');"></div>
     </div>
     <div class="carousel-item">
-      <div class="d-block w-100 hero-slide" style="background-image: url('/img/gereja3.png');"></div>
+      <div class="d-block w-100 hero-slide" style="background-image: url('/img/guamaria.jpg');"></div>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
