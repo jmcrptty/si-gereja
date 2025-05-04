@@ -394,10 +394,12 @@
           <a class="nav-link" href="#">Kontak</a>
         </li>
       </ul>
-      <a href="#" class="nav-link d-flex align-items-center ms-3" style="color: white;">
+      
+      <a href="http://si_gereja.test/login" class="nav-link d-flex align-items-center ms-3" style="color: white;">
         <i class="bi bi-box-arrow-in-right fs-5 me-1"></i>
         <span>Masuk</span>
       </a>
+  
     </div>
   </div>
 </nav>
