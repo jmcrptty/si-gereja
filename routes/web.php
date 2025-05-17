@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KetlingController;
+use App\Http\Controllers\LingkunganController;
+use App\Http\Controllers\UmatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\InformasiMisaController;
