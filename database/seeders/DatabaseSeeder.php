@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\InformasiMisa;
 use App\Models\Lingkungan;
 use App\Models\Umat;
 use App\Models\User;
@@ -138,7 +139,7 @@ class DatabaseSeeder extends Seeder
                 'alamat' => 'Jalan C',
                 'jenis_kelamin' => 'Wanita',
                 'tempat_lahir' => 'Medan',
-                'tanggal_lahir' => '2000-18-01',
+                'tanggal_lahir' => '2001-01-01',
                 'pendidikan' => 'S1',
                 'jenis_pekerjaan' => 'Pegawai',
 
@@ -153,7 +154,7 @@ class DatabaseSeeder extends Seeder
                 'alamat' => 'Jalan F',
                 'jenis_kelamin' => 'Wanita',
                 'tempat_lahir' => 'Manokwari',
-                'tanggal_lahir' => '2004-03-026',
+                'tanggal_lahir' => '2004-03-26',
                 'pendidikan' => 'S1',
                 'jenis_pekerjaan' => 'Pelajar',
 
@@ -182,5 +183,11 @@ class DatabaseSeeder extends Seeder
         foreach ($umats as $umat){
             Umat::create($umat);
         }
+
+        $this->call([
+            // Seeder lain yang ingin dijalankan
+            InformasiMisaSeeder::class,
+            PengumumanSeeder::class,
+        ]);
     }
 }

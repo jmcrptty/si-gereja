@@ -1,4 +1,4 @@
-@extends('ketua_lingkungan.layout')
+@extends('layouts.app')
 
 @section('content')
     <main>

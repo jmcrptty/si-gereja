@@ -58,6 +58,11 @@ Route::get('/pengumuman/{jenis}', [PengumumanController::class, 'showByJenis'])
 Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
+Route::resource('/lingkungan', LingkunganController::class);
+Route::resource('/umat', UmatController::class);
+
+
+
 Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(function () {
 
     Route::get('/dashboard', function () {

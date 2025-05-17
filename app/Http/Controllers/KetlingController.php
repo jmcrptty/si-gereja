@@ -11,9 +11,7 @@ class KetlingController extends Controller
      */
     public function index()
     {
-        return view('ketua_lingkungan.index', [
-
-        ]);
+        //
     }
 
     /**

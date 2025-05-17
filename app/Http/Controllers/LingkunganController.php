@@ -11,7 +11,7 @@ class LingkunganController extends Controller
      */
     public function index()
     {
-        return view('ketua_lingkungan.lingkungan.index', [
+        return view('layouts.ketualingkungan.lingkungan.index', [
 
         ]);
     }
