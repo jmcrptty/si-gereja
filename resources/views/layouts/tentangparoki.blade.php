@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gereja Katedral St. Fransiskus Xaverius Merauke</title>
-  <link rel="icon" href="/img/logo1.ico" type="image/x-icon">
+  <title>Tentang Paroki Katedral</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -409,205 +408,139 @@
 <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <div class="d-block w-100 hero-slide" style="background-image: url('/img/gereja2.jpg');"></div>
-    </div>
-    <div class="carousel-item">
-      <div class="d-block w-100 hero-slide" style="background-image: url('/img/gereja1.jpg');"></div>
-    </div>
-    <div class="carousel-item">
       <div class="d-block w-100 hero-slide" style="background-image: url('/img/guamaria.jpg');"></div>
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
+
   <div class="overlay"></div>
   <div class="hero-content position-absolute top-50 start-50 translate-middle text-center text-white">
-    <h1 class="display-4 mb-4">Paroki St. Fransiskus Xaverius<br>Katedral Merauke</h1>
-    <p class="lead mb-4">Menjadi Komunitas Iman yang Bersaudara, Melayani dan Bersaksi</p>
-    <a href="#pengumuman-section" class="btn btn-elegant">Pengumuman Gereja</a>
+    <H5>TENTANG PAROKI KATEDRAL</H1>
+    <h1 class="display-4 mb-4">SEJARAH</h1>
   </div>
 </div>
 
-<!-- Pengumuman -->
-<section id="pengumuman-section" class="py-5 bg-light">
-  <div class="container py-4">
-    <h2 class="text-center section-heading">PENGUMUMAN GEREJA</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
-    <div class="card h-100 shadow-sm">
-        <div class="overflow-hidden">
-            @if(isset($pengumuman['mingguan'][0]))
-                <img src="{{ asset('storage/' . $pengumuman['mingguan'][0]->image) }}" 
-                     class="card-img-top" 
-                     alt="{{ $pengumuman['mingguan'][0]->title }}"
-                     style="height: 200px; object-fit: cover;"
-                     onerror="this.src='/img/default-image.jpg'">
-            @else
-                <img src="/img/default-image.jpg" 
-                     class="card-img-top" 
-                     alt="Default Image"
-                     style="height: 200px; object-fit: cover;">
-            @endif
-        </div>
-        <div class="card-body d-flex flex-column">
-            <!-- Judul kategori - paling besar -->
-            <h4 class="card-title fw-bold mb-3">Pengumuman Mingguan</h4>
-            
-            <!-- Judul pengumuman - ukuran sedang -->
-            <h5 class="h5 mb-2 text-muted">
-                {{ isset($pengumuman['mingguan'][0]) ? $pengumuman['mingguan'][0]->title : 'Belum ada pengumuman' }}
-            </h5>
-            
-            <!-- Deskripsi - ukuran terkecil -->
-            <p class="card-text small">
-                {{ isset($pengumuman['mingguan'][0]) ? Str::limit($pengumuman['mingguan'][0]->sub, 150) : 'Belum ada detail pengumuman mingguan.' }}
-            </p>
+<!-- Content Section -->
+<section id="tentang-paroki" class="py-5 bg-light">
+  <div class="container">
+    <!-- Judul Halaman -->
+    <h2 class="text-center section-heading mb-4">Tentang Paroki St. Fransiskus Xaverius</h2>
 
-            <!-- Tombol di bagian bawah -->
-            <div class="mt-auto">
-                <a href="{{ route('pengumuman.show', 'mingguan') }}" class="btn btn-dark w-100">
-                    <i></i>Baca Selengkapnya
-                </a>
+    <!-- Deskripsi Sejarah Paroki -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card shadow-sm border-light">
+          <div class="card-body">
+            <h4 class="card-title">Sejarah Paroki</h4>
+            <p class="card-text">
+              Paroki St. Fransiskus Xaverius Merauke didirikan untuk memenuhi kebutuhan umat Katolik yang tersebar di daerah Merauke, Papua. Paroki ini berawal dari komunitas kecil yang ingin menyebarkan ajaran Kristus di daerah ini. Seiring waktu, paroki berkembang menjadi pusat spiritualitas bagi umat Katolik di Merauke dan sekitarnya. Gereja ini telah menjadi tempat untuk berbagi iman, harapan, dan kasih.
+            </p>
+            <p class="card-text">
+              Sejak didirikan, Paroki St. Fransiskus Xaverius terus mengembangkan pelayanan kepada umat, termasuk pelayanan sakramen, pendidikan agama, dan pelayanan sosial. Kami berkomitmen untuk melayani dengan kasih, baik bagi umat Katolik maupun masyarakat sekitar, dan berusaha menjadi saksi hidup akan ajaran Kristus di tanah Papua.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lingkungan-Lingkungan Paroki -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card shadow-sm border-light">
+          <div class="card-body">
+            <h4 class="card-title">Lingkungan-Lingkungan Paroki</h4>
+            <p class="card-text">
+              Paroki St. Fransiskus Xaverius terdiri dari beberapa lingkungan yang masing-masing memiliki karakteristik dan tanggung jawab sosial yang unik. Setiap lingkungan berfungsi untuk mempererat hubungan umat dan memperkuat komunitas dalam iman. Berikut adalah beberapa lingkungan yang ada di paroki kami:
+            </p>
+            <ul class="list-unstyled ms-4">
+              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Maria</li>
+              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Yoseph</li>
+              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Antonius</li>
+              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Teresa</li>
+              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Yosef</li>
+              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Petrus</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gambar Lingkungan Paroki -->
+    <div class="row justify-content-center">
+      <div class="col-md-10 text-center">
+        <h4>Gambar Lingkungan Paroki</h4>
+        <p class="mb-4">Di bawah ini adalah gambar yang menjelaskan pembagian wilayah lingkungan di Paroki St. Fransiskus Xaverius Merauke.</p>
+        
+        <!-- Card dengan Gambar dan Lingkungan -->
+        <div class="card shadow-sm">
+          <img src="path_to_your_image.jpg" class="card-img-top" alt="Lingkungan Paroki St. Fransiskus Xaverius">
+          <div class="card-body">
+
+            <!-- Replace the existing lingkungan section with this -->
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title text-center mb-4">Wilayah Lingkungan</h4>
+                <div class="row">
+                    <!-- Kolom 1 -->
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="bg-primary rounded-circle me-2" style="width: 12px; height: 12px;"></span>
+                                    <strong>Lingkungan St. Yoseph</strong>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="bg-success rounded-circle me-2" style="width: 12px; height: 12px;"></span>
+                                    <strong>Lingkungan St. Maria</strong>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="bg-warning rounded-circle me-2" style="width: 12px; height: 12px;"></span>
+                                    <strong>Lingkungan St. Antonius</strong>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Kolom 2 -->
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="bg-danger rounded-circle me-2" style="width: 12px; height: 12px;"></span>
+                                    <strong>Lingkungan St. Teresa</strong>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="bg-info rounded-circle me-2" style="width: 12px; height: 12px;"></span>
+                                    <strong>Lingkungan St. Petrus</strong>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="bg-secondary rounded-circle me-2" style="width: 12px; height: 12px;"></span>
+                                    <strong>Lingkungan St. Paulus</strong>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <div class="overflow-hidden">
-            @if(isset($pengumuman['laporan_keuangan'][0]))
-              <img src="{{ asset('storage/' . $pengumuman['laporan_keuangan'][0]->image) }}" 
-                   class="card-img-top" 
-                   alt="{{ $pengumuman['laporan_keuangan'][0]->title }}"
-                   style="height: 200px; object-fit: cover;"
-                   onerror="this.src='/img/default-image.jpg'">
-            @else
-              <img src="/img/default-image.jpg" 
-                   class="card-img-top" 
-                   alt="Default Image"
-                   style="height: 200px; object-fit: cover;">
-            @endif
-          </div>
-          <div class="card-body d-flex flex-column">
-
-             <h4 class="card-title fw-bold mb-3">Pengumuman Keuangan</h4>
-
-            <h5 class="h5 mb-2 text-muted">
-              {{ isset($pengumuman['laporan_keuangan'][0]) ? $pengumuman['laporan_keuangan'][0]->title : 'Laporan Keuangan' }}
-            </h5>
-
-            <p class="card-text small">
-              {{ isset($pengumuman['laporan_keuangan'][0]) ? Str::limit($pengumuman['laporan_keuangan'][0]->sub, 150) : 'Belum ada laporan keuangan.' }}
-            </p>
-            <div class="mt-auto">
-              <a href="{{ route('pengumuman.show', 'laporan-keuangan') }}" class="btn btn-dark w-100">Baca Selengkapnya</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-<!-- Perbaikan bagian pengumuman lainnya -->
-<div class="col-md-4">
-    <div class="card h-100 shadow-sm">
-        <div class="overflow-hidden">
-            @if(isset($pengumuman['pengumuman_lainnya'][0]))
-                <img src="{{ asset('storage/' . $pengumuman['pengumuman_lainnya'][0]->image) }}" 
-                     class="card-img-top" 
-                     alt="{{ $pengumuman['pengumuman_lainnya'][0]->title }}"
-                     style="height: 200px; object-fit: cover;"
-                     onerror="this.src='/img/default-image.jpg'">
-            @else
-                <img src="/img/default-image.jpg" 
-                     class="card-img-top" 
-                     alt="Default Image"
-                     style="height: 200px; object-fit: cover;">
-            @endif
-        </div>
-        <div class="card-body d-flex flex-column">
-
-           <h4 class="card-title fw-bold mb-3">Pengumuman Lainnya</h4>
-
-            <h5 class="h5 mb-2 text-muted">
-                {{ isset($pengumuman['pengumuman_lainnya'][0]) ? $pengumuman['pengumuman_lainnya'][0]->title : 'Pengumuman Lainnya' }}
-            </h5>
-            <p class="card-text small">
-                {{ isset($pengumuman['pengumuman_lainnya'][0]) ? Str::limit($pengumuman['pengumuman_lainnya'][0]->sub, 150) : 'Belum ada pengumuman lainnya.' }}
-            </p>
-            <div class="mt-auto">
-                <a href="{{ route('pengumuman.show', 'pengumuman-lainnya') }}" class="btn btn-dark w-100">
-                    <i></i>Baca Selengkapnya
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-</section>
-
-
-<!-- Jadwal Misa -->
-<section class="py-5 bg-white">
-  <div class="container py-4">
-    <h2 class="text-center section-heading">JADWAL MISA</h2>
-    <div class="row g-4">
-      <!-- Misa Harian -->
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body d-flex flex-column">
-            <div class="misa-icon mb-3">
-              <i class="bi bi-brightness-alt-high"></i>
-            </div>
-            <h5 class="h5 mb-2 text-muted">
-              {{ isset($informasiMisa['Harian']) ? $informasiMisa['Harian']->jenis_misa : 'tidak ada' }}
-            </h5>
-            <p class="card-text small">
-              {{ isset($informasiMisa['Harian']) ? $informasiMisa['Harian']->jadwal_misa : '05:30 WIT' }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Misa Jumat Pertama -->
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body d-flex flex-column">
-            <div class="misa-icon mb-3">
-              <i class="bi bi-heart"></i>
-            </div>
-            <h5 class="h5 mb-2 text-muted">
-              {{ isset($informasiMisa['Jumat_Pertama']) ? $informasiMisa['Jumat_Pertama']->jenis_misa : 'Jumat Pertama' }}
-            </h5>
-            <p class="card-text small">
-              {{ isset($informasiMisa['Jumat_Pertama']) ? $informasiMisa['Jumat_Pertama']->jadwal_misa : '19:30 WIT' }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Misa Minggu -->
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body d-flex flex-column">
-            <div class="misa-icon mb-3">
-              <i class="bi bi-people-fill"></i>
-            </div>
-            <h5 class="h5 mb-2 text-muted">
-              {{ isset($informasiMisa['Minggu']) ? $informasiMisa['Minggu']->jenis_misa : 'Minggu' }}
-            </h5>
-            <p class="card-text small">
-              {{ isset($informasiMisa['Minggu']) ? $informasiMisa['Minggu']->jadwal_misa : '06:00 WIT, 08:30 WIT, 16:30 WIT' }}
-            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+
 <!-- Footer -->
 <footer>
   <div class="container">
