@@ -3,24 +3,24 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="{{ route('sekretaris.dashboard') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                         Dashboard
                     </a>
 
                     <div class="sb-sidenav-menu-heading">Menu</div>
 
-                    <a class="nav-link" href="data-umat.html">
+                    <a class="nav-link" href="{{ route('sekretaris.dataumat') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                         Data Umat
                     </a>
 
-                    <a class="nav-link" href="penerimaan-sakramen.html">
+                    <a class="nav-link" href="{{ route('sekretaris.penerimaansakramen') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-cross"></i></div>
                         Penerimaan Sakramen
                     </a>
 
-                    <a class="nav-link" href="pendaftaran-sakramen.html">
+                    <a class="nav-link" href="{{ route('sekretaris.pendaftaransakramen') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>
                         Pendaftaran Sakramen
                     </a>

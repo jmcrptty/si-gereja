@@ -57,6 +57,24 @@ Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'ind
 
 Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(function () {
 
+    Route::get('/dashboard', function () {
+    return view('layouts.sekretaris.dashboard');
+})->name('dashboard');
+
+Route::get('/dataumat', function () {
+    return view('layouts.Dataumat_sekretaris');
+})->name('dataumat');
+
+Route::get('/penerimaansakramen', function () {
+    return view('layouts.penerimaansakramen');
+})->name('penerimaansakramen');
+
+
+Route::get('/pendaftaransakramen', function () {
+    return view('layouts.pendaftaransakramen');
+})->name('pendaftaransakramen');
+
+
     // rute informasi misa
     Route::get('/informasi-misa', [InformasiMisaController::class, 'index'])->name('informasi_misa');
     Route::get('/informasi-misa/get-by-jenis/{jenis}', [InformasiMisaController::class, 'getByJenis']);
