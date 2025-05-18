@@ -16,7 +16,7 @@ class UmatController extends Controller
         // $test = Umat::select('nama_lengkap','lingkungan_id', 'alamat')->get();
         // dd($test);
         return view('layouts.ketualingkungan.umat.index', [
-            'umats' => Umat::select('nama_lengkap','lingkungan_id', 'alamat')->get()
+            'umats' => Umat::select('nama_lengkap','lingkungan', 'no_hp', 'alamat')->get()
         ]);
     }
 
@@ -26,7 +26,7 @@ class UmatController extends Controller
     public function create()
     {
         return view('layouts.ketualingkungan.umat.create', [
-            'lingkungans' => Lingkungan::select('id', 'nama_lingkungan')->get()
+            //
         ]);
     }
 

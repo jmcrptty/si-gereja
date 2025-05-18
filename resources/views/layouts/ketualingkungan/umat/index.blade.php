@@ -22,6 +22,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Lingkungan</th>
+                                <th>Nomor Telpon</th>
                                 <th>Alamat</th>
                                 <th>Aksi</th>
                             </tr>
@@ -31,6 +32,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Lingkungan</th>
+                                <th>Nomor Telpon</th>
                                 <th>Alamat</th>
                                 <th>Aksi</th>
                             </tr>
@@ -40,7 +42,8 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $umat->nama_lengkap }}</td>
-                                    <td>{{ $umat->lingkungan->nama_lingkungan }}</td>
+                                    <td>{{ $umat->lingkungan }}</td>
+                                    <td>{{ $umat->no_hp }}</td>
                                     <td>{{ $umat->alamat }}</td>
                                     <td style="d-flex justify-content-evenly">
                                         <div class="d-flex justify-content-evenly">
