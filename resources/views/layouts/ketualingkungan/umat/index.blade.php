@@ -8,13 +8,15 @@
                 <li class="breadcrumb-item active">Tambah, Edit, dan Hapus Data Umat</li>
             </ol>
 
+            <a class="mb-4 btn btn-success fs-5" href="{{ route('umat.create') }}"><i class="fa-solid fa-plus"></i> Tambah Umat</a>
+
             <div class="mb-4 card">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
                     Data Umat
                 </div>
                 <div class="card-body">
-                    <table id="datatablesSimple">
+                    <table id="datatablesSimple" class="">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -40,7 +42,13 @@
                                     <td>{{ $umat->nama_lengkap }}</td>
                                     <td>{{ $umat->lingkungan->nama_lingkungan }}</td>
                                     <td>{{ $umat->alamat }}</td>
-                                    <td>aksi</td>
+                                    <td style="d-flex justify-content-evenly">
+                                        <div class="d-flex justify-content-evenly">
+                                            <a href="#" class="badge bg-info fs-6"><i class="fa-solid fa-eye" style="color: #000000;"></i></a>
+                                            <a href="#" class="badge bg-warning fs-6"><i class="fa-solid fa-pen" style="color: #000000;"></i></a>
+                                            <a href="#" class="badge bg-danger fs-6"><i class="fa-solid fa-trash" style="color: #000000;"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

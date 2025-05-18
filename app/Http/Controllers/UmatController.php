@@ -25,7 +25,9 @@ class UmatController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.ketualingkungan.umat.create', [
+            'lingkungans' => Lingkungan::select('id', 'nama_lingkungan')->get()
+        ]);
     }
 
     /**
@@ -33,7 +35,19 @@ class UmatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request_valid = $request->validate([
+            // 'email' => 'required|email:dns|unique:users',
+            'nama' => 'required|max:255',
+            'alamat' => 'required|max:255',
+            'no_telpon' => 'required|numeric|digits:12|unique:pasiens',
+            'tanggal_lahir' => 'required',
+            'asuransi_id' => 'required',
+        ]);
+
+        // masukkan data
+        Umat::create($request_valid);
+        // balik ke index
+        return redirect()->route('pasien.index');
     }
 
     /**
@@ -41,7 +55,9 @@ class UmatController extends Controller
      */
     public function show(Umat $umat)
     {
-        //
+        return view('layouts.ketualingkungan.umat.show', [
+
+        ]);
     }
 
     /**
