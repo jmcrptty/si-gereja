@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\InformasiMisa;
-use App\Models\Lingkungan;
-use App\Models\Umat;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\Umat;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,26 +14,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Data default pengguna dengan berbagai role
+        // Users dengan role dan lingkungan
         User::create([
             'name' => 'Pastor Paroki',
             'email' => 'pastor@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'pastor paroki',
+            'lingkungan' => null,
         ]);
 
         User::create([
-            'name' => 'Ketua Lingkungan St.petrus',
+            'name' => 'Ketua Lingkungan St.Petrus',
             'email' => 'st.petrus@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'ketua lingkungan',
+            'lingkungan' => 'st.petrus',
         ]);
 
         User::create([
-            'name' => 'Ketua Lingkungan St.antonius',
-            'email' => 'st.antonius@gmail.com',
+            'name' => 'Ketua Lingkungan St.Yohanes',
+            'email' => 'st.yohanes@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'ketua lingkungan',
+            'lingkungan' => 'st.yohanes',
         ]);
 
         User::create([
@@ -43,144 +44,50 @@ class DatabaseSeeder extends Seeder
             'email' => 'sekretaris@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'sekretaris',
+            'lingkungan' => null,
         ]);
 
-        Lingkungan::create([
-            'nama_lingkungan' => 'Stella Maris',
-            'alamat_lingkungan' => 'Jalan Kampung Timur',
-        ]);
-
-        Lingkungan::create([
-            'nama_lingkungan' => 'St. Antonius dari Padua',
-            'alamat_lingkungan' => 'Jalan Ternate',
-        ]);
-
+        // Data umat contoh
         $umats = [
             [
                 'nama_lengkap' => 'Alice',
-                'lingkungan_id' => '1',
-                'alamat' => 'Jalan A',
-                'jenis_kelamin' => 'Wanita',
-                'tempat_lahir' => 'Merauke',
-                'tanggal_lahir' => '2002-02-14',
-                'pendidikan' => 'SMA',
-                'jenis_pekerjaan' => 'Pegawai',
-
-                // umur nullable dulu. harus otomatis
-                'status_hubungan' => 'Belum Menikah',
-                // status baptis, komuni, krisma, dan pernikahan kosong dulu
-                'nomor_telpon' => '081111111111'
+                'nik' => '1234567890',
+                'ttl' => '1990-01-01',
+                'alamat' => 'Jl. Mawar No.1',
+                'no_hp' => '081234567890',
+                'email' => 'alice@mail.com',
+                'lingkungan' => 'st.petrus',
+                'kk_file' => null,
+                'akte_file' => null,
+                'status_pendaftaran' => 'Pending',
             ],
             [
-                'nama_lengkap' => 'Angga',
-                'lingkungan_id' => '1',
-                'alamat' => 'Jalan B',
-                'jenis_kelamin' => 'Pria',
-                'tempat_lahir' => 'Merauke',
-                'tanggal_lahir' => '2008-12-10',
-                'pendidikan' => 'S1',
-                'jenis_pekerjaan' => 'Pelajar',
-
-                // umur nullable dulu. harus otomatis
-                'status_hubungan' => 'Belum Menikah',
-                // status baptis, komuni, krisma, dan pernikahan kosong dulu
-                'nomor_telpon' => '082222222222'
+                'nama_lengkap' => 'Budi',
+                'nik' => '0987654321',
+                'ttl' => '1985-05-15',
+                'alamat' => 'Jl. Melati No.2',
+                'no_hp' => '089876543210',
+                'email' => 'budi@mail.com',
+                'lingkungan' => 'st.yohanes',
+                'kk_file' => null,
+                'akte_file' => null,
+                'status_pendaftaran' => 'Pending',
             ],
             [
-                'nama_lengkap' => 'Doni',
-                'lingkungan_id' => '1',
-                'alamat' => 'Jalan C',
-                'jenis_kelamin' => 'Pria',
-                'tempat_lahir' => 'Merauke',
-                'tanggal_lahir' => '1988-10-06',
-                'pendidikan' => 'S1',
-                'jenis_pekerjaan' => 'Pegawai',
-
-                // umur nullable dulu. harus otomatis
-                'status_hubungan' => 'Menikah',
-                // status baptis, komuni, krisma, dan pernikahan kosong dulu
-                'nomor_telpon' => '083333333333'
-            ],
-            [
-                'nama_lengkap' => 'Indah',
-                'lingkungan_id' => '1',
-                'alamat' => 'Jalan C',
-                'jenis_kelamin' => 'Wanita',
-                'tempat_lahir' => 'Merauke',
-                'tanggal_lahir' => '1990-01-31',
-                'pendidikan' => 'S2',
-                'jenis_pekerjaan' => 'Dosen',
-
-                // umur nullable dulu. harus otomatis
-                'status_hubungan' => 'Menikah',
-                // status baptis, komuni, krisma, dan pernikahan kosong dulu
-                'nomor_telpon' => '084444444444'
-            ],
-
-            // lingkungan 2
-            [
-                'nama_lengkap' => 'Ali',
-                'lingkungan_id' => '2',
-                'alamat' => 'Jalan D',
-                'jenis_kelamin' => 'Pria',
-                'tempat_lahir' => 'Merauke',
-                'tanggal_lahir' => '1999-05-13',
-                'pendidikan' => 'S1',
-                'jenis_pekerjaan' => 'Wirausaha',
-
-                // umur nullable dulu. harus otomatis
-                'status_hubungan' => 'Belum Menikah',
-                // status baptis, komuni, krisma, dan pernikahan kosong dulu
-                'nomor_telpon' => '085555555555'
-            ],
-            [
-                'nama_lengkap' => 'Butet',
-                'lingkungan_id' => '2',
-                'alamat' => 'Jalan C',
-                'jenis_kelamin' => 'Wanita',
-                'tempat_lahir' => 'Medan',
-                'tanggal_lahir' => '2001-01-01',
-                'pendidikan' => 'S1',
-                'jenis_pekerjaan' => 'Pegawai',
-
-                // umur nullable dulu. harus otomatis
-                'status_hubungan' => 'Belum Menikah',
-                // status baptis, komuni, krisma, dan pernikahan kosong dulu
-                'nomor_telpon' => '086666666666'
-            ],
-            [
-                'nama_lengkap' => 'Dinda',
-                'lingkungan_id' => '2',
-                'alamat' => 'Jalan F',
-                'jenis_kelamin' => 'Wanita',
-                'tempat_lahir' => 'Manokwari',
-                'tanggal_lahir' => '2004-03-26',
-                'pendidikan' => 'S1',
-                'jenis_pekerjaan' => 'Pelajar',
-
-                // umur nullable dulu. harus otomatis
-                'status_hubungan' => 'Belum Menikah',
-                // status baptis, komuni, krisma, dan pernikahan kosong dulu
-                'nomor_telpon' => '087777777777'
-            ],
-            [
-                'nama_lengkap' => 'Yogi',
-                'lingkungan_id' => '2',
-                'alamat' => 'Jalan G',
-                'jenis_kelamin' => 'Pria',
-                'tempat_lahir' => 'Merauke',
-                'tanggal_lahir' => '2001-12-23',
-                'pendidikan' => 'S2',
-                'jenis_pekerjaan' => 'Dosen',
-
-                // umur nullable dulu. harus otomatis
-                'status_hubungan' => 'Menikah',
-                // status baptis, komuni, krisma, dan pernikahan kosong dulu
-                'nomor_telpon' => '084444444444'
+                'nama_lengkap' => 'Citra',
+                'nik' => '1122334455',
+                'ttl' => '1995-07-20',
+                'alamat' => 'Jl. Anggrek No.3',
+                'no_hp' => '082233445566',
+                'email' => 'citra@mail.com',
+                'lingkungan' => 'st.maria',
+                'kk_file' => null,
+                'akte_file' => null,
+                'status_pendaftaran' => 'Pending',
             ],
         ];
 
-        foreach ($umats as $umat){
+        foreach ($umats as $umat) {
             Umat::create($umat);
         }
 
@@ -188,6 +95,8 @@ class DatabaseSeeder extends Seeder
             // Seeder lain yang ingin dijalankan
             InformasiMisaSeeder::class,
             PengumumanSeeder::class,
+            SakramenSeeder::class,
+            SertifikatSakramenSeeder::class,
         ]);
     }
 }
