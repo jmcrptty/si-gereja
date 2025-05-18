@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Lingkungan')
 
 @section('content')
     <main>
@@ -7,6 +8,8 @@
             <ol class="mb-4 breadcrumb">
                 <li class="breadcrumb-item active">Tambah, Edit, dan Hapus Data Umat</li>
             </ol>
+
+            <a href="{{ route('umat.create') }}" class="mb-4 btn btn-success fs-5"><i class="fa-solid fa-add"></i> Tambah Umat</a>
 
             <div class="mb-4 card">
                 <div class="card-header">
@@ -20,6 +23,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Lingkungan</th>
+                                <th>Nomor Telpon</th>
                                 <th>Alamat</th>
                                 <th>Aksi</th>
                             </tr>
@@ -29,6 +33,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Lingkungan</th>
+                                <th>Nomor Telpon</th>
                                 <th>Alamat</th>
                                 <th>Aksi</th>
                             </tr>
@@ -38,9 +43,16 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $umat->nama_lengkap }}</td>
-                                    <td>{{ $umat->lingkungan->nama_lingkungan }}</td>
+                                    <td>{{ $umat->lingkungan }}</td>
+                                    <td>{{ $umat->no_hp }}</td>
                                     <td>{{ $umat->alamat }}</td>
-                                    <td>aksi</td>
+                                    <td>
+                                        <div class="d-flex justify-content-around">
+                                            <a href="" class="badge bg-primary fs-6"><i class="fa-solid fa-eye"></i></a>
+                                            <a href="" class="badge bg-warning fs-6"><i class="fa-solid fa-pencil"></i></a>
+                                            <a href="" class="badge bg-danger fs-6"><i class="fa-solid fa-trash"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
