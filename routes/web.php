@@ -7,6 +7,7 @@ use App\Http\Controllers\LingkunganController;
 use App\Http\Controllers\UmatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\PendaftaranUmatController;
 use App\Http\Controllers\InformasiMisaController;
 
 Route::get('/', function () {
@@ -31,28 +32,26 @@ Route::get('/pengumuman/{jenis}', [PengumumanController::class, 'showByJenis'])
 
  Route::get('/krisma', function () {
     return view('layouts/krisma');
-})->name('krisma');
+    })->name('krisma');
 
- Route::get('/pernikahan', function () {
-    return view('layouts.pernikahan');
-})->name('pernikahan');
+    Route::get('/pernikahan', function () {
+        return view('layouts.pernikahan');
+    })->name('pernikahan');
 
- Route::get('/komuni-pertama', function () {
-    return view('layouts.komunipertama');
-})->name('komuni-pertama');
+    Route::get('/komuni-pertama', function () {
+        return view('layouts.komunipertama');
+    })->name('komuni-pertama');
 
- Route::get('/tentang-paroki', function () {
-    return view('layouts.tentangparoki');
-})->name('tentang-paroki');
+    Route::get('/tentang-paroki', function () {
+        return view('layouts.tentangparoki');
+    })->name('tentang-paroki');
 
 
- Route::get('/kontak', function () {
-    return view('layouts.kontak');
-})->name('kontak');
+    Route::get('/kontak', function () {
+        return view('layouts.kontak');
+    })->name('kontak');
 
- Route::get('/pendaftaran-umat', function () {
-    return view('layouts.pendaftaranumat');
-})->name('pendaftaran-umat');
+    Route::get('/pendaftaran-umat', [PendaftaranUmatController::class, 'index'])->name('pendaftaran-umat.index');
 
 
 Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -67,20 +66,20 @@ Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(fu
 
     Route::get('/dashboard', function () {
     return view('layouts.sekretaris.dashboard');
-})->name('dashboard');
+    })->name('dashboard');
 
-Route::get('/dataumat', function () {
-    return view('layouts.Dataumat_sekretaris');
-})->name('dataumat');
+    Route::get('/dataumat', function () {
+        return view('layouts.Dataumat_sekretaris');
+    })->name('dataumat');
 
-Route::get('/penerimaansakramen', function () {
-    return view('layouts.penerimaansakramen');
-})->name('penerimaansakramen');
+    Route::get('/penerimaansakramen', function () {
+        return view('layouts.penerimaansakramen');
+    })->name('penerimaansakramen');
 
 
-Route::get('/pendaftaransakramen', function () {
-    return view('layouts.pendaftaransakramen');
-})->name('pendaftaransakramen');
+    Route::get('/pendaftaransakramen', function () {
+        return view('layouts.pendaftaransakramen');
+    })->name('pendaftaransakramen');
 
 
     // rute informasi misa
