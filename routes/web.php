@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KetlingController;
@@ -51,7 +52,15 @@ Route::get('/pengumuman/{jenis}', [PengumumanController::class, 'showByJenis'])
         return view('layouts.kontak');
     })->name('kontak');
 
-    Route::get('/pendaftaran-umat', [PendaftaranUmatController::class, 'index'])->name('pendaftaran-umat.index');
+    Route::get('/pendaftaran-umat', [PendaftaranUmatController::class, 'index'])->name('pendaftaran-umat');
+
+    Route::get('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'create'])->name('pendaftaran-umat.create');
+
+    Route::post('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'store'])->name('pendaftaran-umat.store');
+
+    Route::post('/pendaftaran-umat/carinik', [PendaftaranUmatController::class, 'carinik'])->name('pendaftaran-umat.carinik');
+
+    Route::post('api/cek_nik', [ApiController::class, 'get_nik']);
 
 
 Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

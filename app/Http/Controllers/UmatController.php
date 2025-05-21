@@ -72,7 +72,7 @@ class UmatController extends Controller
         // masukkan data
         Umat::create($request_valid);
         // balik ke index
-        return redirect()->route('umat.index')->with('success', 'Data Umat berhasil ditambahkan!');;
+        return redirect()->route('umat.index')->with('success', 'Data Umat berhasil ditambahkan!');
     }
 
     /**

@@ -7,6 +7,11 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+  <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <style>
     :root {
       --primary-dark: #2d3748;
@@ -16,7 +21,7 @@
       --text-dark: #333;
       --text-light: #f8f9fa;
     }
-    
+
     body {
       font-family: 'Lora', serif;
       color: var(--text-dark);
@@ -332,11 +337,11 @@
       .navbar {
         background-color: rgba(45, 55, 72, 0.98) !important;
       }
-      
+
       .hero-content h1 {
         font-size: 2.5rem;
       }
-      
+
       .misa-item {
         margin-bottom: 20px;
       }
@@ -346,11 +351,11 @@
       .hero-content h1 {
         font-size: 2rem;
       }
-      
+
       .card-img-top {
         height: 200px;
       }
-      
+
       .footer-column {
         margin-bottom: 30px;
       }
@@ -394,12 +399,12 @@
           <a class="nav-link" href="{{ route('kontak') }}">Kontak</a>
         </li>
       </ul>
-      
+
       <a href="http://si_gereja.test/login" class="nav-link d-flex align-items-center ms-3" style="color: white;">
         <i class="bi bi-box-arrow-in-right fs-5 me-1"></i>
         <span>Masuk</span>
       </a>
-  
+
     </div>
   </div>
 </nav>
@@ -413,109 +418,17 @@
   </div>
 
   <div class="overlay"></div>
-  <div class="hero-content position-absolute top-50 start-50 translate-middle text-center text-white">
-    <H5>CEK STATUS</H5>
-    <h1 class="display-4 mb-4">PENDAFTARAN UMAT PAROKI KATEDRAL</h1>
+  <div class="text-center text-white hero-content position-absolute top-50 start-50 translate-middle">
+    @yield('judul-hero')
   </div>
 </div>
 
-<!-- Content Section -->
 <section id="pendaftaran-umat" class="py-5 bg-light">
-  <div class="container">
-    <!-- Judul Halaman -->
-    <h2 class="text-center section-heading mb-4">Pendaftaran Umat</h2>
-
-    <!-- Deskripsi Pendaftaran -->
-    <div class="row mb-4">
-      <div class="col-md-12">
-        <p class="text-center">
-          Untuk memastikan status pendaftaran Anda, masukkan NIK di bawah ini. Sistem kami akan memeriksa apakah NIK Anda sudah terdaftar sebagai umat paroki atau belum.
-        </p>
-      </div>
-    </div>
-
-    <!-- Form Pencarian NIK -->
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h4 class="card-title text-center">Cek Status Pendaftaran</h4>
-            <form id="formPendaftaran" onsubmit="return checkNIK(event)">
-              <div class="mb-4">
-                <label for="nikInput" class="form-label">Masukkan NIK Anda</label>
-                <input type="text" class="form-control" id="nikInput" placeholder="Masukkan NIK" required>
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-dark">Cek Status</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Hasil Pencarian Status -->
-    <div class="row justify-content-center mt-4">
-      <div class="col-md-8">
-        <div class="alert alert-info text-center" id="statusAlert" style="display: none;">
-          <strong>Status: </strong><span id="statusMessage"></span>
-        </div>
-        <div class="text-center" id="pendaftaranButton" style="display: none;">
-          <a href="pendaftaran_form_url_here" class="btn btn-dark">Klik untuk Pendaftaran Umat</a>
-        </div>
-      </div>
-    </div>
-  </div>
+    @yield('content')
 </section>
 
-<script>
-  // Mock Database
-  const database = [
-    { nik: '1234567890123456', status: 'Terdaftar' },
-    { nik: '9876543210987654', status: 'Belum Terdaftar' }
-  ];
-
-  // Function to check NIK
-  function checkNIK(event) {
-    event.preventDefault();
-
-    const nikInput = document.getElementById('nikInput').value;
-    const statusAlert = document.getElementById('statusAlert');
-    const statusMessage = document.getElementById('statusMessage');
-    const pendaftaranButton = document.getElementById('pendaftaranButton');
-    
-    // Reset previous status
-    statusAlert.style.display = 'none';
-    pendaftaranButton.style.display = 'none';
-
-    // Simulate database search
-    const userRecord = database.find(record => record.nik === nikInput);
-
-    if (userRecord) {
-      // If NIK found, show status
-      statusAlert.style.display = 'block';
-      statusMessage.textContent = userRecord.status;
-
-      if (userRecord.status === 'Terdaftar') {
-        statusMessage.classList.remove('text-danger');
-        statusMessage.classList.add('text-success');
-      } else {
-        statusMessage.classList.remove('text-success');
-        statusMessage.classList.add('text-danger');
-        pendaftaranButton.style.display = 'block'; // Show the registration button
-      }
-    } else {
-      // If NIK not found, show message
-      statusAlert.style.display = 'block';
-      statusMessage.textContent = 'NIK tidak ditemukan. Silakan melakukan pendaftaran umat.';
-      statusMessage.classList.remove('text-success');
-      statusMessage.classList.add('text-danger');
-      pendaftaranButton.style.display = 'block';
-    }
-  }
-</script>
-
-
+{{-- ajax --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- Footer -->
 <footer>
@@ -558,13 +471,24 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('js/scripts.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
+<script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+@stack('pendaftaran-umat-after-script')
+
 <script>
   // Navbar scroll effect
   const navbar = document.getElementById('mainNavbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('navbar-scrolled', window.scrollY > 50);
   });
-  
+
   // Initialize Bootstrap tooltips
   document.addEventListener('DOMContentLoaded', function() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
