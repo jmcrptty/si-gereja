@@ -48,6 +48,9 @@ class PendaftaranUmatController extends Controller
             // 'akte_file.max' => 'Ukuran file Akte maksimal 25MB.',
         ]);
 
+        //tambah status pending
+        $request_valid['status_pendfataran'] = 'Pending';
+
         // masukkan data
         Umat::create($request_valid);
         // balik ke index

@@ -15,7 +15,7 @@
                     Data Umat
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('umat.store') }}" method="POST">
+                    <form action="{{ route('umat.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row g-3">
                             <div class="col-sm-6">
@@ -73,16 +73,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            {{-- <div class="col-sm-6">
-                                <label for="status_pendaftaran" class="form-label">Status Pendaftaran</label>
-                                <select type="text" class="form-control @error ('status_pendaftaran')is-invalid @enderror" id="status_pendaftaran" name="status_pendaftaran" placeholder="" value="" required>
-                                    <option selected value="">Pilih Status Pendaftaran</option>
-                                    <option value="st.petrus">St. Petrus</option>
-                                    <option value="st.yohanes">St. Yohanes</option>
-                                    <option value="st.maria">St. Maria</option>
-                                </select>
-                            </div> --}}
 
                             <h1 class="pt-1 mt-4">Berkas</h1>
 

@@ -55,19 +55,39 @@
 
                             <h1 class="pt-1 mt-4">Berkas</h1>
 
+                            {{-- {{ dd($umat->kk_file) }} --}}
                             <div class="col-sm-6">
-                                <label for="kk_file" class="form-label">Kartu Keluarga</label>
-                                <input disabled readlonly type="file" class="form-control @error ('kk_file')is-invalid @enderror" id="kk_file" name="kk_file" value="{{ old('kk_file') }}">
+                                <label for="kk_file" class="form-label">Kartu Keluarga: </label>
+                                @if ( $umat->kk_file )
+                                    <a href="{{ route('umat.downloadFile', ['type' => 'kk', 'filename' => basename($umat->kk_file)]) }}"
+                                    class="btn btn-outline-primary" target="_blank">
+                                        Lihat Kartu Keluarga
+                                    </a>
+                                @else
+                                    <a href="#" class="btn btn-outline-primary" target="_blank" style="color: currentColor; cursor: not-allowed; opacity: 0.5; text-decoration: none; pointer-events: none;">
+                                        Belum ada
+                                    </a>
+                                @endif
                             </div>
 
                             <div class="col-sm-6">
-                                <label for="akte_file" class="form-label">Akte Kelahiran</label>
-                                <input disabled readlonly type="file" class="form-control @error ('akte_file')is-invalid @enderror" id="akte_file" name="akte_file" value="{{ old('akte_file') }}" >
+                                <label for="akte_file" class="form-label">Akte Kelahiran: </label>
+                                {{-- {{ dd($umat->akte_file) }} --}}
+                                @if ( $umat->akte_file )
+                                    <a href="{{ route('umat.downloadFile', ['type' => 'akte', 'filename' => basename($umat->akte_file)]) }}"
+                                    class="btn btn-outline-primary" target="_blank">
+                                        Lihat Akte Kelahiran
+                                    </a>
+                                @else
+                                    <a href="#" class="btn btn-outline-primary" target="_blank" style="color: currentColor; cursor: not-allowed; opacity: 0.5; text-decoration: none; pointer-events: none;">
+                                        Belum ada
+                                    </a>
+                                @endif
                             </div>
                         </div>
 
                         <div class="mt-5 button-group text-end">
-                            <a href="{{ route('umat.index') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
+                            <a href="{{ url()->previous() }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
                         </div>
                     </form>
                 </div>

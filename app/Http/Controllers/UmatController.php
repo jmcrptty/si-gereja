@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lingkungan;
 use App\Models\Umat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UmatController extends Controller
 {
@@ -13,6 +14,7 @@ class UmatController extends Controller
      */
     public function index()
     {
+        // dd(Umat::all());
         // $test = Umat::select('nama_lengkap','lingkungan_id', 'alamat')->get();
         // dd($test);
         return view('layouts.ketualingkungan.umat.index', [
@@ -37,16 +39,16 @@ class UmatController extends Controller
     {
         $request_valid = $request->validate([
             'nama_lengkap' => ['required', 'string', 'max:255'],
-            'nik' => ['required', 'string', 'max:16', 'unique:users,nik'],
+            'nik' => ['required', 'string', 'max:16', 'unique:umat,nik'],
             'ttl' => ['required', 'date'],
             'alamat' => ['required', 'string'],
-            'no_hp' => ['required', 'string', 'max:12', 'unique:users,no_hp'],
-            'email' => ['required', 'email:rfc,dns', 'unique:users,email'],
+            'no_hp' => ['required', 'string', 'max:12', 'unique:umat,no_hp'],
+            'email' => ['required', 'email:rfc,dns', 'unique:umat,email'],
             'lingkungan' => ['required', 'string'],
 
             // rencana
-            // 'kk_file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'], // ~25MB
-            // 'akte_file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
+            'kk_file' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'], // ~25MB
+            'akte_file' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
         ], [
             // pesan error
             'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
@@ -63,11 +65,23 @@ class UmatController extends Controller
             'lingkungan.required' => 'Lingkungan wajib dipilih.',
 
             // pesan error rencana
-            // 'kk_file.required' => 'File KK wajib diunggah.',
-            // 'akte_file.required' => 'File Akte wajib diunggah.',
-            // 'kk_file.max' => 'Ukuran file KK maksimal 25MB.',
-            // 'akte_file.max' => 'Ukuran file Akte maksimal 25MB.',
+            'kk_file.max' => 'Ukuran file KK maksimal 25MB.',
+            'akte_file.max' => 'Ukuran file Akte maksimal 25MB.',
         ]);
+
+        //masukkan file ke penyimpanan
+        $kkPath = $request->file('kk_file')->store('umats/kk', 'local');
+        $aktePath = $request->file('akte_file')->store('umats/akte', 'local');
+
+        // dd($aktePath);
+
+        if($request->hasFile('kk_file') ){
+            $request_valid['kk_file'] = $kkPath;
+            // dd($request_valid['kk_file']);
+        }
+        if($request->hasFile('akte_file')){
+            $request_valid['akte_file'] = $aktePath;
+        }
 
         // masukkan data
         Umat::create($request_valid);
@@ -80,6 +94,7 @@ class UmatController extends Controller
      */
     public function show(Umat $umat)
     {
+        // dd($umat);
         return view('layouts.ketualingkungan.umat.show', [
             'umat' => $umat
         ]);
@@ -100,33 +115,18 @@ class UmatController extends Controller
      */
     public function update(Request $request, Umat $umat)
     {
-        // simpan ini buat lebih gampang testing
-        // $request_valid = $request->validate([
-        //     // 'email' => 'required|email:dns|unique:users',
-        //     'nama_lengkap' => 'required|max:255',
-        //     'nik' => 'required|unique:users|max:16',
-        //     'ttl' => 'required',
-        //     'alamat' => 'required',
-        //     'no_hp' => 'required|unique:users|max:12',
-        //     'email' => 'required|unique:users',
-        //     'lingkungan' => 'required',
-        //     // file-file nanti
-        //     // 'kk_file' => 'required', 'max:'25000'
-        //     // 'akte_file' => 'required', 'max:'25000'
-        // ]);
-
         $request_valid = $request->validate([
             'nama_lengkap' => ['required', 'string', 'max:255'],
-            'nik' => ['required', 'string', 'max:16', 'unique:users,nik'],
+            'nik' => ['required', 'string', 'max:16', 'unique:umat,nik'],
             'ttl' => ['required', 'date'],
             'alamat' => ['required', 'string'],
-            'no_hp' => ['required', 'string', 'max:12', 'unique:users,no_hp'],
-            'email' => ['required', 'email:rfc,dns', 'unique:users,email'],
+            'no_hp' => ['required', 'string', 'max:12', 'unique:umat,no_hp'],
+            'email' => ['required', 'email:rfc,dns', 'unique:umat,email'],
             'lingkungan' => ['required', 'string'],
 
             // rencana
-            // 'kk_file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'], // ~25MB
-            // 'akte_file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
+            'kk_file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'], // ~25MB
+            'akte_file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
         ], [
             // pesan error
             'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
@@ -143,10 +143,10 @@ class UmatController extends Controller
             'lingkungan.required' => 'Lingkungan wajib dipilih.',
 
             // pesan error rencana
-            // 'kk_file.required' => 'File KK wajib diunggah.',
-            // 'akte_file.required' => 'File Akte wajib diunggah.',
-            // 'kk_file.max' => 'Ukuran file KK maksimal 25MB.',
-            // 'akte_file.max' => 'Ukuran file Akte maksimal 25MB.',
+            'kk_file.required' => 'File KK wajib diunggah.',
+            'akte_file.required' => 'File Akte wajib diunggah.',
+            'kk_file.max' => 'Ukuran file KK maksimal 25MB.',
+            'akte_file.max' => 'Ukuran file Akte maksimal 25MB.',
         ]);
 
         // masukkan data
@@ -163,4 +163,34 @@ class UmatController extends Controller
         Umat::destroy($umat->id);
         return redirect()->route('umat.index')->with('delete_success', 'Data Berhasil Dihapus');
     }
+
+
+    // tambahan
+
+    public function persetujuan(){
+        // $test = Umat::select('id','nama_lengkap','lingkungan', 'no_hp', 'alamat')->where('status_pendaftaran', 'Pending')->get();
+        // dd($test);
+        return view('layouts.ketualingkungan.umat.persetujuan', [
+            'umats' => Umat::select('id','nama_lengkap','lingkungan', 'no_hp', 'alamat')->where('status_pendaftaran', 'Pending')->get()
+        ]);
+    }
+
+    public function setuju(Umat $umat)
+    {
+        $umat->update(['status_pendaftaran' => 'Diterima']);
+        // dd($id);
+        return redirect()->route('umat.persetujuan')->with('setuju', 'Umat berhasil diverifikasi!');
+    }
+
+    public function downloadFile($type, $filename)
+    {
+        $path = "private/umats/{$type}/{$filename}";
+
+        // if (!Storage::disk('local')->exists("app/{$path}")) {
+        //     abort(404, 'File not found');
+        // }
+
+        return response()->file(storage_path("app/{$path}"));
+    }
+
 }

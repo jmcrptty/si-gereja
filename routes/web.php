@@ -67,7 +67,11 @@ Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'ind
 
 
 Route::resource('/lingkungan', LingkunganController::class);
+Route::get('/umat/persetujuan', [UmatController::class, 'persetujuan'])->name('umat.persetujuan');
+Route::post('/umat/setuju/{umat}', [UmatController::class, 'setuju'])->name('umat.setuju');
+Route::get('/umat/file/{type}/{filename}', [UmatController::class, 'downloadFile'])->name('umat.downloadFile');
 Route::resource('/umat', UmatController::class);
+
 
 
 
