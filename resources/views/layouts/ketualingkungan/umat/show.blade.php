@@ -71,12 +71,12 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <label for="akte_file" class="form-label">Akte Kelahiran: </label>
+                                <label for="akte_file" class="form-label">Akta Kelahiran: </label>
                                 {{-- {{ dd($umat->akte_file) }} --}}
                                 @if ( $umat->akte_file )
                                     <a href="{{ route('umat.downloadFile', ['type' => 'akte', 'filename' => basename($umat->akte_file)]) }}"
                                     class="btn btn-outline-primary" target="_blank">
-                                        Lihat Akte Kelahiran
+                                        Lihat Akta Kelahiran
                                     </a>
                                 @else
                                     <a href="#" class="btn btn-outline-primary" target="_blank" style="color: currentColor; cursor: not-allowed; opacity: 0.5; text-decoration: none; pointer-events: none;">

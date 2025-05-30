@@ -18,7 +18,7 @@ class UmatController extends Controller
         // $test = Umat::select('nama_lengkap','lingkungan_id', 'alamat')->get();
         // dd($test);
         return view('layouts.ketualingkungan.umat.index', [
-            'umats' => Umat::select('id','nama_lengkap','lingkungan', 'no_hp', 'alamat')->get()
+            'umats' => Umat::select('id','nama_lengkap','lingkungan', 'no_hp', 'alamat')->where('status_pendaftaran', 'Diterima')->get()
         ]);
     }
 
@@ -69,17 +69,13 @@ class UmatController extends Controller
             'akte_file.max' => 'Ukuran file Akte maksimal 25MB.',
         ]);
 
-        //masukkan file ke penyimpanan
-        $kkPath = $request->file('kk_file')->store('umats/kk', 'local');
-        $aktePath = $request->file('akte_file')->store('umats/akte', 'local');
-
-        // dd($aktePath);
-
+        // dimasukan hanya kalau ada filenya. kalau tidak nilainya tetap null
         if($request->hasFile('kk_file') ){
+            $kkPath = $request->file('kk_file')->store('umats/kk', 'local');
             $request_valid['kk_file'] = $kkPath;
-            // dd($request_valid['kk_file']);
         }
         if($request->hasFile('akte_file')){
+            $aktePath = $request->file('akte_file')->store('umats/akte', 'local');
             $request_valid['akte_file'] = $aktePath;
         }
 
@@ -117,16 +113,16 @@ class UmatController extends Controller
     {
         $request_valid = $request->validate([
             'nama_lengkap' => ['required', 'string', 'max:255'],
-            'nik' => ['required', 'string', 'max:16', 'unique:umat,nik'],
+            'nik' => ['required', 'string', 'max:16', 'unique:umat,nik' . $umat->id], // harus unik, kecuali untuk umat dengan id berikut....
             'ttl' => ['required', 'date'],
             'alamat' => ['required', 'string'],
-            'no_hp' => ['required', 'string', 'max:12', 'unique:umat,no_hp'],
-            'email' => ['required', 'email:rfc,dns', 'unique:umat,email'],
+            'no_hp' => ['required', 'string', 'max:12', 'unique:umat,no_hp' . $umat->id],
+            'email' => ['required', 'email:rfc,dns', 'unique:umat,email'. $umat->id],
             'lingkungan' => ['required', 'string'],
 
             // rencana
-            'kk_file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'], // ~25MB
-            'akte_file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
+            'kk_file' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'], // ~25MB
+            'akte_file' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
         ], [
             // pesan error
             'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
@@ -143,16 +139,24 @@ class UmatController extends Controller
             'lingkungan.required' => 'Lingkungan wajib dipilih.',
 
             // pesan error rencana
-            'kk_file.required' => 'File KK wajib diunggah.',
-            'akte_file.required' => 'File Akte wajib diunggah.',
             'kk_file.max' => 'Ukuran file KK maksimal 25MB.',
             'akte_file.max' => 'Ukuran file Akte maksimal 25MB.',
         ]);
 
+        // dimasukan hanya kalau ada filenya. kalau tidak nilainya tetap null
+        if($request->hasFile('kk_file') ){
+            $kkPath = $request->file('kk_file')->store('umats/kk', 'local');
+            $request_valid['kk_file'] = $kkPath;
+        }
+        if($request->hasFile('akte_file')){
+            $aktePath = $request->file('akte_file')->store('umats/akte', 'local');
+            $request_valid['akte_file'] = $aktePath;
+        }
+
         // masukkan data
         Umat::where('id', $umat->id)->update($request_valid);
         // balik ke index
-        return redirect()->route('umat.index')->with('success', 'Data umat berhasil diperbarui!');;
+        return redirect()->route('umat.index')->with('success', 'Data umat berhasil diperbarui!');
     }
 
     /**
@@ -161,25 +165,32 @@ class UmatController extends Controller
     public function destroy(Umat $umat)
     {
         Umat::destroy($umat->id);
-        return redirect()->route('umat.index')->with('delete_success', 'Data Berhasil Dihapus');
+        return redirect()->back()->with('delete_success', 'Data Berhasil Dihapus');
     }
 
 
     // tambahan
 
     public function persetujuan(){
-        // $test = Umat::select('id','nama_lengkap','lingkungan', 'no_hp', 'alamat')->where('status_pendaftaran', 'Pending')->get();
-        // dd($test);
-        return view('layouts.ketualingkungan.umat.persetujuan', [
-            'umats' => Umat::select('id','nama_lengkap','lingkungan', 'no_hp', 'alamat')->where('status_pendaftaran', 'Pending')->get()
+        return view('layouts.ketualingkungan.umat.persetujuan.persetujuan', [
+            'umats' => Umat::select('id','nama_lengkap','lingkungan', 'no_hp', 'alamat')->where('status_pendaftaran', 'Pending')->get(),
+            'umats_tolak' => Umat::select('id','nama_lengkap','lingkungan', 'no_hp', 'alamat')->where('status_pendaftaran', 'Ditolak')->get(),
+            'jumlahPending' => Umat::where('status_pendaftaran', 'Pending')->count()
         ]);
     }
 
     public function setuju(Umat $umat)
     {
         $umat->update(['status_pendaftaran' => 'Diterima']);
-        // dd($id);
-        return redirect()->route('umat.persetujuan')->with('setuju', 'Umat berhasil diverifikasi!');
+
+        return redirect()->route('umat.persetujuan')->with('status', 'Umat berhasil diverifikasi!');
+    }
+
+    public function tolak(Umat $umat)
+    {
+        $umat->update(['status_pendaftaran' => 'Ditolak']);
+
+        return redirect()->route('umat.persetujuan')->with('status', 'Data umat ditolak!');
     }
 
     public function downloadFile($type, $filename)
@@ -189,6 +200,7 @@ class UmatController extends Controller
         // if (!Storage::disk('local')->exists("app/{$path}")) {
         //     abort(404, 'File not found');
         // }
+        // mungkin sebaiknya perlu error handling yang lebih bagus, tapi untuk sekarang nonaktifkan linknya aja
 
         return response()->file(storage_path("app/{$path}"));
     }

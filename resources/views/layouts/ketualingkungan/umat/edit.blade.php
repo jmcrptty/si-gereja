@@ -15,7 +15,7 @@
                     Data Umat
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('umat.update', $umat->id) }}" method="POST">
+                    <form action="{{ route('umat.update', $umat->id) }}" method="POST" enctype="multipart/form-data">
                         @method('put')
                         @csrf
                         <div class="row g-3">
@@ -75,29 +75,69 @@
                                 @enderror
                             </div>
 
-                            {{-- <div class="col-sm-6">
-                                <label for="status_pendaftaran" class="form-label">Status Pendaftaran</label>
-                                <select type="text" class="form-control @error ('status_pendaftaran')is-invalid @enderror" id="status_pendaftaran" name="status_pendaftaran" placeholder="" value="" required>
-                                    <option selected value="">Pilih Status Pendaftaran</option>
-                                    <option value="st.petrus">St. Petrus</option>
-                                    <option value="st.yohanes">St. Yohanes</option>
-                                    <option value="st.maria">St. Maria</option>
-                                </select>
-                            </div> --}}
-
                             <h1 class="pt-1 mt-4">Berkas</h1>
 
-                            <div class="col-sm-6">
-                                <label for="kk_file" class="form-label">Kartu Keluarga</label>
-                                <input type="file" class="form-control @error ('kk_file')is-invalid @enderror" id="kk_file" name="kk_file" value="{{ old('kk_file') }}">
+                            <div class="mb-3 col-sm-6">
+                                <label for="kk_file" class="form-label fw-semibold">Kartu Keluarga</label>
+
+                                {{-- Tampilkan file sebelumnya jika ada --}}
+                                @if ($umat->kk_file)
+                                    <div class="mb-2">
+                                        <a href="{{ route('umat.downloadFile', ['type' => 'kk', 'filename' => basename($umat->kk_file)]) }}"
+                                        class="btn btn-outline-primary btn-sm"
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                            Lihat Kartu Keluarga Sebelumnya
+                                        </a>
+                                    </div>
+                                @else
+                                    <div class="mb-2">
+                                        <a href="#"
+                                        class="btn btn-outline-primary btn-sm"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style="color: currentColor; cursor: not-allowed; opacity: 0.5; text-decoration: none; pointer-events: none;">
+                                            Kartu Keluarga Belum Pernah Dimasukkan
+                                        </a>
+                                    </div>
+                                @endif
+
+                                <input type="file" class="form-control @error ('kk_file')is-invalid @enderror" id="kk_file" name="kk_file">
+
                                 @error('kk_file')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+
                             </div>
 
+
                             <div class="col-sm-6">
-                                <label for="akte_file" class="form-label">Akte Kelahiran</label>
-                                <input type="file" class="form-control @error ('akte_file')is-invalid @enderror" id="akte_file" name="akte_file" value="{{ old('akte_file') }}" >
+                                <label for="akte_file" class="form-label">Akta Kelahiran</label>
+
+                                {{-- Tampilkan file sebelumnya jika ada --}}
+                                @if ($umat->akte_file)
+                                    <div class="mb-2">
+                                        <a href="{{ route('umat.downloadFile', ['type' => 'akte', 'filename' => basename($umat->akte_file)]) }}"
+                                        class="btn btn-outline-primary btn-sm"
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                            Lihat Akta Kelahiran Sebelumnya
+                                        </a>
+                                    </div>
+                                @else
+                                    <div class="mb-2">
+                                        <a href="#"
+                                        class="btn btn-outline-primary btn-sm"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style="color: currentColor; cursor: not-allowed; opacity: 0.5; text-decoration: none; pointer-events: none;">
+                                            Akta kelahiran Belum Pernah Dimasukkan
+                                        </a>
+                                    </div>
+                                @endif
+
+                                <input type="file" class="form-control @error('akte_file') is-invalid @enderror" id="akte_file" name="akte_file">
+
                                 @error('akte_file')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

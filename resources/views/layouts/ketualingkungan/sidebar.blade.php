@@ -19,7 +19,12 @@
                             <div class="collapse {{ Request::is('umat') ? 'show' : '' }} {{ Request::is('umat/persetujuan') ? 'show' : '' }}" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link {{ Request::is('umat') ? 'active' : '' }}" href="{{ route('umat.index') }}">Kelola Data Umat</a>
-                                    <a class="nav-link {{ Request::is('umat/persetujuan') ? 'active' : '' }}" href="{{ route('umat.persetujuan') }}">Persetujuan</a>
+                                    <a class="nav-link {{ Request::is('umat/persetujuan') ? 'active' : '' }}" href="{{ route('umat.persetujuan') }}">
+                                        Persetujuan
+                                        @if ($jumlahPending > 0)
+                                            <span class="badge bg-danger ms-2">{{ $jumlahPending }}</span>
+                                        @endif
+                                    </a>
                                 </nav>
                             </div>
 

@@ -85,7 +85,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <label for="akte_file" class="form-label">Akte Kelahiran</label>
+                                <label for="akte_file" class="form-label">Akta Kelahiran</label>
                                 <input type="file" class="form-control @error ('akte_file')is-invalid @enderror" id="akte_file" name="akte_file" value="{{ old('akte_file') }}" >
                                 @error('akte_file')
                                     <div class="invalid-feedback">{{ $message }}</div>

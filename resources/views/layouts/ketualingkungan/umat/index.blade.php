@@ -66,7 +66,7 @@
             <a href="{{ route('umat.create') }}" class="mb-4 btn btn-success fs-5"><i class="fa-solid fa-add"></i> Tambah Umat</a>
 
             <div class="mb-4 card">
-                <div class="card-header">
+                <div class="card-header fw-bold">
                     <i class="fas fa-table me-1"></i>
                     Data Umat
                 </div>
