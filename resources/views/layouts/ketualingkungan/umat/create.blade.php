@@ -15,7 +15,7 @@
                     Data Umat
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('umat.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('ketualingkungan.umat.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row g-3">
                             <div class="col-sm-6">
@@ -94,7 +94,7 @@
                         </div>
 
                         <div class="mt-5 button-group text-end">
-                            <a href="{{ route('umat.index') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
+                            <a href="{{ route('ketualingkungan.umat.index') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
 
                             <button class="border-0 rounded btn bg-primary btn-lg" type="submit">Tambah Umat</button>
                         </div>

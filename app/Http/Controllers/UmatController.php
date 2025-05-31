@@ -82,7 +82,7 @@ class UmatController extends Controller
         // masukkan data
         Umat::create($request_valid);
         // balik ke index
-        return redirect()->route('umat.index')->with('success', 'Data Umat berhasil ditambahkan!');
+        return redirect()->route('ketualingkungan.umat.index')->with('success', 'Data Umat berhasil ditambahkan!');
     }
 
     /**
@@ -156,7 +156,7 @@ class UmatController extends Controller
         // masukkan data
         Umat::where('id', $umat->id)->update($request_valid);
         // balik ke index
-        return redirect()->route('umat.index')->with('success', 'Data umat berhasil diperbarui!');
+        return redirect()->route('ketualingkungan.umat.index')->with('success', 'Data umat berhasil diperbarui!');
     }
 
     /**
@@ -183,14 +183,14 @@ class UmatController extends Controller
     {
         $umat->update(['status_pendaftaran' => 'Diterima']);
 
-        return redirect()->route('umat.persetujuan')->with('status', 'Umat berhasil diverifikasi!');
+        return redirect()->route('ketualingkungan.umat.persetujuan')->with('status', 'Umat berhasil diverifikasi!');
     }
 
     public function tolak(Umat $umat)
     {
         $umat->update(['status_pendaftaran' => 'Ditolak']);
 
-        return redirect()->route('umat.persetujuan')->with('status', 'Data umat ditolak!');
+        return redirect()->route('ketualingkungan.umat.persetujuan')->with('status', 'Data umat ditolak!');
     }
 
     public function downloadFile($type, $filename)

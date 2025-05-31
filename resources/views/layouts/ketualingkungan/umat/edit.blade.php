@@ -15,7 +15,7 @@
                     Data Umat
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('umat.update', $umat->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('ketualingkungan.umat.update', $umat->id) }}" method="POST" enctype="multipart/form-data">
                         @method('put')
                         @csrf
                         <div class="row g-3">
@@ -83,7 +83,7 @@
                                 {{-- Tampilkan file sebelumnya jika ada --}}
                                 @if ($umat->kk_file)
                                     <div class="mb-2">
-                                        <a href="{{ route('umat.downloadFile', ['type' => 'kk', 'filename' => basename($umat->kk_file)]) }}"
+                                        <a href="{{ route('ketualingkungan.umat.downloadFile', ['type' => 'kk', 'filename' => basename($umat->kk_file)]) }}"
                                         class="btn btn-outline-primary btn-sm"
                                         target="_blank"
                                         rel="noopener noreferrer">
@@ -117,7 +117,7 @@
                                 {{-- Tampilkan file sebelumnya jika ada --}}
                                 @if ($umat->akte_file)
                                     <div class="mb-2">
-                                        <a href="{{ route('umat.downloadFile', ['type' => 'akte', 'filename' => basename($umat->akte_file)]) }}"
+                                        <a href="{{ route('ketualingkungan.umat.downloadFile', ['type' => 'akte', 'filename' => basename($umat->akte_file)]) }}"
                                         class="btn btn-outline-primary btn-sm"
                                         target="_blank"
                                         rel="noopener noreferrer">
@@ -145,7 +145,7 @@
                         </div>
 
                         <div class="mt-5 button-group text-end">
-                            <a href="{{ route('umat.index') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
+                            <a href="{{ route('ketualingkungan.umat.index') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
 
                             <button class="border-0 rounded btn bg-primary btn-lg" type="submit">Perbarui Data Umat</button>
                         </div>

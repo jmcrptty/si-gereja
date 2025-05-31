@@ -17,7 +17,7 @@
       --text-dark: #333;
       --text-light: #f8f9fa;
     }
-    
+
     body {
       font-family: 'Lora', serif;
       color: var(--text-dark);
@@ -333,11 +333,11 @@
       .navbar {
         background-color: rgba(45, 55, 72, 0.98) !important;
       }
-      
+
       .hero-content h1 {
         font-size: 2.5rem;
       }
-      
+
       .misa-item {
         margin-bottom: 20px;
       }
@@ -347,11 +347,11 @@
       .hero-content h1 {
         font-size: 2rem;
       }
-      
+
       .card-img-top {
         height: 200px;
       }
-      
+
       .footer-column {
         margin-bottom: 30px;
       }
@@ -395,12 +395,12 @@
           <a class="nav-link" href="{{ route('kontak') }}">Kontak</a>
         </li>
       </ul>
-      
+
       <a href="http://si_gereja.test/login" class="nav-link d-flex align-items-center ms-3" style="color: white;">
         <i class="bi bi-box-arrow-in-right fs-5 me-1"></i>
         <span>Masuk</span>
       </a>
-  
+
     </div>
   </div>
 </nav>
@@ -425,9 +425,9 @@
     <span class="carousel-control-next-icon"></span>
   </button>
   <div class="overlay"></div>
-  <div class="hero-content position-absolute top-50 start-50 translate-middle text-center text-white">
-    <h1 class="display-4 mb-4">Paroki St. Fransiskus Xaverius<br>Katedral Merauke</h1>
-    <p class="lead mb-4">Menjadi Komunitas Iman yang Bersaudara, Melayani dan Bersaksi</p>
+  <div class="text-center text-white hero-content position-absolute top-50 start-50 translate-middle">
+    <h1 class="mb-4 display-4">Paroki St. Fransiskus Xaverius<br>Katedral Merauke</h1>
+    <p class="mb-4 lead">Menjadi Komunitas Iman yang Bersaudara, Melayani dan Bersaksi</p>
     <a href="#pengumuman-section" class="btn btn-elegant">Pengumuman Gereja</a>
   </div>
 </div>
@@ -438,30 +438,30 @@
     <h2 class="text-center section-heading">PENGUMUMAN GEREJA</h2>
     <div class="row g-4">
       <div class="col-md-4">
-    <div class="card h-100 shadow-sm">
+    <div class="shadow-sm card h-100">
         <div class="overflow-hidden">
             @if(isset($pengumuman['mingguan'][0]))
-                <img src="{{ asset('storage/' . $pengumuman['mingguan'][0]->image) }}" 
-                     class="card-img-top" 
+                <img src="{{ asset('storage/' . $pengumuman['mingguan'][0]->image) }}"
+                     class="card-img-top"
                      alt="{{ $pengumuman['mingguan'][0]->title }}"
                      style="height: 200px; object-fit: cover;"
-                     onerror="this.src='/img/default-image.jpg'">
+                     onerror="this.onerror=null; this.src='/img/default-image.jpg';">
             @else
-                <img src="/img/default-image.jpg" 
-                     class="card-img-top" 
+                <img src="/img/default-image.jpg"
+                     class="card-img-top"
                      alt="Default Image"
                      style="height: 200px; object-fit: cover;">
             @endif
         </div>
         <div class="card-body d-flex flex-column">
             <!-- Judul kategori - paling besar -->
-            <h4 class="card-title fw-bold mb-3">Pengumuman Mingguan</h4>
-            
+            <h4 class="mb-3 card-title fw-bold">Pengumuman Mingguan</h4>
+
             <!-- Judul pengumuman - ukuran sedang -->
-            <h5 class="h5 mb-2 text-muted">
+            <h5 class="mb-2 h5 text-muted">
                 {{ isset($pengumuman['mingguan'][0]) ? $pengumuman['mingguan'][0]->title : 'Belum ada pengumuman' }}
             </h5>
-            
+
             <!-- Deskripsi - ukuran terkecil -->
             <p class="card-text small">
                 {{ isset($pengumuman['mingguan'][0]) ? Str::limit($pengumuman['mingguan'][0]->sub, 150) : 'Belum ada detail pengumuman mingguan.' }}
@@ -478,26 +478,26 @@
 </div>
 
       <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
+        <div class="shadow-sm card h-100">
           <div class="overflow-hidden">
             @if(isset($pengumuman['laporan_keuangan'][0]))
-              <img src="{{ asset('storage/' . $pengumuman['laporan_keuangan'][0]->image) }}" 
-                   class="card-img-top" 
+              <img src="{{ asset('storage/' . $pengumuman['laporan_keuangan'][0]->image) }}"
+                   class="card-img-top"
                    alt="{{ $pengumuman['laporan_keuangan'][0]->title }}"
                    style="height: 200px; object-fit: cover;"
-                   onerror="this.src='/img/default-image.jpg'">
+                   onerror="this.onerror=null; this.src='/img/default-image.jpg';">
             @else
-              <img src="/img/default-image.jpg" 
-                   class="card-img-top" 
+              <img src="/img/default-image.jpg"
+                   class="card-img-top"
                    alt="Default Image"
                    style="height: 200px; object-fit: cover;">
             @endif
           </div>
           <div class="card-body d-flex flex-column">
 
-             <h4 class="card-title fw-bold mb-3">Pengumuman Keuangan</h4>
+             <h4 class="mb-3 card-title fw-bold">Pengumuman Keuangan</h4>
 
-            <h5 class="h5 mb-2 text-muted">
+            <h5 class="mb-2 h5 text-muted">
               {{ isset($pengumuman['laporan_keuangan'][0]) ? $pengumuman['laporan_keuangan'][0]->title : 'Laporan Keuangan' }}
             </h5>
 
@@ -513,26 +513,26 @@
 
 <!-- Perbaikan bagian pengumuman lainnya -->
 <div class="col-md-4">
-    <div class="card h-100 shadow-sm">
+    <div class="shadow-sm card h-100">
         <div class="overflow-hidden">
             @if(isset($pengumuman['pengumuman_lainnya'][0]))
-                <img src="{{ asset('storage/' . $pengumuman['pengumuman_lainnya'][0]->image) }}" 
-                     class="card-img-top" 
+                <img src="{{ asset('storage/' . $pengumuman['pengumuman_lainnya'][0]->image) }}"
+                     class="card-img-top"
                      alt="{{ $pengumuman['pengumuman_lainnya'][0]->title }}"
                      style="height: 200px; object-fit: cover;"
-                     onerror="this.src='/img/default-image.jpg'">
+                     onerror="this.onerror=null; this.src='/img/default-image.jpg';">
             @else
-                <img src="/img/default-image.jpg" 
-                     class="card-img-top" 
+                <img src="/img/default-image.jpg"
+                     class="card-img-top"
                      alt="Default Image"
                      style="height: 200px; object-fit: cover;">
             @endif
         </div>
         <div class="card-body d-flex flex-column">
 
-           <h4 class="card-title fw-bold mb-3">Pengumuman Lainnya</h4>
+           <h4 class="mb-3 card-title fw-bold">Pengumuman Lainnya</h4>
 
-            <h5 class="h5 mb-2 text-muted">
+            <h5 class="mb-2 h5 text-muted">
                 {{ isset($pengumuman['pengumuman_lainnya'][0]) ? $pengumuman['pengumuman_lainnya'][0]->title : 'Pengumuman Lainnya' }}
             </h5>
             <p class="card-text small">
@@ -557,12 +557,12 @@
     <div class="row g-4">
       <!-- Misa Harian -->
       <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
+        <div class="shadow-sm card h-100">
           <div class="card-body d-flex flex-column">
-            <div class="misa-icon mb-3">
+            <div class="mb-3 misa-icon">
               <i class="bi bi-brightness-alt-high"></i>
             </div>
-            <h5 class="h5 mb-2 text-muted">
+            <h5 class="mb-2 h5 text-muted">
               {{ isset($informasiMisa['Harian']) ? $informasiMisa['Harian']->jenis_misa : 'tidak ada' }}
             </h5>
             <p class="card-text small">
@@ -574,12 +574,12 @@
 
       <!-- Misa Jumat Pertama -->
       <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
+        <div class="shadow-sm card h-100">
           <div class="card-body d-flex flex-column">
-            <div class="misa-icon mb-3">
+            <div class="mb-3 misa-icon">
               <i class="bi bi-heart"></i>
             </div>
-            <h5 class="h5 mb-2 text-muted">
+            <h5 class="mb-2 h5 text-muted">
               {{ isset($informasiMisa['Jumat_Pertama']) ? $informasiMisa['Jumat_Pertama']->jenis_misa : 'Jumat Pertama' }}
             </h5>
             <p class="card-text small">
@@ -591,12 +591,12 @@
 
       <!-- Misa Minggu -->
       <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
+        <div class="shadow-sm card h-100">
           <div class="card-body d-flex flex-column">
-            <div class="misa-icon mb-3">
+            <div class="mb-3 misa-icon">
               <i class="bi bi-people-fill"></i>
             </div>
-            <h5 class="h5 mb-2 text-muted">
+            <h5 class="mb-2 h5 text-muted">
               {{ isset($informasiMisa['Minggu']) ? $informasiMisa['Minggu']->jenis_misa : 'Minggu' }}
             </h5>
             <p class="card-text small">
@@ -655,7 +655,7 @@
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('navbar-scrolled', window.scrollY > 50);
   });
-  
+
   // Initialize Bootstrap tooltips
   document.addEventListener('DOMContentLoaded', function() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

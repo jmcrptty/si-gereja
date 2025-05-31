@@ -36,7 +36,7 @@
                         <td>
                             <div class="flex-wrap gap-2 d-flex justify-content-center">
                                 {{-- Lihat --}}
-                                <a href="{{ route('umat.show', $umat->id) }}" class="border-0 badge bg-primary fs-6" title="Lihat" style="text-decoration: none">
+                                <a href="{{ route('ketualingkungan.umat.show', $umat->id) }}" class="border-0 badge bg-primary fs-6" title="Lihat" style="text-decoration: none">
                                     <i class="fa-solid fa-eye"></i> Lihat
                                 </a>
                                 {{-- Konfirmasi --}}
@@ -74,7 +74,7 @@
                                     <h3 class="fw-semibold">Apakah Anda yakin ingin mengonfirmasi data <strong>{{ $umat->nama_lengkap }}</strong>?</h3>
                                 </div>
                                 <div class="pt-0 border-0 modal-footer justify-content-center">
-                                    <form action="{{ route('umat.setuju', $umat->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('ketualingkungan.umat.setuju', $umat->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         <button type="submit" class="px-4 btn btn-success">Setujui</button>
                                     </form>
@@ -105,7 +105,7 @@
                                     <h3 class="fw-semibold">Apakah Anda yakin ingin menolak data <strong>{{ $umat->nama_lengkap }}</strong>?</h3>
                                 </div>
                                 <div class="pt-0 border-0 modal-footer justify-content-center">
-                                    <form action="{{ route('umat.tolak', $umat->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('ketualingkungan.umat.tolak', $umat->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         <button type="submit" class="px-4 btn btn-danger">Tolak</button>
                                     </form>

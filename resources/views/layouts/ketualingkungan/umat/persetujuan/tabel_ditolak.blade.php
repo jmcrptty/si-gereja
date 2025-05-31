@@ -36,7 +36,7 @@
                         <td>
                             <div class="flex-wrap gap-2 d-flex justify-content-center">
                                 {{-- Delete --}}
-                                <form action="{{ route('umat.destroy', $umat->id) }}" method="POST" onsubmit="return confirm('Apakah ingin menghapus data {{ $umat->nama_lengkap }}?')">
+                                <form action="{{ route('ketualingkungan.umat.destroy', $umat->id) }}" method="POST" onsubmit="return confirm('Apakah ingin menghapus data {{ $umat->nama_lengkap }}?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="button" class="border-0 badge bg-danger fs-6" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $umat->id }}">
@@ -70,7 +70,7 @@
                                     <h3 class="fw-semibold">Apakah Anda yakin ingin menghapus <strong>{{ $umat->nama_lengkap }}</strong>?</h3>
                                 </div>
                                 <div class="pt-0 border-0 modal-footer justify-content-center">
-                                    <form action="{{ route('umat.destroy', $umat->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('ketualingkungan.umat.destroy', $umat->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="px-4 btn btn-danger">Hapus</button>

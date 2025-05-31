@@ -59,7 +59,7 @@
                             <div class="col-sm-6">
                                 <label for="kk_file" class="form-label">Kartu Keluarga: </label>
                                 @if ( $umat->kk_file )
-                                    <a href="{{ route('umat.downloadFile', ['type' => 'kk', 'filename' => basename($umat->kk_file)]) }}"
+                                    <a href="{{ route('ketualingkungan.umat.downloadFile', ['type' => 'kk', 'filename' => basename($umat->kk_file)]) }}"
                                     class="btn btn-outline-primary" target="_blank">
                                         Lihat Kartu Keluarga
                                     </a>
@@ -74,7 +74,7 @@
                                 <label for="akte_file" class="form-label">Akta Kelahiran: </label>
                                 {{-- {{ dd($umat->akte_file) }} --}}
                                 @if ( $umat->akte_file )
-                                    <a href="{{ route('umat.downloadFile', ['type' => 'akte', 'filename' => basename($umat->akte_file)]) }}"
+                                    <a href="{{ route('ketualingkungan.umat.downloadFile', ['type' => 'akte', 'filename' => basename($umat->akte_file)]) }}"
                                     class="btn btn-outline-primary" target="_blank">
                                         Lihat Akta Kelahiran
                                     </a>
