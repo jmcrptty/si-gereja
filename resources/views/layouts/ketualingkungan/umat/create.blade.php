@@ -33,6 +33,24 @@
                                 @enderror
                             </div>
                             <div class="col-sm-6">
+                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                <select type="text" class="form-control @error ('jenis_kelamin')is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin" placeholder="" value="" required>
+                                    <option selected disabled value="">Pilih Jenis Kelamin</option>
+                                    <option value="Pria">Pria</option>
+                                    <option value="Wanita">Wanita</option>
+                                </select>
+                                @error('jenis_kelamin')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                <input type="date" class="form-control @error ('tempat_lahir')is-invalid @enderror" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
+                                @error('tempat_lahir')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
                                 <label for="ttl" class="form-label">Tanggal Lahir</label>
                                 <input type="date" class="form-control @error ('ttl')is-invalid @enderror" id="ttl" name="ttl" value="{{ old('ttl') }}" required>
                                 @error('ttl')
@@ -47,6 +65,20 @@
                                 @enderror
                             </div>
                             <div class="col-sm-6">
+                                <label for="nama_ayah" class="form-label">Nama Ayah</label>
+                                <input type="text" class="form-control @error ('nama_ayah')is-invalid @enderror" id="nama_ayah" name="nama_ayah" placeholder="" value="{{ old('nama_ayah') }}" required>
+                                @error('nama_ayah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="nama_ibu" class="form-label">Nama Ibu</label>
+                                <input type="text" class="form-control @error ('nama_ibu')is-invalid @enderror" id="nama_ibu" name="nama_ibu" placeholder="" value="{{ old('nama_ibu') }}" required>
+                                @error('nama_ibu')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
                                 <label for="no_hp" class="form-label">Nomor Telpon</label>
                                 <input type="text" class="form-control @error ('no_hp')is-invalid @enderror" id="no_hp" name="no_hp" minlength="10" maxlength="12" value="{{ old('no_hp') }}" required>
                                 @error('no_hp')
@@ -55,7 +87,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control @error ('email')is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
+                                <input type="text" class="form-control @error ('email')is-invalid @enderror" id="email" name="email" value="" required>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -85,7 +117,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <label for="akte_file" class="form-label">Akta Kelahiran</label>
+                                <label for="akte_file" class="form-label">Akte Kelahiran</label>
                                 <input type="file" class="form-control @error ('akte_file')is-invalid @enderror" id="akte_file" name="akte_file" value="{{ old('akte_file') }}" >
                                 @error('akte_file')
                                     <div class="invalid-feedback">{{ $message }}</div>

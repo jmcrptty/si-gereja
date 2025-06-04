@@ -16,72 +16,85 @@
                 </div>
                 <div class="card-body">
                     <form action="" method="">
-                        @csrf
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-                                <input disabled readlonly type="text" class="form-control @error ('nama_lengkap')is-invalid @enderror" id="nama_lengkap" name="nama_lengkap" placeholder="" value="{{ $umat->nama_lengkap }}" required>
+                                <input disabled readonly type="text" class="form-control" id="nama_lengkap" value="{{ $umat->nama_lengkap }}">
                             </div>
+
                             <div class="col-sm-6">
                                 <label for="nik" class="form-label">NIK</label>
-                                <input disabled readlonly type="text" class="form-control @error ('nik')is-invalid @enderror" id="nik" name="nik" minlength="16" maxlength="16" value="{{ $umat->nik }}" required>
+                                <input disabled readonly type="text" class="form-control" id="nik" value="{{ $umat->nik }}">
                             </div>
+
+                            <div class="col-sm-6">
+                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                <input disabled readonly type="text" class="form-control" id="jenis_kelamin" value="{{ $umat->jenis_kelamin }}">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                <input disabled readonly type="text" class="form-control" id="tempat_lahir" value="{{ $umat->tempat_lahir }}">
+                            </div>
+
                             <div class="col-sm-6">
                                 <label for="ttl" class="form-label">Tanggal Lahir</label>
-                                <input disabled readlonly type="date" class="form-control @error ('ttl')is-invalid @enderror" id="ttl" name="ttl" value="{{ $umat->ttl }}" required>
+                                <input disabled readonly type="date" class="form-control" id="ttl" value="{{ $umat->ttl }}">
                             </div>
+
                             <div class="col-sm-6">
                                 <label for="alamat" class="form-label">Alamat</label>
-                                <input disabled readlonly type="text" class="form-control @error ('alamat')is-invalid @enderror" id="alamat" name="alamat" value="{{ $umat->alamat }}" required>
+                                <input disabled readonly type="text" class="form-control" id="alamat" value="{{ $umat->alamat }}">
                             </div>
+
+                            <div class="col-sm-6">
+                                <label for="nama_ayah" class="form-label">Nama Ayah</label>
+                                <input disabled readonly type="text" class="form-control" id="nama_ayah" value="{{ $umat->nama_ayah }}">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="nama_ibu" class="form-label">Nama Ibu</label>
+                                <input disabled readonly type="text" class="form-control" id="nama_ibu" value="{{ $umat->nama_ibu }}">
+                            </div>
+
                             <div class="col-sm-6">
                                 <label for="no_hp" class="form-label">Nomor Telpon</label>
-                                <input disabled readlonly type="text" class="form-control @error ('no_hp')is-invalid @enderror" id="no_hp" name="no_hp" minlength="10" maxlength="12" value="{{ $umat->no_hp }}" required>
+                                <input disabled readonly type="text" class="form-control" id="no_hp" value="{{ $umat->no_hp }}">
                             </div>
+
                             <div class="col-sm-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input disabled readlonly type="text" class="form-control @error ('email')is-invalid @enderror" id="email" name="email" value="{{ $umat->email }}" required>
+                                <input disabled readonly type="text" class="form-control" id="email" value="{{ $umat->email }}">
                             </div>
 
                             <div class="col-sm-6">
                                 <label for="lingkungan" class="form-label">Lingkungan</label>
-                                <select disabled readlonly type="text" class="form-control @error ('lingkungan')is-invalid @enderror" id="lingkungan" name="lingkungan" placeholder="" value="" required>
-                                    <option {{ $umat->lingkungan == 'st.petrus' ? 'selected' : '' }} value="st.petrus">St. Petrus</option>
-                                    <option {{ $umat->lingkungan == 'st.yohanes' ? 'selected' : '' }} value="st.yohanes">St. Yohanes</option>
-                                    <option {{ $umat->lingkungan == 'st.maria' ? 'selected' : '' }} value="st.maria">St. Maria</option>
-                                </select>
-
+                                <input disabled readonly type="text" class="form-control" id="lingkungan" value="{{ $umat->lingkungan }}">
                             </div>
 
                             <h1 class="pt-1 mt-4">Berkas</h1>
 
-                            {{-- {{ dd($umat->kk_file) }} --}}
                             <div class="col-sm-6">
-                                <label for="kk_file" class="form-label">Kartu Keluarga: </label>
-                                @if ( $umat->kk_file )
+                                <label for="kk_file" class="form-label">Kartu Keluarga</label>
+                                @if ($umat->kk_file)
                                     <a href="{{ route('ketualingkungan.umat.downloadFile', ['type' => 'kk', 'filename' => basename($umat->kk_file)]) }}"
-                                    class="btn btn-outline-primary" target="_blank">
+                                        class="btn btn-outline-primary" target="_blank">
                                         Lihat Kartu Keluarga
                                     </a>
                                 @else
-                                    <a href="#" class="btn btn-outline-primary" target="_blank" style="color: currentColor; cursor: not-allowed; opacity: 0.5; text-decoration: none; pointer-events: none;">
-                                        Belum ada
-                                    </a>
+                                    <span class="btn btn-outline-secondary disabled">Belum ada</span>
                                 @endif
                             </div>
 
                             <div class="col-sm-6">
-                                <label for="akte_file" class="form-label">Akta Kelahiran: </label>
-                                {{-- {{ dd($umat->akte_file) }} --}}
-                                @if ( $umat->akte_file )
+                                <label for="akte_file" class="form-label">Akta Kelahiran</label>
+                                @if ($umat->akte_file)
                                     <a href="{{ route('ketualingkungan.umat.downloadFile', ['type' => 'akte', 'filename' => basename($umat->akte_file)]) }}"
-                                    class="btn btn-outline-primary" target="_blank">
+                                        class="btn btn-outline-primary" target="_blank">
                                         Lihat Akta Kelahiran
                                     </a>
                                 @else
-                                    <a href="#" class="btn btn-outline-primary" target="_blank" style="color: currentColor; cursor: not-allowed; opacity: 0.5; text-decoration: none; pointer-events: none;">
-                                        Belum ada
-                                    </a>
+                                    <span class="btn btn-outline-secondary disabled">Belum ada</span>
                                 @endif
                             </div>
                         </div>

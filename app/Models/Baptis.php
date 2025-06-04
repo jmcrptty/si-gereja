@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Baptis extends Model
+{
+    protected $table = 'baptis';
+
+    protected $fillable = [
+        'umat_id',
+        'nama_baptis',
+        'fotokopi_ktp_ortu',
+        'surat_pernikahan_katolik_ortu',
+        'nama_wali_baptis',
+        'surat_krisma_wali_baptis',
+        'nama_wali_baptis_pria',
+        'nama_wali_baptis_wanita',
+        'nama_wali_baptis_wanita',
+    ];
+
+    public function umat(){
+       return $this->belongsTo(Umat::class);
+    }
+}
