@@ -1,76 +1,82 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\BaptisController;
+use App\Http\Controllers\UmatController;
+use App\Http\Controllers\KetlingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KetlingController;
+use App\Http\Controllers\PendaftaranUmat_InvController;
+use App\Http\Controllers\PendaftaranBaptis_InvController;
 use App\Http\Controllers\LingkunganController;
-use App\Http\Controllers\UmatController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PengumumanController;
-use App\Http\Controllers\PendaftaranUmatController;
 use App\Http\Controllers\InformasiMisaController;
+use App\Http\Controllers\PendaftaranUmatController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/', [PengumumanController::class, 'showWelcome'])->name('welcome');
-Route::get('/pengumuman/{jenis}', [PengumumanController::class, 'showByJenis'])->name('pengumuman.jenis');
+Route::middleware('guest')->group(function () {
 
-Route::get('/pengumuman/{jenis}', [PengumumanController::class, 'showByJenis'])
-    ->where('jenis', 'mingguan|laporan-keuangan|pengumuman-lainnya')
-    ->name('pengumuman.show');
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
-//  layanan
-    Route::get('/baptis', function () {
-    return view('layouts.baptis');
-})->name('baptis');
+    Route::get('/', [PengumumanController::class, 'showWelcome'])->name('welcome');
+    Route::get('/pengumuman/{jenis}', [PengumumanController::class, 'showByJenis'])->name('pengumuman.jenis');
 
- Route::get('/komuni-pertama', function () {
-    return view('layouts.komunipertama');
-})->name('komuni-pertama');
+    Route::get('/pengumuman/{jenis}', [PengumumanController::class, 'showByJenis'])
+        ->where('jenis', 'mingguan|laporan-keuangan|pengumuman-lainnya')
+        ->name('pengumuman.show');
 
- Route::get('/krisma', function () {
-    return view('layouts/krisma');
+    //  Daftar layanan
+
+    // 1. Baptis
+    Route::get('/baptis', [BaptisController::class, 'index'])->name('baptis');
+    Route::post('/baptis/send', [PendaftaranBaptis_InvController::class, 'sendEmailPendaftaran'])->name('baptis.mail');
+    Route::get('/baptis/formulir/{token}', [BaptisController::class, 'create' ])->name('baptis.create');
+    Route::get('/baptis/formulir/', [BaptisController::class, 'store' ])->name('baptis.store');
+
+    // 2. Komuni
+    Route::get('/komuni-pertama', function () {
+        return view('layouts.komunipertama');
+    })->name('komuni-pertama');
+    // 3. Krisma
+    Route::get('/krisma', function () {
+    return view('layouts.krisma');
     })->name('krisma');
 
+    // 4. Pernikahan
     Route::get('/pernikahan', function () {
         return view('layouts.pernikahan');
     })->name('pernikahan');
 
-    Route::get('/komuni-pertama', function () {
-        return view('layouts.komunipertama');
-    })->name('komuni-pertama');
+    // 5. Pendaftaran Umat
+    // Route::get('/pendaftaran-umat', [PendaftaranUmatController::class, 'index'])->name('pendaftaran-umat');
+    Route::get('/pendaftaran-umat', [PendaftaranUmat_InvController::class, 'index'])->name('pendaftaran-umat');
+    Route::post('/pendaftaran-umat/send', [PendaftaranUmat_InvController::class, 'sendStatusPendaftaranEmail'])->name('pendaftaran-umat.mail');
+    Route::get('/pendaftaran-umat/formulir/{token}', [PendaftaranUmatController::class, 'create'])->name('pendaftaran-umat.create'); // kalau ubah ini, jangan lupa untuk ubah link di PendaftaranUmat_InvController
+    Route::post('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'store'])->name('pendaftaran-umat.store');
+    // Route::get('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'create'])->name('pendaftaran-umat.create');
+    // Route::post('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'store'])->name('pendaftaran-umat.store');
+    // Route::post('/pendaftaran-umat/carinik', [PendaftaranUmatController::class, 'carinik'])->name('pendaftaran-umat.carinik');
+    // Route::post('api/cek_nik', [ApiController::class, 'get_nik'])->middleware('throttle:10,1'); // batasi pencarian hanya 10 NIK/Menit untuk setiap IP
 
     Route::get('/tentang-paroki', function () {
         return view('layouts.tentangparoki');
     })->name('tentang-paroki');
 
-
     Route::get('/kontak', function () {
         return view('layouts.kontak');
     })->name('kontak');
-
-    Route::get('/pendaftaran-umat', [PendaftaranUmatController::class, 'index'])->name('pendaftaran-umat');
-
-    Route::get('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'create'])->name('pendaftaran-umat.create');
-
-    Route::post('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'store'])->name('pendaftaran-umat.store');
-
-    Route::post('/pendaftaran-umat/carinik', [PendaftaranUmatController::class, 'carinik'])->name('pendaftaran-umat.carinik');
-
-    Route::post('api/cek_nik', [ApiController::class, 'get_nik']);
+});
 
 
+// rute-rute user yang telah diautentikasi
+
+// dashboard
 Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
-Route::resource('/lingkungan', LingkunganController::class);
-Route::resource('/umat', UmatController::class);
-
-
-
+// sekretaris
 Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(function () {
 
     Route::get('/dashboard', function () {
@@ -102,10 +108,19 @@ Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(fu
     Route::put('/pengumuman/{id}', [PengumumanController::class, 'update'])->name('pengumuman.update');
     Route::get('/pengumuman/image/{filename}', [PengumumanController::class, 'showImage'])->name('sekretaris.pengumuman.image');
     Route::get('/image/{filename}', [PengumumanController::class, 'showImage'])->name('image.show');
-
-
 });
 
+// ketua lingkungan
+Route::middleware(['auth'])->prefix('ketualingkungan')->name('ketualingkungan.')->group(function () {
+    Route::resource('/lingkungan', LingkunganController::class);
+    Route::get('/umat/persetujuan', [UmatController::class, 'persetujuan'])->name('umat.persetujuan');
+    Route::post('/umat/setuju/{umat}', [UmatController::class, 'setuju'])->name('umat.setuju');
+    Route::post('/umat/tolak/{umat}', [UmatController::class, 'tolak'])->name('umat.tolak');
+    Route::get('/umat/file/{type}/{filename}', [UmatController::class, 'downloadFile'])->name('umat.downloadFile');
+    Route::resource('/umat', UmatController::class);
+});
+
+// lain
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -2,31 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Baptis;
 use App\Models\Invitation;
-use App\Models\User;
 use App\Models\Umat;
 use Illuminate\Http\Request;
 
-class PendaftaranUmatController extends Controller
+class BaptisController extends Controller
 {
-    public function create($token) {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(){
+        // ke halaman utama pendaftaran umat
+        return view('layouts.baptis.baptis');
+    }
 
-        // aktifkan untuk cek database saja
-        // dd(Invitation::all());
-
-        // ambil data email dari tabel invitation, dimana tokennya seperti ini dan statusnya aktif
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create($token)
+    {
         $invitation = Invitation::select('email')->where('token', $token)->where('aktif', true)->first();
-
-        // jika tidak ada, kembalikan ke halaman utama
         if(!$invitation){
-            return redirect('pendaftaran-umat')->with('Pemberitahuan', 'Undangan yang anda masukan sudah kadaluarsa. Mohon isi kembali email pada form di bawah');
+            return redirect('baptis')->with('Pemberitahuan', 'Undangan yang anda masukan sudah kadaluarsa. Mohon isi kembali email pada form di bawah');
         }
         // jika ada, tampilkan halaman login
         return view('layouts.baptis.create', [
-            'email' => $invitation->email
+            'umat' => Umat::select('nama_lengkap')->where('email', $invitation->email)->first(),
         ]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request_valid = $request->validate([
@@ -102,10 +110,41 @@ class PendaftaranUmatController extends Controller
         $invitation->update(['aktif'=> false]);
 
         // masukkan data
-        Umat::create($request_valid);
+        // Umat::create($request_valid);
 
         // balik ke index
         return redirect()->route('pendaftaran-umat')->with('success', 'Anda berhasil mendaftar! Tunggu informasi lebih lanjut mengenai persetujuan oleh ketua lingkungan');
     }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(Baptis $baptis)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Baptis $baptis)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Baptis $baptis)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Baptis $baptis)
+    {
+        //
+    }
 }

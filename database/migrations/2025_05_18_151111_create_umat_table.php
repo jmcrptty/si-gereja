@@ -10,17 +10,28 @@ class CreateUmatTable extends Migration
     {
         Schema::create('umat', function (Blueprint $table) {
             $table->id();
+            // Biodata
             $table->string('nama_lengkap', 100);
-            $table->string('nik', 20)->nullable();
-            $table->date('ttl')->nullable();
-            $table->text('alamat')->nullable();
-            $table->string('no_hp', 15)->nullable();
-            $table->string('email', 50)->nullable();
+            $table->string('nik', 20);
+            $table->enum('jenis_kelamin', ['Pria', 'Wanita']);
+            $table->string('nama_ayah');
+            $table->string('nama_ibu');
+            $table->text('tempat_lahir');
+            $table->date('ttl');
+            $table->text('alamat');
             $table->enum('lingkungan', ['st.petrus', 'st.yohanes', 'st.maria']);
-            $table->string('kk_file', 255)->nullable();
-            $table->string('akte_file', 255)->nullable();
             $table->enum('status_pendaftaran', ['Pending', 'Diterima', 'Ditolak'])->default('Pending');
             $table->timestamp('tanggal_daftar')->useCurrent();
+
+            // kontak
+            $table->string('no_hp', 15);
+            $table->string('email', 50);
+
+            // berkas universal
+            $table->string('kk_file', 255)->nullable();
+            $table->string('akte_file', 255)->nullable();
+
+
             $table->timestamps();
         });
     }

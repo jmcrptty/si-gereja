@@ -63,10 +63,10 @@
             </div>
             @endif
 
-            <a href="{{ route('umat.create') }}" class="mb-4 btn btn-success fs-5"><i class="fa-solid fa-add"></i> Tambah Umat</a>
+            <a href="{{ route('ketualingkungan.umat.create') }}" class="mb-4 btn btn-success fs-5"><i class="fa-solid fa-add"></i> Tambah Umat</a>
 
             <div class="mb-4 card">
-                <div class="card-header">
+                <div class="card-header fw-bold">
                     <i class="fas fa-table me-1"></i>
                     Data Umat
                 </div>
@@ -103,17 +103,17 @@
                                     <td>
                                         <div class="flex-wrap gap-2 d-flex justify-content-center">
                                             {{-- Show --}}
-                                            <a href="{{ route('umat.show', $umat->id) }}" class="btn btn-sm bg-primary" title="Lihat">
+                                            <a href="{{ route('ketualingkungan.umat.show', $umat->id) }}" class="btn btn-sm bg-primary" title="Lihat">
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>
 
                                             {{-- Edit --}}
-                                            <a href="{{ route('umat.edit', $umat->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                                            <a href="{{ route('ketualingkungan.umat.edit', $umat->id) }}" class="btn btn-sm btn-warning" title="Edit">
                                                 <i class="fa-solid fa-pencil"></i>
                                             </a>
 
                                             {{-- Delete --}}
-                                            <form action="{{ route('umat.destroy', $umat->id) }}" method="POST" onsubmit="return confirm('Apakah ingin menghapus data {{ $umat->nama_lengkap }}?')">
+                                            <form action="{{ route('ketualingkungan.umat.destroy', $umat->id) }}" method="POST" onsubmit="return confirm('Apakah ingin menghapus data {{ $umat->nama_lengkap }}?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="border-0 badge bg-danger fs-6" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $umat->id }}">
@@ -143,10 +143,10 @@
                                                     loop
                                                     autoplay
                                                 ></dotlottie-player>
-                                                <p class="fw-semibold">Apakah Anda yakin ingin menghapus <strong>{{ $umat->nama_lengkap }}</strong>?</p>
+                                                <h3 class="fw-semibold">Apakah Anda yakin ingin menghapus <strong>{{ $umat->nama_lengkap }}</strong>?</h3>
                                             </div>
                                             <div class="pt-0 border-0 modal-footer justify-content-center">
-                                                <form action="{{ route('umat.destroy', $umat->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route('ketualingkungan.umat.destroy', $umat->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="px-4 btn btn-danger">Hapus</button>

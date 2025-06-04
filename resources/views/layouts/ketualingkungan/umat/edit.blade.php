@@ -15,17 +15,18 @@
                     Data Umat
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('umat.update', $umat->id) }}" method="POST">
+                    <form action="{{ route('ketualingkungan.umat.update', $umat->id) }}" method="POST" enctype="multipart/form-data">
                         @method('put')
                         @csrf
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control @error ('nama_lengkap')is-invalid @enderror" id="nama_lengkap" name="nama_lengkap" placeholder="" value="{{ old('nama_lengkap', $umat->nama_lengkap) }}" required>
+                                <input type="text" class="form-control @error ('nama_lengkap')is-invalid @enderror" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap', $umat->nama_lengkap) }}" required>
                                 @error('nama_lengkap')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-sm-6">
                                 <label for="nik" class="form-label">NIK</label>
                                 <input type="text" class="form-control @error ('nik')is-invalid @enderror" id="nik" name="nik" minlength="16" maxlength="16" value="{{ old('nik', $umat->nik) }}" required>
@@ -33,6 +34,27 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="col-sm-6">
+                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                <select class="form-control @error ('jenis_kelamin')is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin" required>
+                                    <option disabled {{ old('jenis_kelamin', $umat->jenis_kelamin) == null ? 'selected' : '' }}>Pilih Jenis Kelamin</option>
+                                    <option value="Pria" {{ old('jenis_kelamin', $umat->jenis_kelamin) == 'Pria' ? 'selected' : '' }}>Pria</option>
+                                    <option value="Wanita" {{ old('jenis_kelamin', $umat->jenis_kelamin) == 'Wanita' ? 'selected' : '' }}>Wanita</option>
+                                </select>
+                                @error('jenis_kelamin')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                <input type="text" class="form-control @error ('tempat_lahir')is-invalid @enderror" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir', $umat->tempat_lahir) }}" required>
+                                @error('tempat_lahir')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="col-sm-6">
                                 <label for="ttl" class="form-label">Tanggal Lahir</label>
                                 <input type="date" class="form-control @error ('ttl')is-invalid @enderror" id="ttl" name="ttl" value="{{ old('ttl', $umat->ttl) }}" required>
@@ -40,6 +62,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-sm-6">
                                 <label for="alamat" class="form-label">Alamat</label>
                                 <input type="text" class="form-control @error ('alamat')is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat', $umat->alamat) }}" required>
@@ -47,6 +70,23 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="col-sm-6">
+                                <label for="nama_ayah" class="form-label">Nama Ayah</label>
+                                <input type="text" class="form-control @error ('nama_ayah')is-invalid @enderror" id="nama_ayah" name="nama_ayah" value="{{ old('nama_ayah', $umat->nama_ayah) }}" required>
+                                @error('nama_ayah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="nama_ibu" class="form-label">Nama Ibu</label>
+                                <input type="text" class="form-control @error ('nama_ibu')is-invalid @enderror" id="nama_ibu" name="nama_ibu" value="{{ old('nama_ibu', $umat->nama_ibu) }}" required>
+                                @error('nama_ibu')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="col-sm-6">
                                 <label for="no_hp" class="form-label">Nomor Telpon</label>
                                 <input type="text" class="form-control @error ('no_hp')is-invalid @enderror" id="no_hp" name="no_hp" minlength="10" maxlength="12" value="{{ old('no_hp', $umat->no_hp) }}" required>
@@ -54,9 +94,10 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-sm-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control @error ('email')is-invalid @enderror" id="email" name="email" value="{{ old('email', $umat->email) }}" required>
+                                <input type="email" class="form-control @error ('email')is-invalid @enderror" id="email" name="email" value="{{ old('email', $umat->email) }}" required>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -64,32 +105,30 @@
 
                             <div class="col-sm-6">
                                 <label for="lingkungan" class="form-label">Lingkungan</label>
-                                <select type="text" class="form-control @error ('lingkungan')is-invalid @enderror" id="lingkungan" name="lingkungan" placeholder="" value="" required>
-                                    <option selected disabled value="">Pilih Lingkungan</option>
-                                    <option {{ $umat->lingkungan == 'st.petrus' ? 'selected' : '' }} value="st.petrus">St. Petrus</option>
-                                    <option {{ $umat->lingkungan == 'st.yohanes' ? 'selected' : '' }} value="st.yohanes">St. Yohanes</option>
-                                    <option {{ $umat->lingkungan == 'st.maria' ? 'selected' : '' }} value="st.maria">St. Maria</option>
+                                <select class="form-control @error ('lingkungan')is-invalid @enderror" id="lingkungan" name="lingkungan" required>
+                                    <option disabled {{ old('lingkungan', $umat->lingkungan) == null ? 'selected' : '' }}>Pilih Lingkungan</option>
+                                    <option value="st.petrus" {{ old('lingkungan', $umat->lingkungan) == 'st.petrus' ? 'selected' : '' }}>St. Petrus</option>
+                                    <option value="st.yohanes" {{ old('lingkungan', $umat->lingkungan) == 'st.yohanes' ? 'selected' : '' }}>St. Yohanes</option>
+                                    <option value="st.maria" {{ old('lingkungan', $umat->lingkungan) == 'st.maria' ? 'selected' : '' }}>St. Maria</option>
                                 </select>
                                 @error('lingkungan')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            {{-- <div class="col-sm-6">
-                                <label for="status_pendaftaran" class="form-label">Status Pendaftaran</label>
-                                <select type="text" class="form-control @error ('status_pendaftaran')is-invalid @enderror" id="status_pendaftaran" name="status_pendaftaran" placeholder="" value="" required>
-                                    <option selected value="">Pilih Status Pendaftaran</option>
-                                    <option value="st.petrus">St. Petrus</option>
-                                    <option value="st.yohanes">St. Yohanes</option>
-                                    <option value="st.maria">St. Maria</option>
-                                </select>
-                            </div> --}}
-
                             <h1 class="pt-1 mt-4">Berkas</h1>
 
-                            <div class="col-sm-6">
+                            <div class="mb-3 col-sm-6">
                                 <label for="kk_file" class="form-label">Kartu Keluarga</label>
-                                <input type="file" class="form-control @error ('kk_file')is-invalid @enderror" id="kk_file" name="kk_file" value="{{ old('kk_file') }}">
+                                @if ($umat->kk_file)
+                                    <div class="mb-2">
+                                        <a href="{{ route('ketualingkungan.umat.downloadFile', ['type' => 'kk', 'filename' => basename($umat->kk_file)]) }}"
+                                            class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                            Lihat Kartu Keluarga Sebelumnya
+                                        </a>
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control @error ('kk_file')is-invalid @enderror" id="kk_file" name="kk_file">
                                 @error('kk_file')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -97,7 +136,15 @@
 
                             <div class="col-sm-6">
                                 <label for="akte_file" class="form-label">Akte Kelahiran</label>
-                                <input type="file" class="form-control @error ('akte_file')is-invalid @enderror" id="akte_file" name="akte_file" value="{{ old('akte_file') }}" >
+                                @if ($umat->akte_file)
+                                    <div class="mb-2">
+                                        <a href="{{ route('ketualingkungan.umat.downloadFile', ['type' => 'akte', 'filename' => basename($umat->akte_file)]) }}"
+                                            class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                            Lihat Akta Kelahiran Sebelumnya
+                                        </a>
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control @error('akte_file') is-invalid @enderror" id="akte_file" name="akte_file">
                                 @error('akte_file')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -105,7 +152,7 @@
                         </div>
 
                         <div class="mt-5 button-group text-end">
-                            <a href="{{ route('umat.index') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
+                            <a href="{{ route('ketualingkungan.umat.index') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
 
                             <button class="border-0 rounded btn bg-primary btn-lg" type="submit">Perbarui Data Umat</button>
                         </div>

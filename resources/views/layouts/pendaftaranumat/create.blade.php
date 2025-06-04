@@ -1,4 +1,4 @@
-@extends('layouts.pendaftaranumat.layout')
+@extends('layouts.pendaftaranumat.layoutUmum')
 @section('title', 'Pendfataran Umat')
 
 @section('judul-hero')
@@ -20,8 +20,10 @@
                     Data Umat
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('pendaftaran-umat.store') }}" method="POST">
+                    <form action="{{ route('pendaftaran-umat.store') }}" method="POST" enctype="multipart/form-data">
+                        {{-- tidak untuk diubah-ubah --}}
                         @csrf
+                        <input type="hidden" name="token" value="{{ request()->segment(3) }}">
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
@@ -34,6 +36,24 @@
                                 <label for="nik" class="form-label">NIK</label>
                                 <input type="text" class="form-control @error ('nik')is-invalid @enderror" id="nik" name="nik" minlength="16" maxlength="16" value="{{ old('nik') }}" required>
                                 @error('nik')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                <select type="text" class="form-control @error ('jenis_kelamin')is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin" placeholder="" value="" required>
+                                    <option selected disabled value="">Pilih Jenis Kelamin</option>
+                                    <option value="Pria">Pria</option>
+                                    <option value="Wanita">Wanita</option>
+                                </select>
+                                @error('jenis_kelamin')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                <input type="date" class="form-control @error ('tempat_lahir')is-invalid @enderror" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
+                                @error('tempat_lahir')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -52,6 +72,20 @@
                                 @enderror
                             </div>
                             <div class="col-sm-6">
+                                <label for="nama_ayah" class="form-label">Nama Ayah</label>
+                                <input type="text" class="form-control @error ('nama_ayah')is-invalid @enderror" id="nama_ayah" name="nama_ayah" placeholder="" value="{{ old('nama_ayah') }}" required>
+                                @error('nama_ayah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="nama_ibu" class="form-label">Nama Ibu</label>
+                                <input type="text" class="form-control @error ('nama_ibu')is-invalid @enderror" id="nama_ibu" name="nama_ibu" placeholder="" value="{{ old('nama_ibu') }}" required>
+                                @error('nama_ibu')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
                                 <label for="no_hp" class="form-label">Nomor Telpon</label>
                                 <input type="text" class="form-control @error ('no_hp')is-invalid @enderror" id="no_hp" name="no_hp" minlength="10" maxlength="12" value="{{ old('no_hp') }}" required>
                                 @error('no_hp')
@@ -60,7 +94,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control @error ('email')is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
+                                <input type="text" class="form-control @error ('email')is-invalid @enderror" id="email" name="email" value="{{ $email }}" readonly required style="background-color: #f8f9fa; color: #6c757d;">
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

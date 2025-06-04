@@ -14,19 +14,27 @@ class Umat extends Model
     protected $fillable = [
         'nama_lengkap',
         'nik',
+        'jenis_kelamin',
+        'nama_ayah',
+        'nama_ibu',
+        'tempat_lahir',
         'ttl',
         'alamat',
-        'no_hp',
-        'email',
         'lingkungan',
-        'kk_file',
-        'akte_file',
         'status_pendaftaran',
         'tanggal_daftar',
+        'no_hp',
+        'email',
+        'kk_file',
+        'akte_file',
     ];
 
     public function sertifikatSakramen()
     {
         return $this->hasMany(SertifikatSakramen::class, 'umat_id');
+    }
+
+    public function baptis(){
+        return $this->hasOne(Baptis::class);
     }
 }

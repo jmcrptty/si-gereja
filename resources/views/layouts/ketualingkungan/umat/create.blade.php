@@ -15,7 +15,7 @@
                     Data Umat
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('umat.store') }}" method="POST">
+                    <form action="{{ route('ketualingkungan.umat.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row g-3">
                             <div class="col-sm-6">
@@ -29,6 +29,24 @@
                                 <label for="nik" class="form-label">NIK</label>
                                 <input type="text" class="form-control @error ('nik')is-invalid @enderror" id="nik" name="nik" minlength="16" maxlength="16" value="{{ old('nik') }}" required>
                                 @error('nik')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                <select type="text" class="form-control @error ('jenis_kelamin')is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin" placeholder="" value="" required>
+                                    <option selected disabled value="">Pilih Jenis Kelamin</option>
+                                    <option value="Pria">Pria</option>
+                                    <option value="Wanita">Wanita</option>
+                                </select>
+                                @error('jenis_kelamin')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                <input type="date" class="form-control @error ('tempat_lahir')is-invalid @enderror" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
+                                @error('tempat_lahir')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -47,6 +65,20 @@
                                 @enderror
                             </div>
                             <div class="col-sm-6">
+                                <label for="nama_ayah" class="form-label">Nama Ayah</label>
+                                <input type="text" class="form-control @error ('nama_ayah')is-invalid @enderror" id="nama_ayah" name="nama_ayah" placeholder="" value="{{ old('nama_ayah') }}" required>
+                                @error('nama_ayah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="nama_ibu" class="form-label">Nama Ibu</label>
+                                <input type="text" class="form-control @error ('nama_ibu')is-invalid @enderror" id="nama_ibu" name="nama_ibu" placeholder="" value="{{ old('nama_ibu') }}" required>
+                                @error('nama_ibu')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
                                 <label for="no_hp" class="form-label">Nomor Telpon</label>
                                 <input type="text" class="form-control @error ('no_hp')is-invalid @enderror" id="no_hp" name="no_hp" minlength="10" maxlength="12" value="{{ old('no_hp') }}" required>
                                 @error('no_hp')
@@ -55,7 +87,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control @error ('email')is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
+                                <input type="text" class="form-control @error ('email')is-invalid @enderror" id="email" name="email" value="" required>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -73,16 +105,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            {{-- <div class="col-sm-6">
-                                <label for="status_pendaftaran" class="form-label">Status Pendaftaran</label>
-                                <select type="text" class="form-control @error ('status_pendaftaran')is-invalid @enderror" id="status_pendaftaran" name="status_pendaftaran" placeholder="" value="" required>
-                                    <option selected value="">Pilih Status Pendaftaran</option>
-                                    <option value="st.petrus">St. Petrus</option>
-                                    <option value="st.yohanes">St. Yohanes</option>
-                                    <option value="st.maria">St. Maria</option>
-                                </select>
-                            </div> --}}
 
                             <h1 class="pt-1 mt-4">Berkas</h1>
 
@@ -104,7 +126,7 @@
                         </div>
 
                         <div class="mt-5 button-group text-end">
-                            <a href="{{ route('umat.index') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
+                            <a href="{{ route('ketualingkungan.umat.index') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
 
                             <button class="border-0 rounded btn bg-primary btn-lg" type="submit">Tambah Umat</button>
                         </div>

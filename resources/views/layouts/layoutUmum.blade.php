@@ -3,11 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gereja Katedral St. Fransiskus Xaverius Merauke</title>
-  <link rel="icon" href="/img/logo.ico" type="image/x-icon">
+  <title>Pendaftaran Umat</title>
+  {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet"> --}}
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+  <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <style>
     :root {
       --primary-dark: #2d3748;
@@ -409,205 +417,23 @@
 <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <div class="d-block w-100 hero-slide" style="background-image: url('/img/gereja2.jpg');"></div>
-    </div>
-    <div class="carousel-item">
-      <div class="d-block w-100 hero-slide" style="background-image: url('/img/gereja1.jpg');"></div>
-    </div>
-    <div class="carousel-item">
-      <div class="d-block w-100 hero-slide" style="background-image: url('/img/guamaria.jpg');"></div>
+      @yield('gambar-hero')
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-    {{-- <span class="carousel-control-prev-icon"></span> --}}
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-    {{-- <span class="carousel-control-next-icon"></span> --}}
-  </button>
+
   <div class="overlay"></div>
   <div class="text-center text-white hero-content position-absolute top-50 start-50 translate-middle">
-    <h1 class="mb-4 display-4">Paroki St. Fransiskus Xaverius<br>Katedral Merauke</h1>
-    <p class="mb-4 lead">Menjadi Komunitas Iman yang Bersaudara, Melayani dan Bersaksi</p>
-    <a href="#pengumuman-section" class="btn btn-elegant">Pengumuman Gereja</a>
+    @yield('judul-hero')
   </div>
 </div>
 
-<!-- Pengumuman -->
-<section id="pengumuman-section" class="py-5 bg-light">
-  <div class="container py-4">
-    <h2 class="text-center section-heading">PENGUMUMAN GEREJA</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
-    <div class="shadow-sm card h-100">
-        <div class="overflow-hidden">
-            @if(isset($pengumuman['mingguan'][0]))
-                <img src="{{ asset('storage/' . $pengumuman['mingguan'][0]->image) }}"
-                     class="card-img-top"
-                     alt="{{ $pengumuman['mingguan'][0]->title }}"
-                     style="height: 200px; object-fit: cover;"
-                     onerror="this.onerror=null; this.src='/img/default-image.jpg';">
-            @else
-                <img src="/img/default-image.jpg"
-                     class="card-img-top"
-                     alt="Default Image"
-                     style="height: 200px; object-fit: cover;">
-            @endif
-        </div>
-        <div class="card-body d-flex flex-column">
-            <!-- Judul kategori - paling besar -->
-            <h4 class="mb-3 card-title fw-bold">Pengumuman Mingguan</h4>
-
-            <!-- Judul pengumuman - ukuran sedang -->
-            <h5 class="mb-2 h5 text-muted">
-                {{ isset($pengumuman['mingguan'][0]) ? $pengumuman['mingguan'][0]->title : 'Belum ada pengumuman' }}
-            </h5>
-
-            <!-- Deskripsi - ukuran terkecil -->
-            <p class="card-text small">
-                {{ isset($pengumuman['mingguan'][0]) ? Str::limit($pengumuman['mingguan'][0]->sub, 150) : 'Belum ada detail pengumuman mingguan.' }}
-            </p>
-
-            <!-- Tombol di bagian bawah -->
-            <div class="mt-auto">
-                <a href="{{ route('pengumuman.show', 'mingguan') }}" class="btn btn-dark w-100">
-                    <i></i>Baca Selengkapnya
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-      <div class="col-md-4">
-        <div class="shadow-sm card h-100">
-          <div class="overflow-hidden">
-            @if(isset($pengumuman['laporan_keuangan'][0]))
-              <img src="{{ asset('storage/' . $pengumuman['laporan_keuangan'][0]->image) }}"
-                   class="card-img-top"
-                   alt="{{ $pengumuman['laporan_keuangan'][0]->title }}"
-                   style="height: 200px; object-fit: cover;"
-                   onerror="this.onerror=null; this.src='/img/default-image.jpg';">
-            @else
-              <img src="/img/default-image.jpg"
-                   class="card-img-top"
-                   alt="Default Image"
-                   style="height: 200px; object-fit: cover;">
-            @endif
-          </div>
-          <div class="card-body d-flex flex-column">
-
-             <h4 class="mb-3 card-title fw-bold">Pengumuman Keuangan</h4>
-
-            <h5 class="mb-2 h5 text-muted">
-              {{ isset($pengumuman['laporan_keuangan'][0]) ? $pengumuman['laporan_keuangan'][0]->title : 'Laporan Keuangan' }}
-            </h5>
-
-            <p class="card-text small">
-              {{ isset($pengumuman['laporan_keuangan'][0]) ? Str::limit($pengumuman['laporan_keuangan'][0]->sub, 150) : 'Belum ada laporan keuangan.' }}
-            </p>
-            <div class="mt-auto">
-              <a href="{{ route('pengumuman.show', 'laporan-keuangan') }}" class="btn btn-dark w-100">Baca Selengkapnya</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-<!-- Perbaikan bagian pengumuman lainnya -->
-<div class="col-md-4">
-    <div class="shadow-sm card h-100">
-        <div class="overflow-hidden">
-            @if(isset($pengumuman['pengumuman_lainnya'][0]))
-                <img src="{{ asset('storage/' . $pengumuman['pengumuman_lainnya'][0]->image) }}"
-                     class="card-img-top"
-                     alt="{{ $pengumuman['pengumuman_lainnya'][0]->title }}"
-                     style="height: 200px; object-fit: cover;"
-                     onerror="this.onerror=null; this.src='/img/default-image.jpg';">
-            @else
-                <img src="/img/default-image.jpg"
-                     class="card-img-top"
-                     alt="Default Image"
-                     style="height: 200px; object-fit: cover;">
-            @endif
-        </div>
-        <div class="card-body d-flex flex-column">
-
-           <h4 class="mb-3 card-title fw-bold">Pengumuman Lainnya</h4>
-
-            <h5 class="mb-2 h5 text-muted">
-                {{ isset($pengumuman['pengumuman_lainnya'][0]) ? $pengumuman['pengumuman_lainnya'][0]->title : 'Pengumuman Lainnya' }}
-            </h5>
-            <p class="card-text small">
-                {{ isset($pengumuman['pengumuman_lainnya'][0]) ? Str::limit($pengumuman['pengumuman_lainnya'][0]->sub, 150) : 'Belum ada pengumuman lainnya.' }}
-            </p>
-            <div class="mt-auto">
-                <a href="{{ route('pengumuman.show', 'pengumuman-lainnya') }}" class="btn btn-dark w-100">
-                    <i></i>Baca Selengkapnya
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
+<section class="py-5 bg-light">
+    @yield('content') {{-- konten drop di sini --}}
 </section>
 
+{{-- ajax --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- Jadwal Misa -->
-<section class="py-5 bg-white">
-  <div class="container py-4">
-    <h2 class="text-center section-heading">JADWAL MISA</h2>
-    <div class="row g-4">
-      <!-- Misa Harian -->
-      <div class="col-md-4">
-        <div class="shadow-sm card h-100">
-          <div class="card-body d-flex flex-column">
-            <div class="mb-3 misa-icon">
-              <i class="bi bi-brightness-alt-high"></i>
-            </div>
-            <h5 class="mb-2 h5 text-muted">
-              {{ isset($informasiMisa['Harian']) ? $informasiMisa['Harian']->jenis_misa : 'tidak ada' }}
-            </h5>
-            <p class="card-text small">
-              {{ isset($informasiMisa['Harian']) ? $informasiMisa['Harian']->jadwal_misa : '05:30 WIT' }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Misa Jumat Pertama -->
-      <div class="col-md-4">
-        <div class="shadow-sm card h-100">
-          <div class="card-body d-flex flex-column">
-            <div class="mb-3 misa-icon">
-              <i class="bi bi-heart"></i>
-            </div>
-            <h5 class="mb-2 h5 text-muted">
-              {{ isset($informasiMisa['Jumat_Pertama']) ? $informasiMisa['Jumat_Pertama']->jenis_misa : 'Jumat Pertama' }}
-            </h5>
-            <p class="card-text small">
-              {{ isset($informasiMisa['Jumat_Pertama']) ? $informasiMisa['Jumat_Pertama']->jadwal_misa : '19:30 WIT' }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Misa Minggu -->
-      <div class="col-md-4">
-        <div class="shadow-sm card h-100">
-          <div class="card-body d-flex flex-column">
-            <div class="mb-3 misa-icon">
-              <i class="bi bi-people-fill"></i>
-            </div>
-            <h5 class="mb-2 h5 text-muted">
-              {{ isset($informasiMisa['Minggu']) ? $informasiMisa['Minggu']->jenis_misa : 'Minggu' }}
-            </h5>
-            <p class="card-text small">
-              {{ isset($informasiMisa['Minggu']) ? $informasiMisa['Minggu']->jadwal_misa : '06:00 WIT, 08:30 WIT, 16:30 WIT' }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 <!-- Footer -->
 <footer>
   <div class="container">
@@ -649,6 +475,16 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('js/scripts.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+{{-- <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
+<script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+@stack('baptis-after-script')
+
 <script>
   // Navbar scroll effect
   const navbar = document.getElementById('mainNavbar');
