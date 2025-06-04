@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gereja Katedral St. Fransiskus Xaverius Merauke</title>
-  <link rel="icon" href="/img/logo1.ico" type="image/x-icon">
+  <link rel="icon" href="/img/logo.ico" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -419,10 +419,10 @@
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
+    {{-- <span class="carousel-control-prev-icon"></span> --}}
   </button>
   <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
+    {{-- <span class="carousel-control-next-icon"></span> --}}
   </button>
   <div class="overlay"></div>
   <div class="hero-content position-absolute top-50 start-50 translate-middle text-center text-white">

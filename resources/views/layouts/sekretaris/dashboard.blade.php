@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Dashboard')
+<link rel="icon" href="/img/logo.ico" type="image/x-icon">
 
 @push('styles')
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
