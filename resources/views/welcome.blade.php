@@ -394,6 +394,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('kontak') }}">Kontak</a>
         </li>
+          <li class="nav-item">
+          <a class="nav-link" href="{{ route('forum.index') }}">Forum Umat</a>
+        </li>
       </ul>
 
       <a href="http://si_gereja.test/login" class="nav-link d-flex align-items-center ms-3" style="color: white;">
