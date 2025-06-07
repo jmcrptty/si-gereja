@@ -13,6 +13,7 @@ use App\Http\Controllers\LingkunganController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\InformasiMisaController;
 use App\Http\Controllers\PendaftaranUmatController;
+use App\Http\Controllers\ForumUmatController;
 
 
 Route::middleware('guest')->group(function () {
@@ -62,6 +63,10 @@ Route::middleware('guest')->group(function () {
     // Route::post('/pendaftaran-umat/carinik', [PendaftaranUmatController::class, 'carinik'])->name('pendaftaran-umat.carinik');
     // Route::post('api/cek_nik', [ApiController::class, 'get_nik'])->middleware('throttle:10,1'); // batasi pencarian hanya 10 NIK/Menit untuk setiap IP
 
+    //6.forum Umat
+    Route::get('/forum', [ForumUmatController::class, 'umatIndex'])->name('forum.index');
+Route::post('/forum', [ForumUmatController::class, 'store'])->name('forum.store');
+
     Route::get('/tentang-paroki', function () {
         return view('layouts.tentangparoki');
     })->name('tentang-paroki');
@@ -96,6 +101,11 @@ Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(fu
     Route::get('/pendaftaransakramen', function () {
         return view('layouts.pendaftaransakramen');
     })->name('pendaftaransakramen');
+
+    // forum umat
+     Route::get('/forum', [ForumUmatController::class, 'sekretarisIndex'])->name('forum');
+     Route::post('/forum/{id}/answer', [ForumUmatController::class, 'answer'])->name('forum.answer');
+     Route::delete('/forum/{id}', [ForumUmatController::class, 'destroy'])->name('forum.destroy');
 
 
     // rute informasi misa
