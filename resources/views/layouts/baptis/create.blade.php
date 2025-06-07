@@ -1,12 +1,15 @@
-@extends('layouts.pendaftaranumat.layoutUmum')
-@section('title', 'Formulir Pendfataran Baptis')
+@extends('layouts.layoutUmum')
+
+@section('judul-halaman')
+    Pendaftaran Sakramen Baptis
+@endsection
 
 @section('gambar-hero')
     <div class="d-block w-100 hero-slide" style="background-image: url('/img/baptis1.png');"></div>
 @endsection
 
 @section('judul-hero')
-    <h1 class="mb-4 display-4">Persyaratan Baptis <br>Katedral Merauke</h1>
+    <h1 class="mb-4 display-4">Formulir Pendaftaran Baptis <br>Katedral Merauke</h1>
 @endsection
 
 @section('content')
@@ -27,10 +30,11 @@
                         @csrf
                         {{-- tidak untuk diubah-ubah --}}
                         <input type="hidden" name="token" value="{{ request()->segment(3) }}">
+                        <input type="hidden" name="email" value="{{ $umat->email }}">
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control @error ('nama_lengkap')is-invalid @enderror" id="nama_lengkap" name="nama_lengkap" placeholder="" value="{{ $umat->nama_lengkap }}" required readonly required style="background-color: #f8f9fa; color: #6c757d;">
+                                <input type="text" class="form-control @error ('nama_lengkap')is-invalid @enderror" id="nama_lengkap" name="" placeholder="" value="{{ $umat->nama_lengkap }}" required readonly style="background-color: #f8f9fa; color: #6c757d;">
                                 @error('nama_lengkap')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -62,12 +66,10 @@
 
                             <h1 class="pt-1 mt-4"> Data Wali Baptis</h1>
 
-                            <h6><i>*Pilih Salah Satu</i></h6>
-
-                            <h5>Wali Baptis Tunggal</h5>
+                            <h5>Wali Baptis Tunggal <span>&#42;</span></h5>
                             <div class="col-sm-6">
                                 <label for="nama_wali_baptis" class="form-label">Nama Wali Baptis</label>
-                                <input type="text" class="form-control @error ('nama_wali_baptis')is-invalid @enderror" id="nama_wali_baptis" name="nama_wali_baptis" value="{{ old('nama_wali_baptis') }}" required>
+                                <input type="text" class="form-control @error ('nama_wali_baptis')is-invalid @enderror" id="nama_wali_baptis" name="nama_wali_baptis" value="{{ old('nama_wali_baptis') }}">
                                 @error('nama_wali_baptis')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -80,17 +82,17 @@
                                 @enderror
                             </div>
 
-                            <h5>Wali Baptis Pasangan</h5>
+                            <h5>Wali Baptis Pasangan <span>&#42;</span></h5>
                             <div class="col-sm-6">
                                 <label for="nama_wali_baptis_pria" class="form-label">Nama Wali Baptis Pria</label>
-                                <input type="text" class="form-control @error ('nama_wali_baptis_pria')is-invalid @enderror" id="nama_wali_baptis_pria" name="nama_wali_baptis_pria" value="{{ old('nama_wali_baptis_pria') }}" required>
+                                <input type="text" class="form-control @error ('nama_wali_baptis_pria')is-invalid @enderror" id="nama_wali_baptis_pria" name="nama_wali_baptis_pria" value="{{ old('nama_wali_baptis_pria') }}">
                                 @error('nama_wali_baptis_pria')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-sm-6">
                                 <label for="nama_wali_baptis_wanita" class="form-label">Nama Wali Baptis Wanita</label>
-                                <input type="text" class="form-control @error ('nama_wali_baptis_wanita')is-invalid @enderror" id="nama_wali_baptis_wanita" name="nama_wali_baptis_wanita" value="{{ old('nama_wali_baptis_wanita') }}" required>
+                                <input type="text" class="form-control @error ('nama_wali_baptis_wanita')is-invalid @enderror" id="nama_wali_baptis_wanita" name="nama_wali_baptis_wanita" value="{{ old('nama_wali_baptis_wanita') }}">
                                 @error('nama_wali_baptis_wanita')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -103,6 +105,10 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <br>
+                        <br>
+                        <h6><i><span>&#42;</span>Pilih Salah Satu</i></h6>
 
                         <div class="mt-5 button-group text-end">
                             <a href="{{ route('pendaftaran-umat') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>

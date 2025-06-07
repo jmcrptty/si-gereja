@@ -34,12 +34,13 @@ Route::middleware('guest')->group(function () {
     Route::get('/baptis', [BaptisController::class, 'index'])->name('baptis');
     Route::post('/baptis/send', [PendaftaranBaptis_InvController::class, 'sendEmailPendaftaran'])->name('baptis.mail');
     Route::get('/baptis/formulir/{token}', [BaptisController::class, 'create' ])->name('baptis.create');
-    Route::get('/baptis/formulir/', [BaptisController::class, 'store' ])->name('baptis.store');
+    Route::post('/baptis/formulir/', [BaptisController::class, 'store' ])->name('baptis.store');
 
     // 2. Komuni
     Route::get('/komuni-pertama', function () {
         return view('layouts.komunipertama');
     })->name('komuni-pertama');
+
     // 3. Krisma
     Route::get('/krisma', function () {
     return view('layouts.krisma');

@@ -1,5 +1,9 @@
 @extends('layouts.layoutUmum')
 
+@section('judul-halaman')
+    Pendaftaran Sakramen Baptis
+@endsection
+
 @section('gambar-hero')
     <div class="d-block w-100 hero-slide" style="background-image: url('/img/baptis1.png');"></div>
 @endsection

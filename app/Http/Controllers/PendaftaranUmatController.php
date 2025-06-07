@@ -22,7 +22,7 @@ class PendaftaranUmatController extends Controller
             return redirect('pendaftaran-umat')->with('Pemberitahuan', 'Undangan yang anda masukan sudah kadaluarsa. Mohon isi kembali email pada form di bawah');
         }
         // jika ada, tampilkan halaman login
-        return view('layouts.baptis.create', [
+        return view('layouts.pendaftaranumat.create', [
             'email' => $invitation->email
         ]);
     }
