@@ -15,7 +15,7 @@
 @section('content')
     <main>
         <div class="px-4 container-fluid">
-            <h1 class="mt-4">Formulir Pendaftaran Umat</h1>
+            <h1 class="mt-4">Formulir Pendaftaran Baptis</h1>
             <ol class="mb-4 breadcrumb">
                 {{-- <li class="breadcrumb-item active">Tambah, Edit, dan Hapus Data Umat</li> --}}
             </ol>
@@ -34,10 +34,7 @@
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control @error ('nama_lengkap')is-invalid @enderror" id="nama_lengkap" name="" placeholder="" value="{{ $umat->nama_lengkap }}" required readonly style="background-color: #f8f9fa; color: #6c757d;">
-                                @error('nama_lengkap')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <input disabled readonly type="text" class="form-control" id="nama_lengkap" value="{{ $umat->nama_lengkap }}">
                             </div>
                             <div class="col-sm-6">
                                 <label for="nama_baptis" class="form-label">Nama Baptis</label>
@@ -111,7 +108,7 @@
                         <h6><i><span>&#42;</span>Pilih Salah Satu</i></h6>
 
                         <div class="mt-5 button-group text-end">
-                            <a href="{{ route('pendaftaran-umat') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
+                            <a href="{{ route('baptis') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
 
                             <button class="border-0 rounded btn bg-primary btn-lg" type="submit">Daftar</button>
                         </div>

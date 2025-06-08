@@ -128,20 +128,20 @@ class BaptisController extends Controller
 
         // masukkan file
         if($request->hasFile('fotokopi_ktp_ortu') ){
-            $kkPath = $request->file('fotokopi_ktp_ortu')->store('umats/fotokopi_ktp_ortu', 'local');
-            $request_valid['fotokopi_ktp_ortu'] = $kkPath;
+            $ktpOrtuPath = $request->file('fotokopi_ktp_ortu')->store('umats/fotokopi_ktp_ortu', 'local');
+            $request_valid['fotokopi_ktp_ortu'] = $ktpOrtuPath;
         }
         if($request->hasFile('surat_pernikahan_katolik_ortu')){
-            $aktePath = $request->file('surat_pernikahan_katolik_ortu')->store('umats/surat_pernikahan_katolik_ortu', 'local');
-            $request_valid['surat_pernikahan_katolik_ortu'] = $aktePath;
+            $suratPernikahanOrtuPath = $request->file('surat_pernikahan_katolik_ortu')->store('umats/surat_pernikahan_katolik_ortu', 'local');
+            $request_valid['surat_pernikahan_katolik_ortu'] = $suratPernikahanOrtuPath;
         }
         if($request->hasFile('surat_krisma_wali_baptis')){
-            $aktePath = $request->file('surat_krisma_wali_baptis')->store('umats/surat_krisma_wali_baptis', 'local');
-            $request_valid['surat_krisma_wali_baptis'] = $aktePath;
+            $suratKrismaPath = $request->file('surat_krisma_wali_baptis')->store('umats/surat_krisma_wali_baptis', 'local');
+            $request_valid['surat_krisma_wali_baptis'] = $suratKrismaPath;
         }
         if($request->hasFile('surat_pernikahan_wali_baptis')){
-            $aktePath = $request->file('surat_pernikahan_wali_baptis')->store('umats/surat_pernikahan_wali_baptis', 'local');
-            $request_valid['surat_pernikahan_wali_baptis'] = $aktePath;
+            $suratPernikahanPath = $request->file('surat_pernikahan_wali_baptis')->store('umats/surat_pernikahan_wali_baptis', 'local');
+            $request_valid['surat_pernikahan_wali_baptis'] = $suratPernikahanPath;
         }
 
         // masukkan id umat
