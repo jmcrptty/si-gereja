@@ -2,6 +2,7 @@
 
 @section('title', 'Forum Umat - Sekretaris')
 
+
 @section('content')
 <div class="container-fluid px-4">
     <h1 class="mt-4 mb-4">Forum Umat</h1>
@@ -110,9 +111,10 @@
 
     @if($questions->hasPages())
     <div class="mt-3">
-        {{ $questions->links() }}
+
+        {{ $questions->links('pagination::bootstrap-5') }}
     </div>
-    @endif
+    @endif2
 </div>
 
 <!-- Modal Jawab -->

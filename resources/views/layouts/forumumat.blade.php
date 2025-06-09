@@ -574,6 +574,7 @@
                     </form>
                 </div>
 
+                <!-- Pertanyaan & Jawaban Terbaru -->
                 <h4 class="mb-4 text-center" style="color: var(--primary-dark); font-weight: 600;">Pertanyaan & Jawaban Terbaru</h4>
                 
                 @forelse($questions as $q)
@@ -616,9 +617,11 @@
                 @endforelse
 
                 <!-- Pagination -->
+                @if($questions->hasPages())
                 <div class="d-flex justify-content-center mt-4">
-                    {{ $questions->links() }}
+                    {{ $questions->links('pagination::bootstrap-5') }}
                 </div>
+                @endif
             </div>
 
             <!-- Ask Question Form -->
