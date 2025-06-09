@@ -9,7 +9,7 @@
 @section('content')
     <main>
         <div class="px-4 container-fluid">
-            <h1 class="mt-4">Formulir Pendaftaran Umat</h1>
+            <h1 class="mt-4">Formulir Pendaftaran Sakramen Baptis</h1>
             <ol class="mb-4 breadcrumb">
                 {{-- <li class="breadcrumb-item active">Tambah, Edit, dan Hapus Data Umat</li> --}}
             </ol>
@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-                                <input type="date" class="form-control @error ('tempat_lahir')is-invalid @enderror" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
+                                <input type="text" class="form-control @error ('tempat_lahir')is-invalid @enderror" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
                                 @error('tempat_lahir')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

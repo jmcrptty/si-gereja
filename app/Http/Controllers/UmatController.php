@@ -152,7 +152,7 @@ class UmatController extends Controller
             'kk_file' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
             'akte_file' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
         ], [
-            // Pesan error (same as before)
+            // Pesan error
             'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
             'nik.required' => 'NIK wajib diisi.',
             'nik.max' => 'NIK maksimal 20 karakter.',

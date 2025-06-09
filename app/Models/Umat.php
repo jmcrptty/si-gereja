@@ -37,4 +37,8 @@ class Umat extends Model
     public function baptis(){
         return $this->hasOne(Baptis::class);
     }
+
+    public function komuni(){
+        return $this->hasOne(Komuni::class);
+    }
 }

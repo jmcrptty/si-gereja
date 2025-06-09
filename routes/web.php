@@ -9,12 +9,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PendaftaranUmat_InvController;
 use App\Http\Controllers\PendaftaranBaptis_InvController;
+use App\Http\Controllers\PendaftaranKomuni_InvController;
 use App\Http\Controllers\LingkunganController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\InformasiMisaController;
 use App\Http\Controllers\PendaftaranUmatController;
 use App\Http\Controllers\ForumUmatController;
-
+use App\Http\Controllers\KomuniController;
 
 Route::middleware('guest')->group(function () {
 
@@ -35,12 +36,14 @@ Route::middleware('guest')->group(function () {
     Route::get('/baptis', [BaptisController::class, 'index'])->name('baptis');
     Route::post('/baptis/send', [PendaftaranBaptis_InvController::class, 'sendEmailPendaftaran'])->name('baptis.mail');
     Route::get('/baptis/formulir/{token}', [BaptisController::class, 'create' ])->name('baptis.create');
-    Route::get('/baptis/formulir/', [BaptisController::class, 'store' ])->name('baptis.store');
+    Route::post('/baptis/formulir/', [BaptisController::class, 'store' ])->name('baptis.store');
 
     // 2. Komuni
-    Route::get('/komuni-pertama', function () {
-        return view('layouts.komunipertama');
-    })->name('komuni-pertama');
+    Route::get('/komuni-pertama', [KomuniController::class, 'index'])->name('komuni-pertama');
+    Route::post('/komuni-pertama/send',[PendaftaranKomuni_InvController::class, 'sendEmailPendaftaran'])->name('komuni-pertama.mail');
+    Route::get('/komuni-pertama/formulir/{token}',[KomuniController::class, 'create'])->name('komuni-pertama.create');
+    Route::post('/komuni-pertama/formulir',[KomuniController::class, 'store'])->name('komuni-pertama.store');
+
     // 3. Krisma
     Route::get('/krisma', function () {
     return view('layouts.krisma');
@@ -52,14 +55,10 @@ Route::middleware('guest')->group(function () {
     })->name('pernikahan');
 
     // 5. Pendaftaran Umat
-    // Route::get('/pendaftaran-umat', [PendaftaranUmatController::class, 'index'])->name('pendaftaran-umat');
     Route::get('/pendaftaran-umat', [PendaftaranUmat_InvController::class, 'index'])->name('pendaftaran-umat');
     Route::post('/pendaftaran-umat/send', [PendaftaranUmat_InvController::class, 'sendStatusPendaftaranEmail'])->name('pendaftaran-umat.mail');
     Route::get('/pendaftaran-umat/formulir/{token}', [PendaftaranUmatController::class, 'create'])->name('pendaftaran-umat.create'); // kalau ubah ini, jangan lupa untuk ubah link di PendaftaranUmat_InvController
     Route::post('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'store'])->name('pendaftaran-umat.store');
-    // Route::get('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'create'])->name('pendaftaran-umat.create');
-    // Route::post('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'store'])->name('pendaftaran-umat.store');
-    // Route::post('/pendaftaran-umat/carinik', [PendaftaranUmatController::class, 'carinik'])->name('pendaftaran-umat.carinik');
     // Route::post('api/cek_nik', [ApiController::class, 'get_nik'])->middleware('throttle:10,1'); // batasi pencarian hanya 10 NIK/Menit untuk setiap IP
 
     //6.forum Umat
