@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Komuni extends Model
+class Krisma extends Model
 {
-    protected $table = 'komuni';
+    protected $table = 'krisma';
 
     protected $fillable = [
         'umat_id',
-        'gereja_tempat_komuni',
-        'tanggal_komuni',
-        'surat_komuni',
+        'surat_krisma',
+        'tanggal_krisma',
+        'gereja_tempat_krisma'
     ];
 
     public function umat(){

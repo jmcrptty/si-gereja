@@ -10,12 +10,14 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PendaftaranUmat_InvController;
 use App\Http\Controllers\PendaftaranBaptis_InvController;
 use App\Http\Controllers\PendaftaranKomuni_InvController;
+use App\Http\Controllers\PendaftaranKrisma_InvController;
 use App\Http\Controllers\LingkunganController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\InformasiMisaController;
 use App\Http\Controllers\PendaftaranUmatController;
 use App\Http\Controllers\ForumUmatController;
 use App\Http\Controllers\KomuniController;
+use App\Http\Controllers\KrismaController;
 
 Route::middleware('guest')->group(function () {
 
@@ -45,9 +47,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/komuni-pertama/formulir',[KomuniController::class, 'store'])->name('komuni-pertama.store');
 
     // 3. Krisma
-    Route::get('/krisma', function () {
-    return view('layouts.krisma');
-    })->name('krisma');
+    Route::get('/krisma', [KrismaController::class, 'index'])->name('krisma');
+    Route::post('/krisma/send', [PendaftaranKrisma_InvController::class, 'sendEmailPendaftaran'])->name('krisma.mail');
+    Route::get('/krisma/formulir/{token}', [KrismaController::class, 'create'])->name('krisma.create');
+    Route::post('/krisma/formulir/', [KrismaController::class, 'store'])->name('krisma.store');
 
     // 4. Pernikahan
     Route::get('/pernikahan', function () {

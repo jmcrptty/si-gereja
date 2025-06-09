@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Umat;
 use GuzzleHttp\Client;
 use App\Models\Invitation;
+use App\Models\Komuni;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -22,14 +23,19 @@ class PendaftaranKomuni_InvController extends Controller
 
         // cek apakah ada umat yang memiliki email tersebut
         $umat = Umat::where('email', $request->email)->first();
+        $sudahKomuni = Komuni::where('umat_id', $umat->id)->first();
 
         if(!$umat){
             // jika umat belum terdaftar
             return back()->with('Pemberitahuan', 'Belum terdaftar sebagai umat, silahkan melakukan pendaftaran');
         }
 
+        if($sudahKomuni){
+            return back()->with('Pemberitahuan', 'Anda sudah terdaftar');
+        }
+
         if($umat->status_pendaftaran == 'Diterima'){
-            // jika umat ditemukan dan telah diterima
+            // jika umat ditemukan, telah diterima, dan belum mendaftar
 
             // 1. ganti sesi sebelumnya (jika ada) yang masih aktif menjadi tidak aktif
             Invitation::where('email', $request->email)->where('aktif', true)->update(['aktif' => false]);
@@ -45,7 +51,7 @@ class PendaftaranKomuni_InvController extends Controller
             ]);
 
             // 4. susun menjadi link
-            $link = url('komuni-pertama/formulir/' . $token); // kalau ubah ini plis ingat untuk ubah routenya di web.php (nama: pendaftaran-umat.create)
+            $link = url('komuni-pertama/formulir/' . $token); // kalau ubah ini plis ingat untuk ubah routenya di web.php (nama: komuni.create)
 
             // 5. buat email
             $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', env('BREVO_API_KEY'));

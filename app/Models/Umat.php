@@ -41,4 +41,8 @@ class Umat extends Model
     public function komuni(){
         return $this->hasOne(Komuni::class);
     }
+
+    public function krisma(){
+        return $this->hasOne(Krisma::class);
+    }
 }

@@ -27,6 +27,12 @@ return new class extends Migration
             $table->string('nama_wali_baptis_pria')->nullable();
             $table->string('nama_wali_baptis_wanita')->nullable();
             $table->string('surat_pernikahan_wali_baptis', 255)->nullable();
+            $table->string('gereja_tempat_baptis');
+
+            // diisi saat daftar komuni
+            $table->date('tanggal_baptis')->nullable();
+            $table->string('surat_baptis', 255)->nullable();
+
             $table->timestamps();
         });
     }

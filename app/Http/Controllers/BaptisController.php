@@ -154,6 +154,9 @@ class BaptisController extends Controller
 
         $request_valid['umat_id'] = $umat_id;
 
+        // masukkan gereja tempat baptis umat
+        $request_valid['gereja_tempat_baptis'] = "Gereja Katedral Santo Fransiskus Xaverius Merauke";
+
         // cek kebenaran token
         $invitation = Invitation::where('token', $request->token)->where('aktif', true)->first();
         // kalo gak ada kembalikan ke halaman utama

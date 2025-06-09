@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('komuni', function (Blueprint $table) {
+        Schema::create('krisma', function (Blueprint $table) {
             $table->id();
             $table->foreignId('umat_id')->constrained('umat')->onDelete('cascade');
-            $table->string('gereja_tempat_komuni');
+            $table->string('gereja_tempat_krisma');
 
-            // diisi saat daftar komuni
-            $table->string('surat_komuni', 255)->nullable();
-            $table->date('tanggal_komuni')->nullable();
-
+            // diisi saat daftar nikah
+            $table->string('surat_krisma', 255)->nullable();
+            $table->date('tanggal_krisma')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('komuni');
+        Schema::dropIfExists('krismas');
     }
 };
