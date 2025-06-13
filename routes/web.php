@@ -18,6 +18,8 @@ use App\Http\Controllers\PendaftaranUmatController;
 use App\Http\Controllers\ForumUmatController;
 use App\Http\Controllers\KomuniController;
 use App\Http\Controllers\KrismaController;
+use App\Http\Controllers\PendaftaranPernikahan_InvController;
+use App\Http\Controllers\PernikahanController;
 
 Route::middleware('guest')->group(function () {
 
@@ -53,9 +55,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/krisma/formulir/', [KrismaController::class, 'store'])->name('krisma.store');
 
     // 4. Pernikahan
-    Route::get('/pernikahan', function () {
-        return view('layouts.pernikahan');
-    })->name('pernikahan');
+    Route::get('/pernikahan', [PernikahanController::class, 'index'])->name('pernikahan');
+    Route::get('/pernikahan/send', [PernikahanController::class, 'index'])->name('pernikahan.mail');
+    Route::post('/pernikahan/send', [PendaftaranPernikahan_InvController::class, 'sendEmailPendaftaran'])->name('pernikahan.mail');
+    Route::get('/pernikahan/formulir/{token}', [PernikahanController::class, 'create'])->name('pernikahan.create');
+    Route::post('/pernikahan/formulir/', [PernikahanController::class, 'store'])->name('pernikahan.store');
+    Route::post('api/cek_email_pernikahan', [ApiController::class, 'get_email_pernikahan'])->middleware('throttle:10,1'); // batasi pencarian hanya 10 NIK/Menit untuk setiap IP
 
     // 5. Pendaftaran Umat
     Route::get('/pendaftaran-umat', [PendaftaranUmat_InvController::class, 'index'])->name('pendaftaran-umat');
