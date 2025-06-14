@@ -57,23 +57,23 @@
                 <div class="card-body">
                     <form action="{{ route('pernikahan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
                         {{-- tidak untuk diubah-ubah --}}
+
+                        {{-- email umat yang mendaftar --}}
                         <input type="hidden" name="token" value="{{ request()->segment(3) }}">
                         @if ($umat->jenis_kelamin == 'Pria')
                             {{-- email default pria --}}
-                            <input type="hidden" name="email_pria" value="{{ $umat->email }}">
-                            @error('email_pria')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <input type="hidden" name="email_umat_pria" value="{{ $umat->email }}">
                         @else
                             {{-- email default wanita --}}
-                            <input type="hidden" name="email_wanita" value="{{ $umat->email }}">
-                            @error('email_wanita')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <input type="hidden" name="email_umat_wanita" value="{{ $umat->email }}">
                         @endif
-                        <div class="row g-3">
 
+                        {{-- jenis kelamin umat yang mendaftar --}}
+                        <input type="hidden" name="jenis_kelamin_umat" value="{{ $umat->jenis_kelamin }}">
+
+                        <div class="row g-3">
                             {{-- CALON PRIA --}}
                             <h1 class="pt-1 mt-4">Calon Penerima Pria</h1>
 
@@ -99,9 +99,9 @@
                             <div class="col-sm-6">
                                 <label for="nama_lengkap_pria" class="form-label">Nama Lengkap</label>
                                 @if ($umat->jenis_kelamin == 'Pria')
-                                    <input readonly type="text" class="form-control @error ('nama_lengkap_pria')is-invalid @enderror pseudo-disabled" id="nama_lengkap_pria" name="nama_lengkap_pria" value="{{ $umat->nama_lengkap }}">
+                                    <input readonly type="text" class="form-control @error ('nama_lengkap_pria')is-invalid @enderror pseudo-disabled" id="nama_lengkap_pria" name="nama_lengkap_pria" value="{{ $umat->nama_lengkap }}" required>
                                 @else
-                                    <input type="text" class="form-control @error ('nama_lengkap_pria')is-invalid @enderror" id="nama_lengkap_pria" name="nama_lengkap_pria" value="{{ old('nama_lengkap_pria') }}">
+                                    <input type="text" class="form-control @error ('nama_lengkap_pria')is-invalid @enderror" id="nama_lengkap_pria" name="nama_lengkap_pria" value="{{ old('nama_lengkap_pria') }}" required>
                                     @error('nama_lengkap_pria')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -111,12 +111,12 @@
                             <div class="col-sm-6">
                                 <label for="email_pria" class="form-label">Email</label>
                                 @if ($umat->jenis_kelamin == 'Pria')
-                                    <input readonly type="text" class="form-control @error ('email_pria')is-invalid @enderror" id="email_pria" name="email_pria" value="{{ $umat->email }}">
+                                    <input readonly type="text" class="form-control @error ('email_pria')is-invalid @enderror" id="email_pria" name="email_pria" value="{{ $umat->email }}" required>
                                     @error('email_pria')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 @else
-                                    <input type="text" class="form-control @error ('email_pria')is-invalid @enderror" id="email_pria" name="email_pria" value="{{ old('email_pria') }}">
+                                    <input type="text" class="form-control @error ('email_pria')is-invalid @enderror" id="email_pria" name="email_pria" value="{{ old('email_pria') }}" required>
                                     @error('email_pria')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -126,7 +126,7 @@
                             <div class="col-sm-6">
                                 <label for="alamat_pria" class="form-label">Alamat</label>
                                 @if ($umat->jenis_kelamin == 'Pria')
-                                    <input readonly type="text" class="form-control @error ('alamat_pria')is-invalid @enderror pseudo-disabled" id="alamat_pria" name="alamat_pria" value="{{ $umat->alamat }}">
+                                    <input readonly type="text" class="form-control @error ('alamat_pria')is-invalid @enderror pseudo-disabled" id="alamat_pria" name="alamat_pria" value="{{ $umat->alamat }}" required>
                                 @else
                                     <input type="text" class="form-control @error ('alamat_pria')is-invalid @enderror" id="alamat_pria" name="alamat_pria" value="{{ old('alamat_pria') }}" required>
                                     @error('alamat_pria')
@@ -138,7 +138,7 @@
                             <div class="col-sm-6">
                                 <label for="tempat_lahir_pria" class="form-label">Tempat Lahir</label>
                                 @if ($umat->jenis_kelamin == 'Pria')
-                                    <input readonly type="text" class="form-control @error ('tempat_lahir_pria')is-invalid @enderror pseudo-disabled" id="tempat_lahir_pria" name="tempat_lahir_pria" value="{{ $umat->tempat_lahir }}">
+                                    <input readonly type="text" class="form-control @error ('tempat_lahir_pria')is-invalid @enderror pseudo-disabled" id="tempat_lahir_pria" name="tempat_lahir_pria" value="{{ $umat->tempat_lahir }}" required>
                                 @else
                                     <input type="text" class="form-control @error ('tempat_lahir_pria')is-invalid @enderror" id="tempat_lahir_pria" name="tempat_lahir_pria" value="{{ old('tempat_lahir_pria') }}" required>
                                     @error('tempat_lahir_pria')
@@ -150,7 +150,7 @@
                             <div class="col-sm-6">
                                 <label for="ttl_pria" class="form-label">Tanggal Lahir</label>
                                 @if ($umat->jenis_kelamin == 'Pria')
-                                    <input readonly type="date" class="form-control @error ('ttl_pria')is-invalid @enderror pseudo-disabled" id="ttl_pria" name="ttl_pria" value="{{ $umat->ttl }}">
+                                    <input readonly type="date" class="form-control @error ('ttl_pria')is-invalid @enderror pseudo-disabled" id="ttl_pria" name="ttl_pria" value="{{ $umat->ttl }}" required>
                                 @else
                                     <input type="date" class="form-control @error ('ttl_pria')is-invalid @enderror" id="ttl_pria" name="ttl_pria" value="{{ old('ttl_pria') }}" required>
                                     @error('ttl_pria')
@@ -159,38 +159,40 @@
                                 @endif
                             </div>
 
-                            <div class="col-sm-6">
-                                @if (($umat->jenis_kelamin == 'Pria') && !empty($umat->akte_file))
-                                    {{-- jika umat adalah pria yang sudah mengupload akte: tampilkan badge sudah upload dan masukkan ke hidden input --}}
-                                    <label for="akte_pria" class="form-label">Akte Kelahiran</label>
+                            @if (($umat->jenis_kelamin == 'Pria') && !empty($umat->akte_file))
+                                {{-- jika umat adalah pria yang sudah mengupload akte: tampilkan badge sudah upload dan masukkan ke hidden input --}}
+                                <div class="col-sm-6">
+                                    <label for="akte_pria" class="form-label">Akte Kelahiran V0</label>
                                     <div class="mb-2">
                                         <span class="p-2 px-3 py-2 badge bg-success fs-6">
                                             ✔ Sudah Diupload
                                         </span>
                                     </div>
-                                    <input type="hidden" class="form-control @error('akte_pria') is-invalid @enderror" id="akte_pria" name="akte_pria" value="{{ $umat->akte_file }}">
+                                    <input type="hidden" class="form-control @error('akte_pria') is-invalid @enderror" id="akte_pria" name="akte_path_pria" value="{{ $umat->akte_file }}" required>
                                     @error('akte_pria')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                @else
-                                    {{-- jika umat bukan pria atau belum upload berkas: minta akte kelahiran --}}
-                                    <label for="akte_pria_manual" class="form-label">Akte Kelahiran</label>
-                                    <input type="file" class="form-control @error('akte_pria') is-invalid @enderror" id="akte_pria_manual" name="akte_pria">
+                                </div>
+                            @else
+                                {{-- jika umat bukan pria atau belum upload berkas: minta akte kelahiran --}}
+                                <div class="col-sm-6">
+                                    <label for="akte_pria_manual" id="wrapper_akte_pria_manual" class="form-label">Akte Kelahiran V1</label>
+                                    <input type="file" class="form-control @error('akte_pria') is-invalid @enderror" id="akte_pria_manual" name="akte_pria" required>
                                     @error('akte_pria')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                @endif
-                            </div>
+                                </div>
+                            @endif
 
                             {{-- tampil kalau umat jalur cari email --}}
                             <div class="col-sm-6" id="wrapper_akte_pria_otomatis" style="display: none">
-                                <div class="form-label">Akte Kelahiran</div>
+                                <div class="form-label">Akte Kelahiran V2</div>
                                 <div class="mb-2">
                                     <span class="p-2 px-3 py-2 badge bg-success fs-6">
                                         ✔ Sudah Diupload
                                     </span>
                                 </div>
-                                <input type="hidden" class="form-control @error('akte_pria') is-invalid @enderror" id="akte_pria_otomatis" name="akte_pria" value="{{ $umat->akte_file }}" disabled>
+                                <input type="hidden" class="form-control @error('akte_pria') is-invalid @enderror" id="akte_pria_otomatis" name="akte_path_pria" value="{{ $umat->akte_file }}" disabled required>
                                 @error('akte_pria')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -271,7 +273,7 @@
                             <div class="col-sm-6">
                                 <label for="nama_lengkap_wanita" class="form-label">Nama Lengkap</label>
                                 @if ($umat->jenis_kelamin == 'Wanita')
-                                    <input readonly type="text" class="form-control @error ('nama_lengkap_wanita')is-invalid @enderror pseudo-disabled" id="nama_lengkap_wanita" name="nama_lengkap_wanita" value="{{ $umat->nama_lengkap }}">
+                                    <input readonly type="text" class="form-control @error ('nama_lengkap_wanita')is-invalid @enderror pseudo-disabled" id="nama_lengkap_wanita" name="nama_lengkap_wanita" value="{{ $umat->nama_lengkap }}" required>
                                 @else
                                     <input type="text" class="form-control @error ('nama_lengkap_wanita')is-invalid @enderror" id="nama_lengkap_wanita" name="nama_lengkap_wanita" value="{{ old('nama_lengkap_wanita') }}">
                                     @error('nama_lengkap_wanita')
@@ -283,12 +285,12 @@
                             <div class="col-sm-6">
                                 <label for="email_wanita" class="form-label">Email</label>
                                 @if ($umat->jenis_kelamin == 'Wanita')
-                                    <input readonly type="text" class="form-control @error ('email_wanita')is-invalid @enderror" id="email_wanita" name="email_wanita" value="{{ $umat->email }}">
+                                    <input readonly type="text" class="form-control @error ('email_wanita')is-invalid @enderror" id="email_wanita" name="email_wanita" value="{{ $umat->email }}" required>
                                     @error('email_wanita')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 @else
-                                    <input type="text" class="form-control @error ('email_wanita')is-invalid @enderror" id="email_wanita" name="email_wanita" value="{{ old('email_wanita') }}">
+                                    <input type="text" class="form-control @error ('email_wanita')is-invalid @enderror" id="email_wanita" name="email_wanita" value="{{ old('email_wanita') }}" required>
                                     @error('email_wanita')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -298,7 +300,7 @@
                             <div class="col-sm-6">
                                 <label for="alamat_wanita" class="form-label">Alamat</label>
                                 @if ($umat->jenis_kelamin == 'Wanita')
-                                    <input readonly type="text" class="form-control @error ('alamat_wanita')is-invalid @enderror pseudo-disabled" id="alamat_wanita" name="alamat_wanita" value="{{ $umat->alamat }}">
+                                    <input readonly type="text" class="form-control @error ('alamat_wanita')is-invalid @enderror pseudo-disabled" id="alamat_wanita" name="alamat_wanita" value="{{ $umat->alamat }}" required>
                                 @else
                                     <input type="text" class="form-control @error ('alamat_wanita')is-invalid @enderror" id="alamat_wanita" name="alamat_wanita" value="{{ old('alamat_wanita') }}" required>
                                     @error('alamat_wanita')
@@ -310,7 +312,7 @@
                             <div class="col-sm-6">
                                 <label for="tempat_lahir_wanita" class="form-label">Tempat Lahir</label>
                                 @if ($umat->jenis_kelamin == 'Wanita')
-                                    <input readonly type="text" class="form-control @error ('tempat_lahir_wanita')is-invalid @enderror pseudo-disabled" id="tempat_lahir_wanita" name="tempat_lahir_wanita" value="{{ $umat->tempat_lahir }}">
+                                    <input readonly type="text" class="form-control @error ('tempat_lahir_wanita')is-invalid @enderror pseudo-disabled" id="tempat_lahir_wanita" name="tempat_lahir_wanita" value="{{ $umat->tempat_lahir }}" required>
                                 @else
                                     <input type="text" class="form-control @error ('tempat_lahir_wanita')is-invalid @enderror" id="tempat_lahir_wanita" name="tempat_lahir_wanita" value="{{ old('tempat_lahir_wanita') }}" required>
                                     @error('tempat_lahir_wanita')
@@ -322,7 +324,7 @@
                             <div class="col-sm-6">
                                 <label for="ttl_wanita" class="form-label">Tanggal Lahir</label>
                                 @if ($umat->jenis_kelamin == 'Wanita')
-                                    <input readonly type="date" class="form-control @error ('ttl_wanita')is-invalid @enderror pseudo-disabled" id="ttl_wanita" name="ttl_wanita" value="{{ $umat->ttl }}">
+                                    <input readonly type="date" class="form-control @error ('ttl_wanita')is-invalid @enderror pseudo-disabled" id="ttl_wanita" name="ttl_wanita" value="{{ $umat->ttl }}" required>
                                 @else
                                     <input type="date" class="form-control @error ('ttl_wanita')is-invalid @enderror" id="ttl_wanita" name="ttl_wanita" value="{{ old('ttl_wanita') }}" required>
                                     @error('ttl_wanita')
@@ -331,38 +333,40 @@
                                 @endif
                             </div>
 
-                            <div class="col-sm-6">
-                                @if (($umat->jenis_kelamin == 'Wanita') && !empty($umat->akte_file))
-                                    {{-- jika umat adalah wanita yang sudah mengupload akte: tampilkan badge sudah upload dan masukkan ke hidden input --}}
-                                    <label class="form-label">Akte Kelahiran</label>
+                            @if (($umat->jenis_kelamin == 'Wanita') && !empty($umat->akte_file))
+                                {{-- jika umat adalah wanita yang sudah mengupload akte: tampilkan badge sudah upload dan masukkan ke hidden input --}}
+                                <div class="col-sm-6">
+                                    <label for="akte_wanita" class="form-label">Akte Kelahiran V0</label>
                                     <div class="mb-2">
                                         <span class="p-2 px-3 py-2 badge bg-success fs-6">
                                             ✔ Sudah Diupload
                                         </span>
                                     </div>
-                                    <input type="hidden" class="form-control @error('akte_wanita') is-invalid @enderror" id="akte_wanita" name="akte_wanita" value="{{ $umat->akte_file }}">
+                                    <input type="hidden" class="form-control @error('akte_wanita') is-invalid @enderror" id="akte_wanita" name="akte_path_wanita" value="{{ $umat->akte_file }}" required>
                                     @error('akte_wanita')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                @else
-                                    {{-- jika umat bukan wanita atau belum upload berkas: minta akte kelahiran --}}
-                                    <label for="akte_wanita_manual" class="form-label">Akte Kelahiran</label>
-                                    <input type="file" class="form-control @error('akte_wanita') is-invalid @enderror" id="akte_wanita_manual" name="akte_wanita">
+                                </div>
+                            @else
+                                {{-- jika umat bukan wanita atau belum upload berkas: minta akte kelahiran --}}
+                                <div class="col-sm-6">
+                                    <label for="akte_wanita_manual" id="wrapper_akte_wanita_manual" class="form-label">Akte Kelahiran V1</label>
+                                    <input type="file" class="form-control @error('akte_wanita') is-invalid @enderror" id="akte_wanita_manual" name="akte_wanita" required>
                                     @error('akte_wanita')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                @endif
-                            </div>
+                                </div>
+                            @endif
 
                             {{-- tampil kalau umat jalur cari email --}}
                             <div class="col-sm-6" id="wrapper_akte_wanita_otomatis" style="display: none">
-                                <div class="form-label">Akte Kelahiran</div>
+                                <div class="form-label">Akte Kelahiran V2</div>
                                 <div class="mb-2">
                                     <span class="p-2 px-3 py-2 badge bg-success fs-6">
                                         ✔ Sudah Diupload
                                     </span>
                                 </div>
-                                <input type="hidden" class="form-control @error('akte_wanita') is-invalid @enderror" id="akte_wanita_otomatis" name="akte_wanita" value="{{ $umat->akte_file }}" disabled>
+                                <input type="hidden" class="form-control @error('akte_wanita') is-invalid @enderror" id="akte_wanita_otomatis" name="akte_path_wanita" value="{{ $umat->akte_file }}" disabled required>
                                 @error('akte_wanita')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -419,6 +423,11 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="mt-5 button-group text-end">
+                            <a href="{{ route('pernikahan') }}" class="btn btn-dark">Kembali</a>
+                            <button class="btn btn-dark" type="submit">Daftar</button>
                         </div>
                     </form>
                 </div>
@@ -477,6 +486,9 @@
         $(document).ready(function(){
             $('#tombol_cari_email_pria').on('click', function(){
                 var email = document.getElementById('cari_email_pria').value; //masukan nilai dari input berdasarkan id
+                // verifikasi token
+                const pathSegments = window.location.pathname.split('/');
+                const token = pathSegments[pathSegments.length - 1];
 
                 // Validasi dulu
                 if (email === '') {
@@ -490,12 +502,12 @@
 
                 // INGAT BUAT PENCEGAHAN EMAIL SESAMA JNIS
 
-                // cari email
+                // cari email pria
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: "{{ url('api/cek_email_pernikahan') }}",
+                    url: "{{ url('api/cek_email_pernikahan_pria') }}",
                     type: "POST",
-                    data: { email: email },
+                    data: { email: email, token: token },
                     dataType: 'json',
                     success: function(result) {
                         const $modal = $('#pemberitahuanModalOutside');
@@ -509,6 +521,9 @@
 
                         const $akteOtomatisPria = $('#akte_pria_otomatis');
                         const $akteOtomatisPriaWrapper = $('#wrapper_akte_pria_otomatis');
+
+                        const $akteManualPria = $('#akte_pria_manual');
+                        const $akteManualPriaWrapper = $('#wrapper_akte_pria_manual');
 
                         const fields = {
                             'nama_lengkap_pria': result.nama_lengkap,
@@ -557,22 +572,24 @@
                             $lingkunganOtomatisPria.prop('disabled', false);
                             $lingkunganOtomatisPria.val(result.lingkungan);
 
-                            // matikan akte manual
-                            $('#akte_pria_manual').prop('disabled', true).closest('.col-sm-6').hide();
-
-                            if(result.akte_file && result.akte_file !== ''){
+                             if(result.akte_file && result.akte_file !== ''){
                                 // jika umat sudah upload akte
                                 $akteOtomatisPriaWrapper.show();
                                 $akteOtomatisPria.prop('disabled', false);
                                 $akteOtomatisPria.val(result.akte_file);
 
-                                $('#akte_pria_manual').prop('disabled', true).closest('.col-sm-6').hide(); // just in case hehe
+                                $akteManualPriaWrapper.hide();
+                                $akteManualPria.val('');
+                                $akteManualPria.prop('disabled', true);
                             } else {
                                 // jika umat belum upload akte
-                                $('#akte_pria_manual').prop('disabled', false).closest('.col-sm-6').show();
+                                $akteManualPriaWrapper.show();
+                                $akteManualPria.prop('disabled', false);
+                                $akteManualPria.val(result.akte_file);
+
                                 $akteOtomatisPriaWrapper.hide();
-                                $akteOtomatisPria.prop('disabled', true);
                                 $akteOtomatisPria.val('');
+                                $akteOtomatisPria.prop('disabled', true);
                             }
 
 
@@ -582,6 +599,127 @@
                             // matikan lingkungan manual kalau menyala
                             $lingkunganTextPriaWrapper.hide();
                             $lingkunganManualPria.prop('disabled', true);
+
+                            $message.text('Data berhasil ditemukan dan telah diisikan otomatis.');
+                        }
+
+                        // an attempt to make modal aria safe wkwk
+                        $modal.attr('aria-hidden', 'false');
+                        if (!$modal.hasClass('show')) {
+                            $modal.modal('show');
+                        }
+                    }
+                });
+            });
+
+            $('#tombol_cari_email_wanita').on('click', function(){
+                var email = document.getElementById('cari_email_wanita').value; //masukan nilai dari input berdasarkan id
+                // verifikasi token
+                const pathSegments = window.location.pathname.split('/');
+                const token = pathSegments[pathSegments.length - 1];
+
+                // Validasi dulu
+                if (email === '') {
+                    statusAlert.style.display = 'block';
+                    statusMessage.textContent = 'email tidak boleh kosong.';
+                    statusMessage.classList.remove('text-success', 'text-primary');
+                    statusMessage.classList.add('text-danger');
+                    pendaftaranButton.style.display = 'none';
+                    return;
+                }
+
+                // cari email wanita
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: "{{ url('api/cek_email_pernikahan_wanita') }}",
+                    type: "POST",
+                    data: { email: email, token: token },
+                    dataType: 'json',
+                    success: function(result) {
+                        const $modal = $('#pemberitahuanModalOutside');
+                        const $message = $('#modalMessage');
+
+                        const $lingkunganOtomatiswanita = $('#lingkungan_wanita_otomatis');
+                        const $lingkunganOtomatiswanitaWrapper = $('#wrapper_lingkungan_wanita_otomatis');
+
+                        const $lingkunganTextwanitaWrapper = $('#wrapper_lingkungan_wanita_manual');
+                        const $lingkunganManualwanita = $('#lingkungan_wanita_manual');
+
+                        const $akteOtomatiswanita = $('#akte_wanita_otomatis');
+                        const $akteOtomatiswanitaWrapper = $('#wrapper_akte_wanita_otomatis');
+
+                        const fields = {
+                            'nama_lengkap_wanita': result.nama_lengkap,
+                            'email_wanita': result.email,
+                            'alamat_wanita': result.alamat,
+                            'tempat_lahir_wanita': result.tempat_lahir,
+                            'ttl_wanita': result.ttl,
+                            'lingkungan_wanita': result.lingkungan,
+                            'akte_wanita': result.akte_file,
+                        };
+
+                        if (result.status === 'not_found') {
+                            // nyalakan agama
+                            $('#agama_wanita').prop('disabled', false).closest('.col-sm-6').show();
+                            $('#agama_wanita').val("");
+                            // nyalakan akte manual
+                            $('#akte_wanita_manual').prop('disabled', false).closest('.col-sm-6').show();
+
+                            // matikan lingkungan dan akte otomatis
+                            $lingkunganOtomatiswanitaWrapper.hide();
+                            $lingkunganOtomatiswanita.prop('disabled', true);
+                            $akteOtomatiswanitaWrapper.hide();
+                            $akteOtomatiswanita.prop('disabled', true);
+
+                            for (const [id, value] of Object.entries(fields)) {
+                                const el = document.getElementById(id);
+                                if (el) {
+                                    el.value = '';
+                                    el.classList.remove('pseudo-disabled');
+                                }
+                            }
+
+                            $message.text('Email tidak ditemukan. Silakan melakukan pendaftaran umat.');
+                        } else {
+                            for (const [id, value] of Object.entries(fields)) {
+                                const el = document.getElementById(id);
+                                if (el) {
+                                    el.value = value || '';
+                                    console.log(el.value);
+                                    el.classList.add('pseudo-disabled');
+                                }
+                            }
+
+                            // masukkan nilai lingkungan dan akte krn sebelumnya disabled
+                            $lingkunganOtomatiswanitaWrapper.show();
+                            $lingkunganOtomatiswanita.prop('disabled', false);
+                            $lingkunganOtomatiswanita.val(result.lingkungan);
+
+                            // matikan akte manual
+                            $('#akte_wanita_manual').prop('disabled', true).closest('.col-sm-6').hide();
+
+                            if(result.akte_file && result.akte_file !== ''){
+                                // jika umat sudah upload akte
+                                $akteOtomatiswanitaWrapper.show();
+                                $akteOtomatiswanita.prop('disabled', false);
+                                $akteOtomatiswanita.val(result.akte_file);
+
+                                $('#akte_wanita_manual').prop('disabled', true).closest('.col-sm-6').hide(); // just in case hehe
+                            } else {
+                                // jika umat belum upload akte
+                                $('#akte_wanita_manual').prop('disabled', false).closest('.col-sm-6').show();
+                                $akteOtomatiswanitaWrapper.hide();
+                                $akteOtomatiswanita.prop('disabled', true);
+                                $akteOtomatiswanita.val('');
+                            }
+
+
+                            // matikan agama
+                            $('#agama_wanita').prop('disabled', true).closest('.col-sm-6').hide();
+
+                            // matikan lingkungan manual kalau menyala
+                            $lingkunganTextwanitaWrapper.hide();
+                            $lingkunganManualwanita.prop('disabled', true);
 
                             $message.text('Data berhasil ditemukan dan telah diisikan otomatis.');
                         }

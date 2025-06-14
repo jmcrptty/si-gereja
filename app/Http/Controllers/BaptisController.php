@@ -41,6 +41,7 @@ class BaptisController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request_valid = $request->validate([
             // Biodata Umat
             'nama_baptis' => ['required', 'string', 'max:100'],

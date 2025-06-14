@@ -47,7 +47,7 @@ class KrismaController extends Controller
      */
     public function store(Request $request)
     {
-         // buat variabel umat_id dan cek apakah umat sudah terdaftar
+        // buat variabel umat_id dan cek apakah umat sudah terdaftar
         $umat_id = Umat::where('email', $request->email)->value('id');
         if (!$umat_id) {
             return back()->withErrors(['email' => 'Email tidak ditemukan di database umat.'])->withInput();

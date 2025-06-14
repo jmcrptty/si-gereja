@@ -60,7 +60,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/pernikahan/send', [PendaftaranPernikahan_InvController::class, 'sendEmailPendaftaran'])->name('pernikahan.mail');
     Route::get('/pernikahan/formulir/{token}', [PernikahanController::class, 'create'])->name('pernikahan.create');
     Route::post('/pernikahan/formulir/', [PernikahanController::class, 'store'])->name('pernikahan.store');
-    Route::post('api/cek_email_pernikahan', [ApiController::class, 'get_email_pernikahan'])->middleware('throttle:10,1'); // batasi pencarian hanya 10 NIK/Menit untuk setiap IP
+    Route::post('api/cek_email_pernikahan_pria', [ApiController::class, 'get_email_pernikahan_pria'])->middleware('throttle:10,1'); // batasi pencarian hanya 10 NIK/Menit untuk setiap IP
+    Route::post('api/cek_email_pernikahan_wanita', [ApiController::class, 'get_email_pernikahan_wanita'])->middleware('throttle:10,1');
 
     // 5. Pendaftaran Umat
     Route::get('/pendaftaran-umat', [PendaftaranUmat_InvController::class, 'index'])->name('pendaftaran-umat');
