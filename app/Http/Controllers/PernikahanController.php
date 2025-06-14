@@ -40,9 +40,8 @@ class PernikahanController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $request_valid = $request->validate([
-            'email_umat_pria' => ['email:rfc,dns', 'max:50',],
-            'email_umat_wanita' => ['email:rfc,dns', 'max:50',],
+        $request->validate([
+            'email_default_pendaftar' => ['email:rfc,dns', 'max:50',],
             'jenis_kelamin_umat' => ['required', 'in:Pria,Wanita'],
             'email_pria' => ['required', 'email:rfc,dns', 'max:50'],
             'email_wanita' => ['required', 'email:rfc,dns', 'max:50'],
@@ -58,16 +57,11 @@ class PernikahanController extends Controller
         ]);
 
         // ambil id umat (id ini bakal dipakai di mana-mana)
-        if($request->jenis_kelamin_umat == 'Pria'){
-            $umat_id = Umat::where('email', $request->email_umat_pria)->value('id');
-        } else {
-            $umat_id = Umat::where('email', $request->email_umat_wanita)->value('id');
-        }
+        $umat_id = Umat::where('email', $request->email_default_pendaftar)->value('id');
+
         if (!$umat_id) {
             return back()->withErrors(['email' => 'Email tidak ditemukan di database umat.'])->withInput();
         }
-        // tambahkan gender yang daftar pertama
-        $gender_umat_main = $request->jenis_kelamin_umat;
 
         // cek apakah sudah daftar
         $sudah_daftar = Pernikahan::where('umat_id', $umat_id)->first();
@@ -81,25 +75,30 @@ class PernikahanController extends Controller
             return redirect('pernikahan')->with('Pemberitahuan', 'Terjadi Kesalahan, mohon coba lagi');
         }
 
-        // jika yang daftar deluan adalah pria
-        // apakah wanita tersebut adalah umat?
-
+        // periksa apakah masing-masing adalah umat
         $pria_adalah_umat = Umat::where('email', $request->email_pria)->value('id');
         $wanita_adalah_umat = Umat::where('email', $request->email_wanita)->value('id');
 
         // VALIDASI PRIA STARTS HERE
         if($pria_adalah_umat){
             // PRIA MERUPAKAN UMAT GEREJA
-            $request_valid = $request->validate([
+            $request_valid_pria = $request->validate([
                 // Calon pria
+                'email_pria' => ['required', 'email:rfc,dns', 'max:50'],
                 'nama_lengkap_pria' => ['required', 'string', 'max:100'],
                 'alamat_pria' => ['required', 'string', 'max:100'],
                 'tempat_lahir_pria' => ['required', 'string', 'max:100'],
+                'akte_pria' => ['required_without:akte_path_pria', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
+                'akte_path_pria' => ['required_without:akte_pria', 'string'],
                 'ttl_pria' => ['required', 'date'],
                 'lingkungan_pria' => ['required'],
             ],
             [
                 // Calon pria
+                'email_pria.required' => 'Email calon pria wajib diisi.',
+                'email_pria.email' => 'Email calon pria tidak valid.',
+                'email_pria.max' => 'Email calon pria tidak boleh lebih dari 50 karakter.',
+
                 'nama_lengkap_pria.required' => 'Nama lengkap calon pria wajib diisi.',
                 'nama_lengkap_pria.string' => 'Nama lengkap calon pria harus berupa teks.',
                 'nama_lengkap_pria.max' => 'Nama lengkap calon pria tidak boleh lebih dari 100 karakter.',
@@ -123,14 +122,39 @@ class PernikahanController extends Controller
                 'lingkungan_pria.required' => 'Lingkungan calon pria wajib diisi.',
             ]);
 
-            $request_valid['umat_id_pria'] = $pria_adalah_umat;
-            $request_valid['agama_pria'] = 'Katolik';
+            // pria yang merupakan umat mengupload manual -> sudah pasti lewat akte_pria yang berupa file
+            $fileAktepria = null;
+
+            if($request->hasFile('akte_pria')){
+                // UPLOAD MANUAL -> LANGSUNG SIMPAN
+                $fileAktepria = $request->file('akte_pria')->store('pernikahans/akte', 'local');
+
+                // up path ke db
+                $request_valid_pria['akte_file_pria'] = $fileAktepria;
+            }
+            elseif ($request->filled('akte_path_pria')){
+                // UPLOAD OTOMATIS -> COPY FILE -> SIMPAN
+                $path_lama_akte_pria = $request->input('akte_path_pria'); // ambil path dari data umat
+
+                if (Storage::disk('local')->exists($path_lama_akte_pria)) {
+                    $nama_file = basename($path_lama_akte_pria);
+                    $path_baru_akte_pria = 'pernikahans/akte/' . uniqid() . '_' . $nama_file;
+                    Storage::disk('local')->copy($path_lama_akte_pria, $path_baru_akte_pria);
+                    $fileAktepria = $path_baru_akte_pria;
+
+                    // up path ke db
+                    $request_valid_pria['akte_file_pria'] = $fileAktepria;
+                }
+            }
+
+            $request_valid_pria['umat_id_pria'] = $pria_adalah_umat;
+            $request_valid_pria['agama_pria'] = 'Katolik';
         }
         else {
-            dd('boooo priaa');
             // PRIA BUKAN UMAT GEREJA
-            $request_valid = $request->validate([
+            $request_valid_pria = $request->validate([
                 // Calon pria
+                'email_pria' => ['required', 'email:rfc,dns', 'max:50'],
                 'nama_lengkap_pria' => ['required', 'string', 'max:100'],
                 'alamat_pria' => ['required', 'string', 'max:100'],
                 'tempat_lahir_pria' => ['required', 'string', 'max:100'],
@@ -141,6 +165,10 @@ class PernikahanController extends Controller
             ],
             [
                 // Calon pria
+                'email_pria.required' => 'Email calon pria wajib diisi.',
+                'email_pria.email' => 'Email calon pria tidak valid.',
+                'email_pria.max' => 'Email calon pria tidak boleh lebih dari 50 karakter.',
+
                 'nama_lengkap_pria.required' => 'Nama lengkap calon pria wajib diisi.',
                 'nama_lengkap_pria.string' => 'Nama lengkap calon pria harus berupa teks.',
                 'nama_lengkap_pria.max' => 'Nama lengkap calon pria tidak boleh lebih dari 100 karakter.',
@@ -164,13 +192,25 @@ class PernikahanController extends Controller
                 'agama_pria.required' => 'Agama calon pria wajib dipilih.',
                 'lingkungan_pria.required_if' => 'Lingkungan calon pria wajib diisi.',
             ]);
+
+            if($request->input('lingkungan_pria') == null){
+                $request_valid_pria['lingkungan_pria'] = null;
+            }
+
+            // pria yang bukan umat sudah pasti upload manual
+            $fileAktepria = null;
+            $fileAktepria = $request->file('akte_pria')->store('pernikahans/akte', 'local');
+
+            $request_valid_pria['umat_id_pria'] = $pria_adalah_umat;
+            $request_valid_pria['akte_file_pria'] = $fileAktepria;
         }
 
         // VALIDASI WANITA STARTS HERE
         if($wanita_adalah_umat){
             // WANITA MERUPAKAN UMAT GEREJA
-            $request_valid = $request->validate([
+            $request_valid_wanita = $request->validate([
                 // Calon Wanita
+                'email_wanita' => ['required', 'email:rfc,dns', 'max:50'],
                 'nama_lengkap_wanita' => ['required', 'string', 'max:100'],
                 'alamat_wanita' => ['required', 'string', 'max:100'],
                 'tempat_lahir_wanita' => ['required', 'string', 'max:100'],
@@ -181,6 +221,10 @@ class PernikahanController extends Controller
             ],
             [
                 // Calon Wanita
+                'email_wanita.required' => 'Email calon wanita wajib diisi.',
+                'email_wanita.email' => 'Email calon wanita tidak valid.',
+                'email_wanita.max' => 'Email calon wanita tidak boleh lebih dari 50 karakter.',
+
                 'nama_lengkap_wanita.required' => 'Nama lengkap calon wanita wajib diisi.',
                 'nama_lengkap_wanita.string' => 'Nama lengkap calon wanita harus berupa teks.',
                 'nama_lengkap_wanita.max' => 'Nama lengkap calon wanita tidak boleh lebih dari 100 karakter.',
@@ -204,18 +248,18 @@ class PernikahanController extends Controller
                 'lingkungan_wanita.required' => 'Lingkungan calon wanita wajib diisi.',
             ]);
 
-            dd('eeee lulus nich');
-
             // wanita yang merupakan umat mengupload manual -> sudah pasti lewat akte_wanita yang berupa file
             $fileAkteWanita = null;
 
             if($request->hasFile('akte_wanita')){
+                // UPLOAD MANUAL -> LANGSUNG SIMPAN
                 $fileAkteWanita = $request->file('akte_wanita')->store('pernikahans/akte', 'local');
 
                 // up path ke db
-                $request_valid['akte_wanita'] = $fileAkteWanita;
+                $request_valid_wanita['akte_file_wanita'] = $fileAkteWanita;
             }
             elseif ($request->filled('akte_path_wanita')){
+                // UPLOAD OTOMATIS -> COPY FILE
                 $path_lama_akte_wanita = $request->input('akte_path_wanita'); // ambil path dari data umat
 
                 if (Storage::disk('local')->exists($path_lama_akte_wanita)) {
@@ -225,17 +269,18 @@ class PernikahanController extends Controller
                     $fileAkteWanita = $path_baru_akte_wanita;
 
                     // up path ke db
-                    $request_valid['akte_wanita'] = $fileAkteWanita;
+                    $request_valid_wanita['akte_file_wanita'] = $fileAkteWanita;
                 }
             }
 
-            $request_valid['umat_id_wanita'] = $wanita_adalah_umat;
-            $request_valid['agama_wanita'] = 'Katolik';
+            $request_valid_wanita['umat_id_wanita'] = $wanita_adalah_umat;
+            $request_valid_wanita['agama_wanita'] = 'Katolik';
         }
         else {
             // WANITA BUKAN UMAT GEREJA
-            $request_valid = $request->validate([
+            $request_valid_wanita = $request->validate([
                 // Calon Wanita
+                'email_wanita' => ['required', 'email:rfc,dns', 'max:50'],
                 'nama_lengkap_wanita' => ['required', 'string', 'max:100'],
                 'alamat_wanita' => ['required', 'string', 'max:100'],
                 'tempat_lahir_wanita' => ['required', 'string', 'max:100'],
@@ -246,6 +291,10 @@ class PernikahanController extends Controller
             ],
             [
                 // Calon Wanita
+                'email_wanita.required' => 'Email calon wanita wajib diisi.',
+                'email_wanita.email' => 'Email calon wanita tidak valid.',
+                'email_wanita.max' => 'Email calon wanita tidak boleh lebih dari 50 karakter.',
+
                 'nama_lengkap_wanita.required' => 'Nama lengkap calon wanita wajib diisi.',
                 'nama_lengkap_wanita.string' => 'Nama lengkap calon wanita harus berupa teks.',
                 'nama_lengkap_wanita.max' => 'Nama lengkap calon wanita tidak boleh lebih dari 100 karakter.',
@@ -269,10 +318,56 @@ class PernikahanController extends Controller
                 'agama_wanita.required' => 'Agama calon wanita wajib dipilih.',
                 'lingkungan_wanita.required_if' => 'Lingkungan calon wanita wajib diisi.',
             ]);
+
+            if($request->input('lingkungan_wanita') == null){
+                $request_valid_wanita['lingkungan_wanita'] = null;
+            }
+
+            $fileAkteWanita = null;
+            $fileAkteWanita = $request->file('akte_wanita')->store('pernikahans/akte', 'local');
+
+            $request_valid_wanita['umat_id_wanita'] = $wanita_adalah_umat;
+            $request_valid_wanita['akte_file_wanita'] = $fileAkteWanita;
+
         }
 
         // this is where the validation ends!
 
+        // buat token expire
+        // $invitation->update(['aktif'=> false]);
+
+        // SIMPAN KE DATABASE
+        $request_valid = array_merge($request_valid_pria, $request_valid_wanita);
+
+        // dd($request_valid['akte_file_wanita'], $request_valid['akte_file_pria']);
+        // dd($request->hasFile('akte_pria'), $request->file('akte_pria'));
+
+        Pernikahan::create([
+            'umat_id_pria' => $request_valid['umat_id_pria'],
+            'umat_id_wanita' => $request_valid['umat_id_wanita'],
+
+            'email_pria' => $request_valid['email_pria'],
+            'nama_lengkap_pria' => $request_valid['nama_lengkap_pria'],
+            'alamat_pria' => $request_valid['alamat_pria'],
+            'tempat_lahir_pria' => $request_valid['tempat_lahir_pria'],
+            'ttl_pria' => $request_valid['ttl_pria'],
+            'akte_file_pria' => $request_valid['akte_file_pria'],
+            'agama_pria' => $request_valid['agama_pria'],
+            'lingkungan_pria' => $request_valid['lingkungan_pria'],
+
+            'email_wanita' => $request_valid['email_wanita'],
+            'nama_lengkap_wanita' => $request_valid['nama_lengkap_wanita'],
+            'alamat_wanita' => $request_valid['alamat_wanita'],
+            'tempat_lahir_wanita' => $request_valid['tempat_lahir_wanita'],
+            'ttl_wanita' => $request_valid['ttl_wanita'],
+            'akte_file_wanita' => $request_valid['akte_file_wanita'],
+            'agama_wanita' => $request_valid['agama_wanita'],
+            'lingkungan_wanita' => $request_valid['lingkungan_wanita'],
+
+            'tanggal_daftar' => now()
+        ]);
+
+        return redirect()->route('pernikahan')->with('success', 'Anda berhasil mendaftar! Tunggu informasi lebih lanjut di email anda');
     }
 
     /**

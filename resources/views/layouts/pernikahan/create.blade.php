@@ -62,14 +62,8 @@
 
                         {{-- email umat yang mendaftar --}}
                         <input type="hidden" name="token" value="{{ request()->segment(3) }}">
-                        @if ($umat->jenis_kelamin == 'Pria')
-                            {{-- email default pria --}}
-                            <input type="hidden" name="email_umat_pria" value="{{ $umat->email }}">
-                        @else
-                            {{-- email default wanita --}}
-                            <input type="hidden" name="email_umat_wanita" value="{{ $umat->email }}">
-                        @endif
-
+                        {{-- email default --}}
+                        <input type="hidden" name="email_default_pendaftar" value="{{ $umat->email }}">
                         {{-- jenis kelamin umat yang mendaftar --}}
                         <input type="hidden" name="jenis_kelamin_umat" value="{{ $umat->jenis_kelamin }}">
 
