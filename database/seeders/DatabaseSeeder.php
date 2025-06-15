@@ -289,6 +289,22 @@ class DatabaseSeeder extends Seeder
                 'akte_file' => null,
                 'status_pendaftaran' => 'Pending',
             ],
+            // [
+            //     'nama_lengkap' => 'Learning',
+            //     'nik' => '0909090909',
+            //     'jenis_kelamin' => 'Pria',
+            //     'nama_ayah' => 'Ton',
+            //     'nama_ibu' => 'Nad',
+            //     'tempat_lahir' => 'Amerauke Serikat',
+            //     'ttl' => '1993-03-03',
+            //     'alamat' => 'Jl. Jenius',
+            //     'no_hp' => '099911112222',
+            //     'email' => 'lolny9090@gmail.com',
+            //     'lingkungan' => 'st.maria',
+            //     'kk_file' => null,
+            //     'akte_file' => null,
+            //     'status_pendaftaran' => 'Diterima',
+            // ],
         ];
 
         foreach ($umats as $umat) {

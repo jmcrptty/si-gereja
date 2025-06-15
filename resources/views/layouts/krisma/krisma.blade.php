@@ -1,15 +1,15 @@
 @extends('layouts.layoutUmum')
 
 @section('judul-halaman')
-    Pendaftaran Sakramen Komuni
+    Pendaftaran Sakramen Krisma
 @endsection
 
 @section('gambar-hero')
-    <div class="d-block w-100 hero-slide" style="background-image: url('/img/komuni.png');"></div>
+    <div class="d-block w-100 hero-slide" style="background-image: url('/img/krisma1.png');"></div>
 @endsection
 
 @section('judul-hero')
-    <h1 class="mb-4 display-4">Persyaratan Komuni Pertama <br>Katedral Merauke</h1>
+    <h1 class="mb-4 display-4">Persyaratan Krisma <br>Katedral Merauke</h1>
 @endsection
 
 @section('content')
@@ -68,8 +68,9 @@
     @endif
 
     <div class="container">
+
         <div class="container">
-            <h3 class="mb-4 text-center">Syarat Penerimaan Sakramen Komuni Pertama</h3>
+            <h3 class="mb-4 text-center">Syarat Penerimaan Sakramen Krisma</h3>
 
             <div class="row justify-content-center">
                 <div class="col-md-10">
@@ -113,14 +114,14 @@
 
             <br>
 
-            {{-- Pendaftaran Komuni --}}
+            {{-- Pendaftaran Krisma --}}
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="shadow-sm card">
                         <div class="card-body">
                             <h4 class="text-center card-title">Daftar   </h4>
                             {{-- ini from nya --}}
-                            <form action="{{ route('komuni-pertama.mail') }}" method="POST">
+                            <form action="{{ route('krisma.mail') }}" method="POST">
                                 @csrf
                                 <div class="mb-4">
                                     <label for="email" class="form-label">Masukkan email anda untuk memulai pendaftaran</label>
@@ -136,6 +137,8 @@
             </div>
         </div>
     </div>
+
+
 
 @endsection
 

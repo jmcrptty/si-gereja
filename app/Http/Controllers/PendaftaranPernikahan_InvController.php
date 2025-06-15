@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Baptis;
 use App\Models\Umat;
 use GuzzleHttp\Client;
 use App\Models\Invitation;
+use App\Models\Krisma;
+use App\Models\Pernikahan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -14,7 +15,7 @@ use SendinBlue\Client\Model\SendSmtpEmail;
 use SendinBlue\Client\Api\TransactionalEmailsApi;
 
 
-class PendaftaranBaptis_InvController extends Controller
+class PendaftaranPernikahan_InvController extends Controller
 {
     public function sendEmailPendaftaran(Request $request) {
 
@@ -23,14 +24,14 @@ class PendaftaranBaptis_InvController extends Controller
 
         // cek apakah ada umat yang memiliki email tersebut
         $umat = Umat::where('email', $request->email)->first();
-        $sudahBaptis = Baptis::where('umat_id', $umat->id)->first();
+        $sudahMenikah = Pernikahan::where('umat_id', $umat->id)->first();
 
         if(!$umat){
             // jika umat belum terdaftar
             return back()->with('Pemberitahuan', 'Belum terdaftar sebagai umat, silahkan melakukan pendaftaran');
         }
 
-        if($sudahBaptis){
+        if($sudahMenikah){
             return back()->with('Pemberitahuan', 'Anda sudah terdaftar');
         }
 
@@ -51,7 +52,7 @@ class PendaftaranBaptis_InvController extends Controller
             ]);
 
             // 4. susun menjadi link
-            $link = url('baptis/formulir/' . $token); // kalau ubah ini plis ingat untuk ubah routenya di web.php (nama: baptis.create)
+            $link = url('pernikahan/formulir/' . $token); // kalau ubah ini plis ingat untuk ubah routenya di web.php (nama: pernikahan.create)
 
             // 5. buat email
             $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', env('BREVO_API_KEY'));
@@ -63,7 +64,7 @@ class PendaftaranBaptis_InvController extends Controller
                 'to' => [['email' => $request->email]],
                 'htmlContent' => "
                     <p>Salam damai,</p>
-                    <p>Panitia Pendaftaran Gereja Katedral Merauke dengan ini mengirimkan undangan resmi untuk melanjutkan proses <strong>pendaftaran Sakramen Baptis</strong>.</p>
+                    <p>Panitia Pendaftaran Gereja Katedral Merauke dengan ini mengirimkan undangan resmi untuk melanjutkan proses <strong>pendaftaran Sakramen Pernikahan</strong>.</p>
                     <p>Silakan klik tautan berikut untuk mengisi formulir pendaftaran:</p>
                     <p><a href=\"$link\" style=\"color: #1a73e8;\">$link</a></p>
                     <p>Mohon untuk tidak membagikan tautan ini kepada orang lain demi menjaga keamanan data pribadi Anda.</p>

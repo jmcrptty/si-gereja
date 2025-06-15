@@ -48,4 +48,8 @@ class Umat extends Model
                 ->withPivot(['tanggal_terima', 'tempat_terima', 'keterangan']);
     }
 
+
+    public function krisma(){
+        return $this->hasOne(Krisma::class);
+    }
 }

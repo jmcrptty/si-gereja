@@ -18,6 +18,10 @@ class Baptis extends Model
         'nama_wali_baptis_pria',
         'nama_wali_baptis_wanita',
         'nama_wali_baptis_wanita',
+        'gereja_tempat_baptis',
+
+        'tanggal_baptis',
+        'surat_baptis',
     ];
 
     public function umat(){

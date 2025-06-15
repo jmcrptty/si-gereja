@@ -338,6 +338,13 @@
       margin-top: 30px;
     }
 
+    .pseudo-disabled {
+        background-color: #e9ecef;
+        color: black;
+        opacity: 1;
+        pointer-events: none;
+    }
+
     @media (max-width: 992px) {
       .navbar {
         background-color: rgba(45, 55, 72, 0.98) !important;
