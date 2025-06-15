@@ -41,6 +41,13 @@ class Umat extends Model
     public function komuni(){
         return $this->hasOne(Komuni::class);
     }
+    
+     public function sakramenYangDiterima()
+    {
+    return $this->belongsToMany(Sakramen::class, 'penerimaan_sakramen', 'umat_id', 'sakramen_id')
+                ->withPivot(['tanggal_terima', 'tempat_terima', 'keterangan']);
+    }
+
 
     public function krisma(){
         return $this->hasOne(Krisma::class);

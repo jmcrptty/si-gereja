@@ -68,7 +68,7 @@
         <div class="mb-4 row">
         <div class="col-md-12">
             <p class="text-center">
-            Untuk memastikan status pendaftaran Anda, masukkan email di bawah ini. Sistem kami akan memeriksa apakah email Anda sudah terdaftar sebagai umat paroki atau belum.
+            Silahkan Masukan email anda agar mendapatkan email yang berisi link formulir pendaftaran umat.
             </p>
         </div>
         </div>
@@ -87,7 +87,7 @@
                                 <input type="text" class="form-control" id="email" name='email' placeholder="Masukkan email" required>
                             </div>
                             <div class="text-center">
-                                    <button type="submit" class="btn btn-dark">Cek Status</button>
+                                    <button type="submit" class="btn btn-dark">Kirim Formulir</button>
                             </div>
                         </form>
                     </div>

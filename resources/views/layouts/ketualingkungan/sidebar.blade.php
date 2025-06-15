@@ -27,20 +27,6 @@
                                     </a>
                                 </nav>
                             </div>
-
-                            <a class="nav-link collapsed {{ Request::is('lingkungan') ? 'active' : '' }}" href="{{ route('ketualingkungan.lingkungan.index') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-house-user"></i></div>
-                                Lingkungan
-                            </a>
-                    <div class="sb-sidenav-menu-heading">Addons</div>
-                    <a class="nav-link" href="charts.html">
-                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                        Charts
-                    </a>
-                    <a class="nav-link" href="tables.html">
-                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Tables
-                    </a>
                 </div>
             </div>
         </nav>

@@ -20,6 +20,7 @@ use App\Http\Controllers\KomuniController;
 use App\Http\Controllers\KrismaController;
 use App\Http\Controllers\PendaftaranPernikahan_InvController;
 use App\Http\Controllers\PernikahanController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\SekretarisController;
 
 Route::middleware('guest')->group(function () {
@@ -105,6 +106,12 @@ Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(fu
         return view('layouts.pendaftaransakramen');
     })->name('pendaftaransakramen');
 
+    // view tanggal pembukaan sakramen
+   Route::get('/pembukaan_pendaftaran', function () {
+        return view('layouts.pembukaan_pendaftaran');
+    })->name('sakramen.index');
+
+
     // forum umat
     Route::get('/forum', [ForumUmatController::class, 'sekretarisIndex'])->name('forum');
     Route::post('/forum/{id}/answer', [ForumUmatController::class, 'answer'])->name('forum.answer');
@@ -132,6 +139,21 @@ Route::middleware(['auth'])->prefix('ketualingkungan')->name('ketualingkungan.')
     Route::post('/umat/tolak/{umat}', [UmatController::class, 'tolak'])->name('umat.tolak');
     Route::get('/umat/file/{type}/{filename}', [UmatController::class, 'downloadFile'])->name('umat.downloadFile');
     Route::resource('/umat', UmatController::class);
+});
+
+// pastor paroki
+Route::middleware(['auth'])->prefix('pastorparoki')->name('pastorparoki.')->group(function () {
+    // Dashboard pastor
+    Route::get('/dashboard', function () {
+        return view('layouts.pastor.dashboard');
+    })->name('dashboard');
+
+    //laporan sakramen
+    Route::get('/laporan/sakramen', [LaporanController::class, 'sakramen'])->name('laporan.sakramen');
+
+    // Laporan Data Umat
+    Route::get('/laporan/umat', [LaporanController::class, 'umat'])->name('laporan.umat');
+    Route::get('/laporan/umat/export', [LaporanController::class, 'exportUmat'])->name('laporan.umat.export');
 });
 
 // lain
