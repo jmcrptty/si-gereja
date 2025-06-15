@@ -10,7 +10,7 @@
 
                     <div class="sb-sidenav-menu-heading">Menu</div>
 
-                    <a class="nav-link" href="{{ route('sekretaris.dataumat') }}">
+                    <a class="nav-link" href="{{ route('sekretaris.umat.index') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                         Data Umat
                     </a>

@@ -20,6 +20,7 @@ use App\Http\Controllers\KomuniController;
 use App\Http\Controllers\KrismaController;
 use App\Http\Controllers\PendaftaranPernikahan_InvController;
 use App\Http\Controllers\PernikahanController;
+use App\Http\Controllers\SekretarisController;
 
 Route::middleware('guest')->group(function () {
 
@@ -60,7 +61,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/pernikahan/send', [PendaftaranPernikahan_InvController::class, 'sendEmailPendaftaran'])->name('pernikahan.mail');
     Route::get('/pernikahan/formulir/{token}', [PernikahanController::class, 'create'])->name('pernikahan.create');
     Route::post('/pernikahan/formulir/', [PernikahanController::class, 'store'])->name('pernikahan.store');
-    Route::post('api/cek_email_pernikahan_pria', [ApiController::class, 'get_email_pernikahan_pria'])->middleware('throttle:10,1'); // batasi pencarian hanya 10 NIK/Menit untuk setiap IP
+    Route::post('api/cek_email_pernikahan_pria', [ApiController::class, 'get_email_pernikahan_pria'])->middleware('throttle:10,1'); // batasi pencarian hanya 10 email/Menit untuk setiap IP
     Route::post('api/cek_email_pernikahan_wanita', [ApiController::class, 'get_email_pernikahan_wanita'])->middleware('throttle:10,1');
 
     // 5. Pendaftaran Umat
@@ -68,11 +69,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/pendaftaran-umat/send', [PendaftaranUmat_InvController::class, 'sendStatusPendaftaranEmail'])->name('pendaftaran-umat.mail');
     Route::get('/pendaftaran-umat/formulir/{token}', [PendaftaranUmatController::class, 'create'])->name('pendaftaran-umat.create'); // kalau ubah ini, jangan lupa untuk ubah link di PendaftaranUmat_InvController
     Route::post('/pendaftaran-umat/formulir', [PendaftaranUmatController::class, 'store'])->name('pendaftaran-umat.store');
-    // Route::post('api/cek_nik', [ApiController::class, 'get_nik'])->middleware('throttle:10,1'); // batasi pencarian hanya 10 NIK/Menit untuk setiap IP
 
     //6.forum Umat
     Route::get('/forum', [ForumUmatController::class, 'umatIndex'])->name('forum.index');
-Route::post('/forum', [ForumUmatController::class, 'store'])->name('forum.store');
+    Route::post('/forum', [ForumUmatController::class, 'store'])->name('forum.store');
 
     Route::get('/tentang-paroki', function () {
         return view('layouts.tentangparoki');
@@ -92,13 +92,9 @@ Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'ind
 // sekretaris
 Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(function () {
 
-    Route::get('/dashboard', function () {
-    return view('layouts.sekretaris.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [SekretarisController::class, 'index'])->name('dashboard');
 
-    Route::get('/dataumat', function () {
-        return view('layouts.Dataumat_sekretaris');
-    })->name('dataumat');
+    Route::get('/umat', [SekretarisController::class, 'umat_index'])->name('umat.index');
 
     Route::get('/penerimaansakramen', function () {
         return view('layouts.penerimaansakramen');
@@ -110,9 +106,9 @@ Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(fu
     })->name('pendaftaransakramen');
 
     // forum umat
-     Route::get('/forum', [ForumUmatController::class, 'sekretarisIndex'])->name('forum');
-     Route::post('/forum/{id}/answer', [ForumUmatController::class, 'answer'])->name('forum.answer');
-     Route::delete('/forum/{id}', [ForumUmatController::class, 'destroy'])->name('forum.destroy');
+    Route::get('/forum', [ForumUmatController::class, 'sekretarisIndex'])->name('forum');
+    Route::post('/forum/{id}/answer', [ForumUmatController::class, 'answer'])->name('forum.answer');
+    Route::delete('/forum/{id}', [ForumUmatController::class, 'destroy'])->name('forum.destroy');
 
 
     // rute informasi misa
