@@ -17,10 +17,10 @@ use App\Http\Controllers\InformasiMisaController;
 use App\Http\Controllers\PendaftaranUmatController;
 use App\Http\Controllers\ForumUmatController;
 use App\Http\Controllers\KomuniController;
-use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\KrismaController;
 use App\Http\Controllers\PendaftaranPernikahan_InvController;
 use App\Http\Controllers\PernikahanController;
+use App\Http\Controllers\LaporanController;
 
 Route::middleware('guest')->group(function () {
 
@@ -109,6 +109,12 @@ Route::middleware(['auth'])->prefix('sekretaris')->name('sekretaris.')->group(fu
     Route::get('/pendaftaransakramen', function () {
         return view('layouts.pendaftaransakramen');
     })->name('pendaftaransakramen');
+
+    // view tanggal pembukaan sakramen
+   Route::get('/pembukaan_pendaftaran', function () {
+        return view('layouts.pembukaan_pendaftaran');
+    })->name('sakramen.index');
+
 
     // forum umat
      Route::get('/forum', [ForumUmatController::class, 'sekretarisIndex'])->name('forum');
