@@ -301,6 +301,7 @@ class DatabaseSeeder extends Seeder
             PengumumanSeeder::class,
             SakramenSeeder::class,
             SertifikatSakramenSeeder::class,
+            PenerimaanSakramenSeeder::class,
         ]);
     }
 }

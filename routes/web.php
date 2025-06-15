@@ -16,6 +16,7 @@ use App\Http\Controllers\InformasiMisaController;
 use App\Http\Controllers\PendaftaranUmatController;
 use App\Http\Controllers\ForumUmatController;
 use App\Http\Controllers\KomuniController;
+use App\Http\Controllers\LaporanController;
 
 Route::middleware('guest')->group(function () {
 
@@ -127,6 +128,21 @@ Route::middleware(['auth'])->prefix('ketualingkungan')->name('ketualingkungan.')
     Route::post('/umat/tolak/{umat}', [UmatController::class, 'tolak'])->name('umat.tolak');
     Route::get('/umat/file/{type}/{filename}', [UmatController::class, 'downloadFile'])->name('umat.downloadFile');
     Route::resource('/umat', UmatController::class);
+});
+
+// pastor paroki
+Route::middleware(['auth'])->prefix('pastorparoki')->name('pastorparoki.')->group(function () {
+    // Dashboard pastor
+    Route::get('/dashboard', function () {
+        return view('layouts.pastor.dashboard');
+    })->name('dashboard');
+
+    //laporan sakramen
+    Route::get('/laporan/sakramen', [LaporanController::class, 'sakramen'])->name('laporan.sakramen');
+
+    // Laporan Data Umat
+    Route::get('/laporan/umat', [LaporanController::class, 'umat'])->name('laporan.umat');
+    Route::get('/laporan/umat/export', [LaporanController::class, 'exportUmat'])->name('laporan.umat.export');
 });
 
 // lain

@@ -16,8 +16,8 @@
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="layout-static.html">Laporan Sakramen</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">Laporan Umat</a>
+                            <a class="nav-link" href="{{ route('pastorparoki.laporan.sakramen') }}">Laporan Sakramen</a>
+                            <a class="nav-link" href="{{ route('pastorparoki.laporan.umat') }}">Laporan Umat</a>
                         </nav>
                     </div>
                  

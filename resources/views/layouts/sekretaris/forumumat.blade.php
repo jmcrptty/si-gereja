@@ -114,7 +114,7 @@
 
         {{ $questions->links('pagination::bootstrap-5') }}
     </div>
-    @endif2
+    @endif
 </div>
 
 <!-- Modal Jawab -->

@@ -17,4 +17,11 @@ class Sakramen extends Model
     {
         return $this->hasMany(SertifikatSakramen::class, 'sakramen_id');
     }
+    public function umatPenerima()
+    {
+    return $this->belongsToMany(Umat::class, 'penerimaan_sakramen', 'sakramen_id', 'umat_id')
+                ->withPivot(['tanggal_terima', 'tempat_terima', 'keterangan'])
+                ->withTimestamps();
+    }
+    
 }
