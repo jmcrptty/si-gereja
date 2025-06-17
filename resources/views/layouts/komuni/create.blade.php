@@ -114,6 +114,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-sm-6">
                                 <label for="surat_baptis" class="form-label">Surat Baptis</label>
                                 <input type="file" class="form-control @error ('surat_baptis')is-invalid @enderror" id="surat_baptis" name="surat_baptis" value="{{ old('surat_baptis') }}" >

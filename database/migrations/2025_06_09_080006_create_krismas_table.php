@@ -19,6 +19,13 @@ return new class extends Migration
             // diisi saat daftar nikah
             $table->string('surat_krisma', 255)->nullable();
             $table->date('tanggal_krisma')->nullable();
+
+            // Data penerimaan
+            $table->enum('status_pendaftaran', ['Pending', 'Diterima', 'Ditolak'])->default('Pending');
+            $table->timestamp('tanggal_daftar')->useCurrent();
+            $table->enum('status_penerimaan', ['Pending', 'Diterima', 'Ditolak'])->default('Pending');
+            $table->timestamp('tanggal_terima')->nullable();
+
             $table->timestamps();
         });
     }

@@ -33,6 +33,12 @@ return new class extends Migration
             $table->date('tanggal_baptis')->nullable();
             $table->string('surat_baptis', 255)->nullable();
 
+            // Data penerimaan
+            $table->enum('status_pendaftaran', ['Pending', 'Diterima', 'Ditolak'])->default('Pending');
+            $table->timestamp('tanggal_daftar')->useCurrent();
+            $table->enum('status_penerimaan', ['Pending', 'Diterima', 'Ditolak'])->default('Pending');
+            $table->timestamp('tanggal_terima')->nullable();
+
             $table->timestamps();
         });
     }

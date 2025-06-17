@@ -22,6 +22,11 @@ class Baptis extends Model
 
         'tanggal_baptis',
         'surat_baptis',
+
+        'status_pendaftaran',
+        'tanggal_pendaftaran',
+        'status_penerimaan',
+        'tanggal_terima',
     ];
 
     public function umat(){

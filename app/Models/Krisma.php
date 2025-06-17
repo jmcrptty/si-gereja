@@ -12,7 +12,12 @@ class Krisma extends Model
         'umat_id',
         'surat_krisma',
         'tanggal_krisma',
-        'gereja_tempat_krisma'
+        'gereja_tempat_krisma',
+
+        'status_pendaftaran',
+        'tanggal_pendaftaran',
+        'status_penerimaan',
+        'tanggal_terima',
     ];
 
     public function umat(){

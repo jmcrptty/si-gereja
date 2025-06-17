@@ -66,8 +66,35 @@
 @endsection
 
 @section('content')
-<div class="container-fluid px-4">
+<div class="px-4 container-fluid">
     <h1 class="mt-4 mb-3" style="color: #2d3748; font-weight: 700;">Penerimaan Sakramen</h1>
+
+    @if (session('status'))
+    <!-- Setuju Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="border-0 shadow modal-content">
+                <div class="pb-0 border-0 modal-header">
+                    <h5 class="modal-title fw-bold text-success" id="successModalLabel"><i class="fas fa-check-circle"></i> Success</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="pt-1 text-center modal-body">
+                    <dotlottie-player
+                        src="https://lottie.host/35bcd08c-aecb-4e73-b942-e9e501e9150c/XouVHMEGf5.lottie"
+                        background="transparent"
+                        speed="1"
+                        style="width: 200px; height: 200px; display: block; margin: 0 auto;"
+                        autoplay
+                    ></dotlottie-player>
+                    <h3>{{ session('status') }}</h3>
+                </div>
+                <div class="pt-0 border-0 modal-footer">
+                    <button type="button" class="btn btn-success btn-lg" data-bs-dismiss="modal">OK</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     {{-- Action Buttons --}}
     <div class="actions-btns" id="actionBtns" style="display: none;">
@@ -76,71 +103,40 @@
     </div>
 
     {{-- Loop through each Sakramen --}}
-    @foreach (['Baptis', 'Komuni Pertama', 'Krisma', 'Pernikahan'] as $sakramen)
+    {{-- Card for each Sakramen --}}
     <div class="row g-4">
         <div class="col-md-12">
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    Penerimaan Sakramen {{ $sakramen }}
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>
-                                    <input type="checkbox" 
-                                           id="selectAllCheckbox_{{ strtolower(str_replace(' ', '', $sakramen)) }}"
-                                           class="form-check-input">
-                                </th>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Nomor HP</th>
-                                <th>Status Penerimaan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            // Default data for each sakramen type
-                            $penerimaanSakramen = [
-                                ['id' => 1, 'nama' => 'Andi Setiawan', 'hp' => '08123456789', 'status' => 'Belum Dikonfirmasi'],
-                                ['id' => 2, 'nama' => 'Budi Santoso', 'hp' => '08987654321', 'status' => 'Belum Dikonfirmasi'],
-                                ['id' => 3, 'nama' => 'Citra Dewi', 'hp' => '08567654321', 'status' => 'Belum Dikonfirmasi'],
-                                ['id' => 4, 'nama' => 'Dewi Putri', 'hp' => '08765432100', 'status' => 'Belum Dikonfirmasi'],
-                            ];
-                            @endphp
 
-                            @foreach ($penerimaanSakramen as $index => $pendaftar)
-                            <tr>
-                                <td>
-                                    <input type="checkbox" 
-                                           class="form-check-input selectRowCheckbox_{{ strtolower(str_replace(' ', '', $sakramen)) }}"
-                                           data-id="{{ $pendaftar['id'] }}">
-                                </td>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $pendaftar['nama'] }}</td>
-                                <td>{{ $pendaftar['hp'] }}</td>
-                                <td>{{ $pendaftar['status'] }}</td>  <!-- Displaying the default status -->
-                                <td class="btn-actions">
-                                    @if($pendaftar['status'] == 'Belum Dikonfirmasi')
-                                    <a href="#" class="btn btn-sm btn-success" data-id="{{ $pendaftar['id'] }}" onclick="confirmReception({{ $pendaftar['id'] }})">Sudah Menerima</a>
-                                    @else
-                                    <span class="badge badge-success">Dikonfirmasi</span>
-                                    @endif
-                                    <a href="#" class="btn btn-sm btn-danger" data-id="{{ $pendaftar['id'] }}" onclick="deleteReception({{ $pendaftar['id'] }})">Hapus</a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            @include('layouts.sekretaris.sakramen.baptisPenerimaanTable')
+
+            <br>
+
+            @include('layouts.sekretaris.sakramen.komuniPenerimaanTable')
+
+            <br>
+
+            @include('layouts.sekretaris.sakramen.krismaPenerimaanTable')
+
         </div>
     </div>
-    @endforeach
 </div>
 
 @endsection
+
+@push('sekretaris-after-script')
+    <script>
+        @if (session('status'))
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        @endif
+
+        @if (session('delete_success'))
+            const successModal = new bootstrap.Modal(document.getElementById('deleteSuccessModal'));
+            successModal.show();
+            myModal.show();
+        @endif
+    </script>
+@endpush
 
 @section('scripts')
 <script>
@@ -148,7 +144,7 @@
     function handleSelectAll(sakramenType) {
         const selectAllCheckbox = document.querySelector(`#selectAllCheckbox_${sakramenType}`);
         const checkboxes = document.querySelectorAll(`.selectRowCheckbox_${sakramenType}`);
-        
+
         selectAllCheckbox.addEventListener('change', function() {
             checkboxes.forEach(checkbox => checkbox.checked = this.checked);
             toggleActionButtons();

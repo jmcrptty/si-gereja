@@ -32,7 +32,13 @@ class Pernikahan extends Model
         'agama_wanita',
         'lingkungan_wanita',
 
-        'tanggal_daftar'
-
+        'status_pendaftaran',
+        'tanggal_pendaftaran',
+        'status_penerimaan',
+        'tanggal_terima',
     ];
+
+    public function umat(){
+        return $this->belongsTo(Umat::class);
+    }
 }

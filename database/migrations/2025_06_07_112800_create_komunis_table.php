@@ -20,6 +20,12 @@ return new class extends Migration
             $table->string('surat_komuni', 255)->nullable();
             $table->date('tanggal_komuni')->nullable();
 
+            // Data penerimaan
+            $table->enum('status_pendaftaran', ['Pending', 'Diterima', 'Ditolak'])->default('Pending');
+            $table->timestamp('tanggal_daftar')->useCurrent();
+            $table->enum('status_penerimaan', ['Pending', 'Diterima', 'Ditolak'])->default('Pending');
+            $table->timestamp('tanggal_terima')->nullable();
+
             $table->timestamps();
         });
     }

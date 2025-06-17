@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <link rel="icon" href="/img/logo.ico" type="image/x-icon">
 
     {{-- csrf token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -146,5 +147,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
     @stack('ketua-lingkungan-after-script')
+    @stack('sekretaris-after-script')
 </body>
 </html>
