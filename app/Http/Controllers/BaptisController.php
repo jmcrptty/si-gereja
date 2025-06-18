@@ -25,6 +25,13 @@ class BaptisController extends Controller
     {
         $invitation = Invitation::select('email')->where('token', $token)->where('aktif', true)->first();
 
+        $umat_id = Umat::where('email', $invitation->email)->value('id');
+
+        $sudah_daftar = Baptis::where('umat_id', $umat_id)->first();
+        if($sudah_daftar){
+            return redirect('komuni-pertama')->with('Pemberitahuan', 'Anda telah terdaftar. Mohon tunggu pengumuman lebih lanjut');
+        }
+
         // kemudian hari, tambah logic untuk tolak jika umat sudah pernah kirim ( menunggu persetujuan )
 
         if(!$invitation){

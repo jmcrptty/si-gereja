@@ -29,16 +29,33 @@ class KrismaController extends Controller
         $invitation = Invitation::select('email')->where('token', $token)->where('aktif', true)->first();
 
         if(!$invitation){
-            return redirect('komuni-pertama')->with('Pemberitahuan', 'Undangan yang anda masukan sudah kadaluarsa. Mohon isi kembali email pada form di bawah');
+            return redirect('krisma')->with('Pemberitahuan', 'Undangan yang anda masukan sudah kadaluarsa. Mohon isi kembali email pada form di bawah');
         }
 
         // ambil id umat
         $umat_id = Umat::where('email', $invitation->email)->value('id');
 
+        $sudah_daftar = Krisma::where('umat_id', $umat_id)->first();
+        if($sudah_daftar){
+            return redirect('krisma')->with('Pemberitahuan', 'Anda telah terdaftar. Mohon tunggu pengumuman lebih lanjut');
+        }
+
+        $data_komuni = Komuni::select('gereja_tempat_komuni', 'tanggal_terima')->where('status_penerimaan', 'Diterima')->where('umat_id', $umat_id)->first();
+
+        if ($data_komuni && $data_komuni->tanggal_terima) {
+            $data_komuni->tanggal_terima = \Carbon\Carbon::parse($data_komuni->tanggal_terima)->format('Y-m-d');
+        }
+
+        $data_baptis = Baptis::select('nama_baptis','fotokopi_ktp_ortu', 'surat_pernikahan_katolik_ortu', 'gereja_tempat_baptis', 'tanggal_terima', 'surat_baptis',)->where('status_penerimaan', 'Diterima')->where('umat_id', $umat_id)->first();
+
+        if ($data_baptis && $data_baptis->tanggal_terima) {
+            $data_baptis->tanggal_terima = \Carbon\Carbon::parse($data_baptis->tanggal_terima)->format('Y-m-d');
+        }
+
         return view('layouts.krisma.create', [
             'umat' => Umat::select('nama_lengkap', 'alamat', 'nama_ayah', 'nama_ibu', 'email')->where('email', $invitation->email)->first(),
-            'data_baptis' => Baptis::select('nama_baptis','fotokopi_ktp_ortu', 'surat_pernikahan_katolik_ortu', 'gereja_tempat_baptis', 'tanggal_baptis', 'surat_baptis',)->where('umat_id', $umat_id)->first(),
-            'data_komuni' => Komuni::select('gereja_tempat_komuni', 'tanggal_komuni',)->where('umat_id', $umat_id)->first()
+            'data_baptis' => $data_baptis,
+            'data_komuni' => $data_komuni
         ]);
     }
 
@@ -60,7 +77,7 @@ class KrismaController extends Controller
         // cek kebenaran token
         $invitation = Invitation::where('token', $request->token)->where('aktif', true)->first();
         if(!$invitation){
-            return redirect('komuni-pertama')->with('Pemberitahuan', 'Terjadi Kesalahan, mohon coba lagi');
+            return redirect('krisma')->with('Pemberitahuan', 'Terjadi Kesalahan, mohon coba lagi');
         }
 
         $baptis = Baptis::where('umat_id', $umat_id)->first();
@@ -71,14 +88,14 @@ class KrismaController extends Controller
             'surat_pernikahan_katolik_ortu' => [!$baptis?->surat_pernikahan_katolik_ortu ? 'required' : 'nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
 
             // Data Sakramen Baptis
-            'tanggal_baptis' => [!$baptis?->tanggal_baptis ? 'required' : 'nullable', 'date'],
+            'tanggal_baptis' => [!$baptis?->tanggal_terima ? 'required' : 'nullable', 'date'],
             'surat_baptis' => [!$baptis?->surat_baptis ? 'required' : 'nullable', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
             'nama_baptis' => [!$baptis?->nama_baptis ? 'required' : 'nullable', 'string'],
             'gereja_tempat_baptis' => [!$baptis?->gereja_tempat_baptis ? 'required' : 'nullable', 'string'],
 
             // Data Skaramen Komuni
-            'tanggal_komuni' => [!$komuni?->tanggal_komuni ? 'required' : 'nullable', 'date'],
-            'surat_komuni' => [!$komuni?->fotokopi_ksurat_komunitp_ortu ? 'required' : 'nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
+            'tanggal_komuni' => [!$komuni?->tanggal_terima ? 'required' : 'nullable', 'date'],
+            'surat_komuni' => [!$komuni?->surat_komuni ? 'required' : 'nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
             'gereja_tempat_komuni' => [!$komuni?->gereja_tempat_komuni ? 'required' : 'nullable', 'string'],
 
         ],
@@ -98,8 +115,8 @@ class KrismaController extends Controller
             // Data Sakramen Komuni
             'gereja_tempat_komuni.required' => 'Mohon isi nama gereja tempat menerima komuni pertama',
 
-            'surat_komuni.required' => 'Tanggal komuni pertama wajib diisi.',
-            'surat_komuni.date' => 'Format tanggal komuni pertama tidak valid.',
+            'tanggal_komuni.required' => 'Tanggal komuni pertama wajib diisi.',
+            'tanggal_komuni.date' => 'Format tanggal komuni pertama tidak valid.',
 
             'surat_komuni.file' => 'File surat komuni pertama harus berupa dokumen atau gambar.',
             'surat_komuni.required' => 'Mohon isi file surat komuni',
@@ -121,13 +138,16 @@ class KrismaController extends Controller
         $request_valid['umat_id'] = $umat_id;
 
         // buat token expire
-        $invitation->update(['aktif'=> false]);
+        // $invitation->update(['aktif'=> false]);
 
         // masukkan data
         // buat variabel
+        $tanggal_terima_baptis = null;
+        $tanggal_terima_komuni = null;
         $ktpOrtuPath = null;
         $suratNikahPath = null;
         $suratBaptisPath = null;
+        $surat_komuni = null;
         if($request->hasFile('surat_baptis')){
             $suratBaptisPath = $request->file('surat_baptis')->store('umats/surat_baptis', 'local');
         }
@@ -136,8 +156,20 @@ class KrismaController extends Controller
         }
 
         $sudahBaptis = Baptis::where('umat_id', $umat_id)->first();
+
+        // SANITASI DATA BAPTIS
+        if ($sudahBaptis && (
+                $sudahBaptis->status_pendaftaran === 'Pending' ||
+                $sudahBaptis->status_penerimaan === 'Pending'
+            )) {
+            // Hapus record kalau masih ada tapi pending. biar bisa ganti baru
+            $sudahBaptis->delete();
+            $sudahBaptis = null;
+        }
+
         if(!$sudahBaptis){
             # jika baptis di katedral, buat record baru
+            $tanggal_terima_baptis = $request_valid['tanggal_baptis'];
             if($request->hasFile('fotokopi_ktp_ortu') ){
             $ktpOrtuPath = $request->file('fotokopi_ktp_ortu')->store('umats/fotokopi_ktp_ortu', 'local');
             }
@@ -150,32 +182,42 @@ class KrismaController extends Controller
                 'gereja_tempat_baptis' => $request_valid['gereja_tempat_baptis'],
                 'fotokopi_ktp_ortu' => $ktpOrtuPath,
                 'surat_pernikahan_katolik_ortu' => $suratNikahPath,
-                'tanggal_baptis' => $request_valid['tanggal_baptis'],
+                'tanggal_terima' => $tanggal_terima_baptis,
                 'surat_baptis' => $suratBaptisPath,
             ]);
         }
         else{
             # jika baptis di katedral update tanggal dan surat baptis
             Baptis::where('umat_id', $umat_id)->update([
-                'tanggal_baptis' => $request_valid['tanggal_baptis'],
                 'surat_baptis' => $suratBaptisPath,
             ]);
         }
 
         $sudahKomuni = Komuni::where('umat_id', $umat_id)->first();
+
+        // SANITASI DATA KOMUNI
+        if ($sudahKomuni && (
+                $sudahKomuni->status_pendaftaran === 'Pending' ||
+                $sudahKomuni->status_penerimaan === 'Pending'
+            )) {
+            // Hapus record kalau masih ada tapi pending. biar bisa ganti baru
+            $sudahKomuni->delete();
+            $sudahKomuni = null;
+        }
+
         if(!$sudahKomuni){
             # jika tidak komuni pertama di katedral, buat record baru
+            $tanggal_terima_komuni = $request_valid['tanggal_komuni'];
             Komuni::create([
                 'umat_id' => $umat_id,
                 'gereja_tempat_komuni' => $request_valid['gereja_tempat_komuni'],
-                'tanggal_komuni' => $request_valid['tanggal_komuni'],
+                'tanggal_terima' => $tanggal_terima_komuni,
                 'surat_komuni' => $surat_komuni,
             ]);
         }
         else{
             # jika komuni di katedral update tanggal dan surat komuni
             Komuni::where('umat_id', $umat_id)->update([
-                'tanggal_komuni' => $request_valid['tanggal_komuni'],
                 'surat_komuni' => $surat_komuni,
             ]);
         }

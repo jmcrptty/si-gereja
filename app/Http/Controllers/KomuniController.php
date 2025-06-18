@@ -32,9 +32,20 @@ class KomuniController extends Controller
         // ambil id umat
         $umat_id = Umat::where('email', $invitation->email)->value('id');
 
+        $sudah_daftar = Komuni::where('umat_id', $umat_id)->first();
+        if($sudah_daftar){
+            return redirect('komuni-pertama')->with('Pemberitahuan', 'Anda telah terdaftar. Mohon tunggu pengumuman lebih lanjut');
+        }
+
+        $data_baptis = Baptis::select('nama_baptis','fotokopi_ktp_ortu', 'surat_pernikahan_katolik_ortu', 'gereja_tempat_baptis', 'tanggal_terima', 'surat_baptis',)->where('status_penerimaan', 'Diterima')->where('umat_id', $umat_id)->first();
+
+        if ($data_baptis && $data_baptis->tanggal_terima) {
+            $data_baptis->tanggal_terima = \Carbon\Carbon::parse($data_baptis->tanggal_terima)->format('Y-m-d');
+        }
+
         return view('layouts.komuni.create', [
             'umat' => Umat::select('nama_lengkap', 'alamat', 'nama_ayah', 'nama_ibu', 'email')->where('email', $invitation->email)->first(),
-            'data_baptis' => Baptis::select('nama_baptis','fotokopi_ktp_ortu', 'surat_pernikahan_katolik_ortu', 'gereja_tempat_baptis')->where('umat_id', $umat_id)->first()
+            'data_baptis' => $data_baptis
         ]);
     }
 
@@ -98,10 +109,11 @@ class KomuniController extends Controller
         $request_valid['umat_id'] = $umat_id;
 
         // buat token expire
-        $invitation->update(['aktif'=> false]);
+        // $invitation->update(['aktif'=> false]);
 
         // masukkan data
         // buat variabel
+        $tanggal_terima_baptis = null;
         $ktpOrtuPath = null;
         $suratNikahPath = null;
         $suratBaptisPath = null;
@@ -110,8 +122,20 @@ class KomuniController extends Controller
         }
 
         $sudahBaptis = Baptis::where('umat_id', $umat_id)->first();
+
+        // SANITASI DATA BAPTIS
+        if ($sudahBaptis && (
+                $sudahBaptis->status_pendaftaran === 'Pending' ||
+                $sudahBaptis->status_penerimaan === 'Pending'
+            )) {
+            // Hapus record kalau masih ada tapi pending. biar bisa ganti baru
+            $sudahBaptis->delete();
+            $sudahBaptis = null;
+        }
+
         if(!$sudahBaptis){
             # jika belum baptis buat record baru
+            $tanggal_terima_baptis = $request_valid['tanggal_baptis'];
             if($request->hasFile('fotokopi_ktp_ortu') ){
             $ktpOrtuPath = $request->file('fotokopi_ktp_ortu')->store('umats/fotokopi_ktp_ortu', 'local');
             }
@@ -124,7 +148,7 @@ class KomuniController extends Controller
                 'gereja_tempat_baptis' => $request_valid['gereja_tempat_baptis'],
                 'fotokopi_ktp_ortu' => $ktpOrtuPath,
                 'surat_pernikahan_katolik_ortu' => $suratNikahPath,
-                'tanggal_baptis' => $request_valid['tanggal_baptis'],
+                'tanggal_terima' => $tanggal_terima_baptis,
                 'surat_baptis' => $suratBaptisPath,
             ]);
         }

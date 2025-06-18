@@ -96,6 +96,34 @@
         </div>
     @endif
 
+    @if (session('status_error'))
+    <!-- error Modal -->
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="border-0 shadow modal-content">
+                <div class="pb-0 border-0 modal-header">
+                    <h5 class="modal-title fw-bold text-danger" id="errorModalLabel"><i class="fas fa-check-circle"></i> Failed</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="pt-1 text-center modal-body">
+                    <dotlottie-player
+                        src="https://lottie.host/73f09fa7-54a7-418a-ab54-1242df96a0d6/zaAzYRFgsU.lottie"
+                        background="transparent"
+                        speed="1"
+                        style="width: 200px; height: 200px; margin: 0 auto;"
+                        loop
+                        autoplay
+                    ></dotlottie-player>
+                    <h3>{{ session('status_error') }}</h3>
+                </div>
+                <div class="pt-0 border-0 modal-footer">
+                    <button type="button" class="btn btn-success btn-danger btn-lg" data-bs-dismiss="modal">OK</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     {{-- Action Buttons --}}
     <div class="actions-btns" id="actionBtns" style="display: none;">
         <button class="btn btn-success" id="confirmButton" disabled>Konfirmasi Penerimaan Sakramen</button>
@@ -130,9 +158,9 @@
             successModal.show();
         @endif
 
-        @if (session('delete_success'))
-            const successModal = new bootstrap.Modal(document.getElementById('deleteSuccessModal'));
-            successModal.show();
+        @if (session('status_error'))
+            const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
             myModal.show();
         @endif
     </script>

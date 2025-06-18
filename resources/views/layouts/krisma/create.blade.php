@@ -109,8 +109,8 @@
 
                             <div class="col-sm-6">
                                 <label for="tanggal_baptis" class="form-label">Tanggal Pembaptisan</label>
-                                @if ($data_baptis?->tanggal_baptis)
-                                    <input disabled readonly type="date" class="form-control" id="tanggal_baptis" name="tanggal_baptis" value="{{ $data_baptis->tanggal_baptis }}">
+                                @if ($data_baptis?->tanggal_terima)
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_baptis" name="tanggal_baptis" value="{{ $data_baptis->tanggal_terima }}">
                                 @else
                                     <input type="date" class="form-control @error ('tanggal_baptis')is-invalid @enderror" id="tanggal_baptis" name="tanggal_baptis" value="{{ old('tanggal_baptis') }}">
                                     @error('tanggal_baptis')
@@ -136,12 +136,16 @@
 
                             <h1 class="pt-1 mt-4"> Data Sakramen Komuni</h1>
 
-                            <div class="col-sm-6">
+                             <div class="col-sm-6">
                                 <label for="tanggal_komuni" class="form-label">Tanggal Komuni Pertama</label>
-                                <input type="date" class="form-control @error ('tanggal_komuni')is-invalid @enderror" id="tanggal_komuni" name="tanggal_komuni" value="{{ old('tanggal_komuni') }}">
-                                @error('tanggal_komuni')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                @if ($data_komuni?->tanggal_terima)
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_komuni" name="tanggal_komuni" value="{{ $data_komuni->tanggal_terima }}">
+                                @else
+                                    <input type="date" class="form-control @error ('tanggal_komuni')is-invalid @enderror" id="tanggal_komuni" name="tanggal_komuni" value="{{ old('tanggal_komuni') }}">
+                                    @error('tanggal_komuni')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                @endif
                             </div>
 
                             <div class="col-sm-6">

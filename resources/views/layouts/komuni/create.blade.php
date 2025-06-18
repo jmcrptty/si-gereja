@@ -109,10 +109,14 @@
 
                             <div class="col-sm-6">
                                 <label for="tanggal_baptis" class="form-label">Tanggal Pembaptisan</label>
-                                <input type="date" class="form-control @error ('tanggal_baptis')is-invalid @enderror" id="tanggal_baptis" name="tanggal_baptis" value="{{ old('tanggal_baptis') }}">
-                                @error('tanggal_baptis')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                @if ($data_baptis?->tanggal_terima)
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_baptis" name="tanggal_baptis" value="{{ $data_baptis->tanggal_terima }}">
+                                @else
+                                    <input type="date" class="form-control @error ('tanggal_baptis')is-invalid @enderror" id="tanggal_baptis" name="tanggal_baptis" value="{{ old('tanggal_baptis') }}">
+                                    @error('tanggal_baptis')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                @endif
                             </div>
 
                             <div class="col-sm-6">
