@@ -144,6 +144,10 @@
 
             @include('layouts.sekretaris.sakramen.krismaTable')
 
+            <br>
+
+            @include('layouts.sekretaris.sakramen.pernikahanTable')
+
         </div>
     </div>
 

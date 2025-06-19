@@ -41,4 +41,16 @@ class Pernikahan extends Model
     public function umat(){
         return $this->belongsTo(Umat::class);
     }
+
+    // experimental
+    public function umatPria()
+    {
+        return $this->belongsTo(Umat::class, 'umat_id_pria');
+    }
+
+    public function umatWanita()
+    {
+        return $this->belongsTo(Umat::class, 'umat_id_wanita');
+    }
+
 }

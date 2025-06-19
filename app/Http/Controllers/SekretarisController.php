@@ -7,6 +7,7 @@ use App\Models\Umat;
 use App\Models\Baptis;
 use App\Models\Komuni;
 use App\Models\Krisma;
+use App\Models\Pernikahan;
 use Illuminate\Http\Request;
 
 class SekretarisController extends Controller
@@ -44,6 +45,13 @@ class SekretarisController extends Controller
         return response()->file(storage_path("app/{$path}"));
     }
 
+    public function downloadFilePernikahan($type, $filename)
+    {
+        $path = "private/pernikahans/{$type}/{$filename}";
+
+        return response()->file(storage_path("app/{$path}"));
+    }
+
     // SAKRAMEN -> PENDAFTARAN
     public function pendaftaranSakramen(){
 
@@ -69,10 +77,18 @@ class SekretarisController extends Controller
             return $item;
         });
 
+        $pernikahan = Pernikahan::with(['umatPria:id,nama_lengkap,email,no_hp', 'umatWanita:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Pending')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id_pria', 'umat_id_wanita', 'nama_lengkap_pria', 'nama_lengkap_wanita', 'tanggal_daftar', 'tanggal_terima']);
+
+        $pernikahan = $pernikahan->map(function ($item) {
+            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
+            return $item;
+        });
+
         return view('layouts.pendaftaransakramen', [
             'baptis' => $baptis,
             'komuni' => $komuni,
-            'krisma' => $krisma
+            'krisma' => $krisma,
+            'pernikahan' => $pernikahan,
         ]);
     }
 
@@ -173,6 +189,28 @@ class SekretarisController extends Controller
         return redirect()->route('sekretaris.pendaftaransakramen')->with('status', 'Data umat ditolak!');
     }
 
+    // SAKRAMEN -> PENDAFTARAN -> Pernikahan
+
+    public function pernikahan_show(Pernikahan $pernikahan)
+    {
+        return view('layouts.sekretaris.sakramen.pernikahanShow', [
+            'pernikahan' => $pernikahan
+        ]);
+    }
+
+    public function setujuPendaftaranPernikahan(Pernikahan $pernikahan)
+    {
+        $pernikahan->update(['status_pendaftaran' => 'Diterima']);
+
+        return redirect()->route('sekretaris.pendaftaransakramen')->with('status', 'Umat berhasil diverifikasi!');
+    }
+
+    public function tolakPendaftaranPernikahan(Pernikahan $pernikahan)
+    {
+        $pernikahan->update(['status_pendaftaran' => 'Ditolak']);
+
+        return redirect()->route('sekretaris.pendaftaransakramen')->with('status', 'Data umat ditolak!');
+    }
 
     // SAKRAMEN -> PENERIMAAN
     public function penerimaanSakramen(){
@@ -199,10 +237,18 @@ class SekretarisController extends Controller
             return $item;
         });
 
+        $pernikahan = Pernikahan::with(['umatPria:id,nama_lengkap,email,no_hp', 'umatWanita:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id_pria', 'umat_id_wanita', 'nama_lengkap_pria', 'nama_lengkap_wanita', 'tanggal_daftar', 'tanggal_terima']);
+
+        $pernikahan = $pernikahan->map(function ($item) {
+            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
+            return $item;
+        });
+
         return view('layouts.penerimaansakramen', [
             'baptis' => $baptis,
             'komuni' => $komuni,
             'krisma' => $krisma,
+            'pernikahan' => $pernikahan,
         ]);
     }
 
@@ -308,6 +354,22 @@ class SekretarisController extends Controller
     public function tolakPenerimaanKrisma(Krisma $krisma)
     {
         $krisma->update(['status_penerimaan' => 'Ditolak']);
+
+        return redirect()->route('sekretaris.penerimaansakramen')->with('status', 'Data umat ditolak!');
+    }
+
+    // SAKRAMEN -> penerimaan -> PERNIKAHAN
+
+    public function setujuPenerimaanPernikahan(Pernikahan $pernikahan)
+    {
+        $pernikahan->update(['status_penerimaan' => 'Diterima']);
+
+        return redirect()->route('sekretaris.penerimaansakramen')->with('status', 'Umat telah menerima sakramen!');
+    }
+
+    public function tolakPenerimaanPernikahan(Pernikahan $pernikahan)
+    {
+        $pernikahan->update(['status_penerimaan' => 'Ditolak']);
 
         return redirect()->route('sekretaris.penerimaansakramen')->with('status', 'Data umat ditolak!');
     }

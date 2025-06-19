@@ -99,6 +99,7 @@ Route::middleware(['auth', 'roles:sekretaris'])->prefix('sekretaris')->name('sek
         Route::get('/umat', [SekretarisController::class, 'umat_index'])->name('umat.index');
         Route::get('/umat/{umat}', [SekretarisController::class, 'umat_show'])->name('umat.show'); // <- ingat kalo ada (Umat $umat) di controller, nama idnya harus sesuai (route model binding)
         Route::get('/umat/file/{type}/{filename}', [SekretarisController::class, 'downloadFile'])->name('umat.downloadFile');
+        Route::get('/pernikahan/file/{type}/{filename}', [SekretarisController::class, 'downloadFilePernikahan'])->name('pernikahan.downloadFile');
 
         // sekretaris -> pendaftaran sakramen
         Route::get('/pendaftaransakramen', [SekretarisController::class, 'pendaftaranSakramen'])->name('pendaftaransakramen');
@@ -114,6 +115,10 @@ Route::middleware(['auth', 'roles:sekretaris'])->prefix('sekretaris')->name('sek
         Route::get('/detail_sakramen/krisma/{umat}', [SekretarisController::class, 'krisma_show'])->name('detailKrisma');
         Route::post('/persetujuan/krisma/setuju/{krisma}', [SekretarisController::class, 'setujuPendaftaranKrisma'])->name('setujuKrisma');
         Route::post('/persetujuan/krisma/tolak/{krisma}', [SekretarisController::class, 'tolakPendaftaranKrisma'])->name('tolakKrisma');
+        // sekretaris->sakramen->pernikahan
+        Route::get('/detail_sakramen/pernikahan/{pernikahan}', [SekretarisController::class, 'pernikahan_show'])->name('detailPernikahan');
+        Route::post('/persetujuan/pernikahan/setuju/{pernikahan}', [SekretarisController::class, 'setujuPendaftaranPernikahan'])->name('setujuPernikahan');
+        Route::post('/persetujuan/pernikahan/tolak/{pernikahan}', [SekretarisController::class, 'tolakPendaftaranPernikahan'])->name('tolakPernikahan');
 
         // sekretaris -> penerimaan sakramen
         Route::get('/penerimaansakramen', [SekretarisController::class, 'penerimaansakramen'])->name('penerimaansakramen');
@@ -129,6 +134,9 @@ Route::middleware(['auth', 'roles:sekretaris'])->prefix('sekretaris')->name('sek
         Route::get('/detail_sakramen/penerimaan/krisma/{umat}', [SekretarisController::class, 'krisma_penerimaan_show'])->name('detailKrisma.penerimaan');
         Route::post('/penerimaan/krisma/setuju/{krisma}', [SekretarisController::class, 'setujuPenerimaanKrisma'])->name('setujuKrisma.penerimaan');
         Route::post('/penerimaan/krisma/tolak/{krisma}', [SekretarisController::class, 'tolakPenerimaanKrisma'])->name('tolakKrisma.penerimaan');
+        // sekretaris->sakramen->pernikahan
+        Route::post('/penerimaan/pernikahan/setuju/{pernikahan}', [SekretarisController::class, 'setujuPenerimaanPernikahan'])->name('setujuPernikahan.penerimaan');
+        Route::post('/penerimaan/pernikahan/tolak/{pernikahan}', [SekretarisController::class, 'tolakPenerimaanPernikahan'])->name('tolakPernikahan.penerimaan');
 
     // view tanggal pembukaan sakramen
     Route::get('pembukaan_pendaftaran', function (){

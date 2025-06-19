@@ -173,7 +173,7 @@
                         </div>
 
                         <div class="mt-5 button-group text-end">
-                            <a href="{{ {{ url()->previous() }} }}" class="border-0 rounded btn-warning btn btn-lg">Kembali</a>
+                            <a href="{{ url()->previous() }}" class="border-0 rounded btn-warning btn btn-lg">Kembali</a>
                         </div>
                     </form>
                 </div>
