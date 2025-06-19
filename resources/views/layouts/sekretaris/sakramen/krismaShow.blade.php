@@ -120,8 +120,8 @@
 
                             <div class="col-sm-6">
                                 <label for="tanggal_baptis" class="form-label">Tanggal Baptis</label>
-                                @if ($umat->baptis->tanggal_baptis)
-                                    <input disabled readonly type="date" class="form-control" id="tanggal_baptis" value="{{ $umat->baptis->tanggal_baptis }}">
+                                @if ($umat->baptis->tanggal_terima)
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_baptis" value="{{ $umat->baptis->tanggal_terima->format('Y-m-d') }}">
                                 @else
                                     <input disabled readonly type="text" class="form-control" id="tanggal_baptis" value="Belum Ada">
                                 @endif
@@ -150,8 +150,8 @@
 
                             <div class="col-sm-6">
                                 <label for="tanggal_komuni" class="form-label">Tanggal Komuni Pertama</label>
-                                @if ($umat->komuni->tanggal_komuni)
-                                    <input disabled readonly type="date" class="form-control" id="tanggal_komuni" value="{{ $umat->komuni->tanggal_komuni }}">
+                                @if ($umat->komuni->tanggal_terima)
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_komuni" value="{{ $umat->komuni->tanggal_terima->format('Y-m-d') }}">
                                 @else
                                     <input disabled readonly type="text" class="form-control" id="tanggal_komuni" value="Belum Ada">
                                 @endif

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Umat;
 use App\Models\Baptis;
 use App\Models\Komuni;
 use App\Models\Invitation;
 use Illuminate\Http\Request;
+use App\Models\PengaturanSakramen;
 
 class KomuniController extends Controller
 {
@@ -15,7 +17,19 @@ class KomuniController extends Controller
      */
     public function index()
     {
-        return view('layouts.komuni.komuni');
+        $pengaturan = PengaturanSakramen::where('jenis_sakramen', 'Komuni')->first();
+
+        $now = Carbon::now();
+        $pendaftaran_dibuka = false;
+
+        if ($pengaturan) {
+            if ($pengaturan->override_status === 'on') {
+                $pendaftaran_dibuka = true;
+            } elseif ($pengaturan->tanggal_mulai && $pengaturan->tanggal_selesai) {
+                $pendaftaran_dibuka = $now->between($pengaturan->tanggal_mulai, $pengaturan->tanggal_selesai);
+            }
+        }
+        return view('layouts.komuni.komuni', compact('pendaftaran_dibuka'));
     }
 
     /**

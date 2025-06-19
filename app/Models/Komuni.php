@@ -20,6 +20,12 @@ class Komuni extends Model
         'tanggal_terima',
     ];
 
+    protected $casts = [
+        'tanggal_daftar' => 'datetime',
+        'tanggal_terima' => 'datetime',
+    ];
+
+
     public function umat(){
         return $this->belongsTo(Umat::class);
     }

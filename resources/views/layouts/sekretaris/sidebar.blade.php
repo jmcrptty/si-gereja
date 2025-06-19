@@ -39,7 +39,7 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="{{ route('sekretaris.pendaftaransakramen') }}">Pendaftaran Sakramen</a>
                             <a class="nav-link" href="{{ route('sekretaris.penerimaansakramen') }}">Penerimaan Sakramen</a>
-                            <a class="nav-link" href="{{ route('sekretaris.sakramen.index') }}">Pembukaan Sakramen</a>
+                            <a class="nav-link" href="{{ route('sekretaris.pengaturan_sakramen') }}">Pembukaan Sakramen</a>
                         </nav>
                     </div>
 

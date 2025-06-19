@@ -29,7 +29,7 @@
                         <td>{{ $data_komuni->umat->nama_lengkap }}</td>
                         <td>{{ $data_komuni->umat->no_hp }}</td>
                         <td>{{ $data_komuni->umat->email }}</td>
-                        <td>{{ $data_komuni->tanggal_daftar}}</td>
+                        <td>{{ $data_komuni->tanggal_daftar->format('d M Y')}}</td>
                         <td>
                             <div class="flex-wrap gap-2 d-flex justify-content-center">
                                 {{-- Lihat --}}

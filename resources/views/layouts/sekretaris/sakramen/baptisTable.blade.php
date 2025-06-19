@@ -29,7 +29,7 @@
                         <td>{{ $data_baptis->umat->nama_lengkap }}</td>
                         <td>{{ $data_baptis->umat->no_hp }}</td>
                         <td>{{ $data_baptis->umat->email }}</td>
-                        <td>{{ $data_baptis->tanggal_daftar}}</td>
+                        <td>{{ $data_baptis->tanggal_daftar->format('d M Y') }}</td>
                         <td>
                             <div class="flex-wrap gap-2 d-flex justify-content-center">
                                 {{-- Lihat --}}

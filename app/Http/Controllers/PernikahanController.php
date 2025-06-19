@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Umat;
 use App\Models\Invitation;
 use App\Models\Pernikahan;
 use Illuminate\Http\Request;
+use App\Models\PengaturanSakramen;
 use Illuminate\Support\Facades\Storage;
 
 class PernikahanController extends Controller
@@ -15,7 +17,20 @@ class PernikahanController extends Controller
      */
     public function index()
     {
-        return view('layouts.pernikahan.pernikahan');
+        $pengaturan = PengaturanSakramen::where('jenis_sakramen', 'Pernikahan')->first();
+
+        $now = Carbon::now();
+        $pendaftaran_dibuka = false;
+
+        if ($pengaturan) {
+            if ($pengaturan->override_status === 'on') {
+                $pendaftaran_dibuka = true;
+            } elseif ($pengaturan->tanggal_mulai && $pengaturan->tanggal_selesai) {
+                $pendaftaran_dibuka = $now->between($pengaturan->tanggal_mulai, $pengaturan->tanggal_selesai);
+            }
+        }
+
+        return view('layouts.pernikahan.pernikahan', compact('pendaftaran_dibuka'));
     }
 
     /**

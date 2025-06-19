@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Umat;
 use App\Models\Baptis;
+use App\Models\Komuni;
 use App\Models\Krisma;
 use App\Models\Invitation;
-use App\Models\Komuni;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use App\Models\PengaturanSakramen;
 use function PHPUnit\Framework\isNull;
 
 class KrismaController extends Controller
@@ -18,7 +20,19 @@ class KrismaController extends Controller
      */
     public function index()
     {
-        return view('layouts.krisma.krisma');
+        $pengaturan = PengaturanSakramen::where('jenis_sakramen', 'Krisma')->first();
+
+        $now = Carbon::now();
+        $pendaftaran_dibuka = false;
+
+        if ($pengaturan) {
+            if ($pengaturan->override_status === 'on') {
+                $pendaftaran_dibuka = true;
+            } elseif ($pengaturan->tanggal_mulai && $pengaturan->tanggal_selesai) {
+                $pendaftaran_dibuka = $now->between($pengaturan->tanggal_mulai, $pengaturan->tanggal_selesai);
+            }
+        }
+        return view('layouts.krisma.krisma', compact('pendaftaran_dibuka'));
     }
 
     /**

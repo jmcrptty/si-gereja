@@ -114,27 +114,32 @@
 
             <br>
 
-            {{-- Pendaftaran Krisma --}}
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="shadow-sm card">
-                        <div class="card-body">
-                            <h4 class="text-center card-title">Daftar   </h4>
-                            {{-- ini from nya --}}
-                            <form action="{{ route('krisma.mail') }}" method="POST">
-                                @csrf
-                                <div class="mb-4">
-                                    <label for="email" class="form-label">Masukkan email anda untuk memulai pendaftaran</label>
-                                    <input type="text" class="form-control" id="email" name='email' placeholder="Masukkan email" required>
-                                </div>
-                                <div class="text-center">
-                                        <button type="submit" class="btn btn-dark">Cek Status</button>
-                                </div>
-                            </form>
+                        <div class="text-center card-body">
+                            @if($pendaftaran_dibuka)
+                                <h4 class="text-center card-title">Daftar</h4>
+                                <form action="{{ route('krisma.mail') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-4">
+                                        <label for="email" class="form-label">Masukkan email anda untuk memulai pendaftaran</label>
+                                        <input type="text" class="form-control" id="email" name='email' placeholder="Masukkan email" required>
+                                    </div>
+                                    <div class="text-center">
+                                            <button type="submit" class="btn btn-dark">Cek Status</button>
+                                    </div>
+                                </form>
+                            @else
+                                <h4 class="text-center card-title">Informasi</h4>
+                                <p class="mt-3">Pendaftaran Krisma saat ini <strong>belum dibuka</strong>.<br>
+                                Silakan tunggu informasi selanjutnya dari Gereja Katedral Merauke.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 

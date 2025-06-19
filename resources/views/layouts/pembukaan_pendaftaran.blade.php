@@ -1,55 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Success Alert -->
-@if(session('success'))
-<div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert" style="border-left: 4px solid var(--accent-gold);">
-    <div class="d-flex align-items-center">
-        <i class="bi bi-check-circle-fill me-3" style="color: var(--accent-gold); font-size: 1.2rem;"></i>
-        <div>
-            <strong>Berhasil!</strong> {{ session('success') }}
-        </div>
-    </div>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
 
-<!-- Error Alert -->
-@if(session('error'))
-<div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert" style="border-left: 4px solid var(--accent-burgundy);">
-    <div class="d-flex align-items-center">
-        <i class="bi bi-exclamation-triangle-fill me-3" style="color: var(--accent-burgundy); font-size: 1.2rem;"></i>
-        <div>
-            <strong>Gagal!</strong> {{ session('error') }}
-        </div>
-    </div>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-
-<!-- Validation Error Alert -->
-@if($errors->any())
-<div class="alert alert-warning alert-dismissible fade show shadow-sm" role="alert" style="border-left: 4px solid #ffc107;">
-    <div class="d-flex align-items-start">
-        <i class="bi bi-info-circle-fill me-3 mt-1" style="color: #ffc107; font-size: 1.2rem;"></i>
-        <div>
-            <strong>Perhatian!</strong> Harap perbaiki kesalahan berikut:
-            <ul class="mb-0 mt-2">
-                @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-12">
             <!-- Main Card with Header Info -->
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-header text-white py-4" style="background-color: var(--primary-dark);">
+            <div class="border-0 shadow-sm card rounded-3">
+                <div class="py-4 text-white card-header" style="background-color: var(--primary-dark);">
                     <div class="row align-items-center">
                         <div class="col-md-8">
                             <div class="d-flex align-items-center">
@@ -60,17 +18,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                        <div class="mt-3 col-md-4 text-md-end mt-md-0">
                         </div>
                     </div>
                 </div>
-                
-                <div class="card-body p-0">
+
+                @include('layouts.sekretaris.pembukaan_pendaftaran.modals')
+
+                <div class="p-0 card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover mb-0">
+                        <table class="table mb-0 table-hover">
                             <thead style="background-color: var(--primary-light);">
                                 <tr>
-                                    <th class="py-3 px-4" style="color: var(--text-dark);">Sakramen</th>
+                                    <th class="px-4 py-3" style="color: var(--text-dark);">Sakramen</th>
                                     <th class="py-3 text-center" style="color: var(--text-dark);">Tanggal Mulai</th>
                                     <th class="py-3 text-center" style="color: var(--text-dark);">Tanggal Selesai</th>
                                     <th class="py-3 text-center" style="color: var(--text-dark);">Selalu Aktif</th>
@@ -79,44 +39,50 @@
                             </thead>
                             <tbody>
                                 @foreach ([
-                                    ['name' => 'Baptis', 'icon' => 'bi-droplet-fill'],
-                                    ['name' => 'Krisma', 'icon' => 'bi-star-fill'],
-                                    ['name' => 'Pernikahan', 'icon' => 'bi-heart-fill'],
-                                    ['name' => 'Komuni', 'icon' => 'bi-cup-fill']
+                                    ['name' => 'Baptis', 'link' => 'baptis', 'icon' => 'bi-droplet-fill'],
+                                    ['name' => 'Komuni', 'link' => 'pernikahan', 'icon' => 'bi-cup-fill'],
+                                    ['name' => 'Krisma', 'link' => 'komuni', 'icon' => 'bi-star-fill'],
+                                    ['name' => 'Pernikahan', 'link' => 'krisma', 'icon' => 'bi-heart-fill'],
                                 ] as $sakramen)
+                                @php
+                                    $data = $pengaturan_sakramen->firstWhere('jenis_sakramen', $sakramen['name']);
+                                @endphp
                                 <tr class="border-bottom">
-                                    <form action="{{ url('/sekretaris/sakramen/atur') }}" method="POST" class="sakramen-form contents">
+                                    <form action="{{ route('sekretaris.pengaturan_sakramen.update') }}" method="POST" class="sakramen-form contents">
                                         @csrf
                                         <input type="hidden" name="nama_sakramen" value="{{ $sakramen['name'] }}">
-                                        
-                                        <td class="py-4 px-4">
+
+                                        <td class="px-4 py-4">
                                             <div>
                                                 <h6 class="mb-0 fw-semibold" style="color: var(--text-dark);">{{ $sakramen['name'] }}</h6>
                                                 <small class="text-muted">Sakramen {{ $sakramen['name'] }}</small>
                                             </div>
                                         </td>
-                                        
+
                                         <td class="py-4 text-center">
-                                            <input type="date" name="tanggal_mulai" 
-                                                   class="form-control form-control-sm tanggal-mulai mx-auto" 
-                                                   style="max-width: 160px;">
+                                            <input type="date" name="tanggal_mulai"
+                                                   class="mx-auto form-control form-control-sm tanggal-mulai"
+                                                   style="max-width: 160px;"
+                                                   value="{{ $data->tanggal_mulai ?? '' }}">
                                         </td>
-                                        
+
                                         <td class="py-4 text-center">
-                                            <input type="date" name="tanggal_selesai" 
-                                                   class="form-control form-control-sm tanggal-selesai mx-auto" 
-                                                   style="max-width: 160px;">
+                                            <input type="date" name="tanggal_selesai"
+                                                   class="mx-auto form-control form-control-sm tanggal-selesai"
+                                                   style="max-width: 160px;"
+                                                   value="{{ $data->tanggal_selesai ?? '' }}">
                                         </td>
-                                        
+
                                         <td class="py-4 text-center">
                                             <div class="form-check d-flex justify-content-center">
-                                                <input type="checkbox" name="selalu_aktif" 
-                                                       class="form-check-input selalu-aktif">
+                                                <input type="checkbox" name="selalu_aktif"
+                                                       class="form-check-input selalu-aktif"
+                                                       {{ isset($data) && $data->override_status === 'on' ? 'checked' : '' }}>
                                             </div>
                                         </td>
-                                        
+
                                         <td class="py-4 text-center">
-                                            <button type="submit" class="btn btn-sm px-3 text-white" 
+                                            <button type="submit" class="px-3 text-white btn btn-sm"
                                                     style="background-color: var(--accent-burgundy);">
                                                 <i class="bi bi-check-circle me-1"></i>
                                                 Simpan
@@ -128,7 +94,7 @@
                             </tbody>
                         </table>
 
-                        <div class="card border-0 bg-white bg-opacity-10 rounded-3 p-3">
+                        <div class="p-3 bg-white border-0 card bg-opacity-10 rounded-3">
                                 <div class="d-flex">
                                     <i class="bi bi-lightbulb-fill me-3 text-warning" style="font-size: 1.2rem;"></i>
                                     <div class="text">
@@ -139,7 +105,7 @@
                                         <small class="opacity-90 d-block">
                                            Tanggal Pendaftran akan di abaikan jika <strong>"Selalu Aktif"</strong> dicentang
                                         </small>
-                                        <small class="opacity-75 d-block mt-1">
+                                        <small class="mt-1 opacity-75 d-block">
                                             Atau atur periode tanggal untuk membatasi waktu pendaftaran
                                         </small>
                                     </div>
@@ -151,6 +117,21 @@
         </div>
     </div>
 </div>
+
+@push('sekretaris-after-script')
+    <script>
+        @if (session('status'))
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        @endif
+
+        @if (session('status_error'))
+            const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
+            myModal.show();
+        @endif
+    </script>
+@endpush
 
 {{-- Enhanced JavaScript --}}
 <script>
@@ -180,10 +161,10 @@
 
             function updateInputState() {
                 const isChecked = checkbox.checked;
-                
+
                 tanggalMulai.disabled = isChecked;
                 tanggalSelesai.disabled = isChecked;
-                
+
                 // Visual feedback
                 if (isChecked) {
                     tanggalMulai.style.backgroundColor = '#e9ecef';
@@ -206,7 +187,7 @@
                         showErrorAlert('Harap lengkapi tanggal mulai dan selesai, atau centang "Selalu Aktif".');
                         return;
                     }
-                    
+
                     if (new Date(tanggalMulai.value) >= new Date(tanggalSelesai.value)) {
                         e.preventDefault();
                         showErrorAlert('Tanggal mulai harus lebih awal dari tanggal selesai.');
@@ -321,11 +302,11 @@
         .table-responsive {
             font-size: 0.9rem;
         }
-        
+
         .form-control-sm {
             font-size: 0.8rem;
         }
-        
+
         .btn-sm {
             font-size: 0.8rem;
             padding: 0.25rem 0.75rem;

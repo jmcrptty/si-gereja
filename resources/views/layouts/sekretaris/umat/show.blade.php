@@ -112,8 +112,8 @@
 
                                 <div class="col-sm-6">
                                     <label for="tanggal_baptis" class="form-label">Tanggal Baptis</label>
-                                    @if ($umat->baptis->tanggal_baptis)
-                                        <input disabled readonly type="date" class="form-control" id="tanggal_baptis" value="{{ $umat->baptis->tanggal_baptis }}">
+                                    @if ($tanggal_terima['Baptis'])
+                                        <input disabled readonly type="date" class="form-control" id="tanggal_baptis" value="{{ $tanggal_terima['Baptis'] }}">
                                     @else
                                         <input disabled readonly type="text" class="form-control" id="tanggal_baptis" value="Belum Ada">
                                     @endif
@@ -192,8 +192,8 @@
 
                                 <div class="col-sm-6">
                                     <label for="tanggal_komuni" class="form-label">Tanggal Komuni Pertama</label>
-                                    @if ($umat->komuni->tanggal_komuni)
-                                        <input disabled readonly type="date" class="form-control" id="tanggal_komuni" value="{{ $umat->komuni->tanggal_komuni }}">
+                                    @if ($tanggal_terima['Komuni'])
+                                        <input disabled readonly type="date" class="form-control" id="tanggal_komuni" value="{{ $tanggal_terima['Komuni'] }}">
                                     @else
                                         <input disabled readonly type="text" class="form-control" id="tanggal_komuni" value="Belum Ada">
                                     @endif
@@ -218,14 +218,14 @@
                                 <h1 class="pt-1 mt-4">Data Krisma</h1>
 
                                 <div class="col-sm-6">
-                                    <label for="gereja_pempat_krisma" class="form-label">Gereja Tempat Penerimaan Krisma</label>
-                                    <input disabled readonly type="text" class="form-control" id="gereja_pempat_krisma" value="{{ $umat->krisma->gereja_pempat_krisma }}">
+                                    <label for="gereja_tempat_krisma" class="form-label">Gereja Tempat Penerimaan Krisma</label>
+                                    <input disabled readonly type="text" class="form-control" id="gereja_tempat_krisma" value="{{ $umat->krisma->gereja_tempat_krisma }}">
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="tanggal_krisma" class="form-label">Tanggal Krisma</label>
-                                    @if ($umat->krisma->tanggal_krisma)
-                                        <input disabled readonly type="date" class="form-control" id="tanggal_krisma" value="{{ $umat->krisma->tanggal_krisma }}">
+                                    @if ($tanggal_terima['Krisma'])
+                                        <input disabled readonly type="date" class="form-control" id="tanggal_krisma" value="{{ $tanggal_terima['Krisma'] }}">
                                     @else
                                         <input disabled readonly type="text" class="form-control" id="tanggal_krisma" value="Belum Ada">
                                     @endif

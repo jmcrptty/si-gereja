@@ -25,18 +25,37 @@ class SekretarisController extends Controller
 
     public function umat_show(Umat $umat)
     {
+        // Load all sakramens related to this Umat
         $umat->load(['baptis', 'komuni', 'krisma']);
 
-        if($umat->jenis_kelamin == 'Pria'){
+        // Conditionally load pernikahan relationship
+        if ($umat->jenis_kelamin == 'Pria') {
             $umat->load(['pernikahanPria']);
-        }else{
+        } else {
             $umat->load(['pernikahanWanita']);
         }
 
+        // Format tanggal_terima if the sakramen exists
+        $formattedSakramen = [
+            'Baptis' => $umat->baptis ? optional($umat->baptis)->tanggal_terima?->format('Y-m-d') : null,
+            'Komuni' => $umat->komuni ? optional($umat->komuni)->tanggal_terima?->format('Y-m-d') : null,
+            'Krisma' => $umat->krisma ? optional($umat->krisma)->tanggal_terima?->format('Y-m-d') : null,
+            'Pernikahan' => null,
+        ];
+
+        // Handle pernikahan date
+        if ($umat->jenis_kelamin == 'Pria' && $umat->pernikahanPria) {
+            $formattedSakramen['Pernikahan'] = optional($umat->pernikahanPria)->tanggal_terima?->format('Y-m-d');
+        } elseif ($umat->jenis_kelamin == 'Wanita' && $umat->pernikahanWanita) {
+            $formattedSakramen['Pernikahan'] = optional($umat->pernikahanWanita)->tanggal_terima?->format('Y-m-d');
+        }
+
         return view('layouts.sekretaris.umat.show', [
-            'umat' => $umat
+            'umat' => $umat,
+            'tanggal_terima' => $formattedSakramen
         ]);
     }
+
 
     public function downloadFile($type, $filename)
     {
@@ -56,33 +75,12 @@ class SekretarisController extends Controller
     public function pendaftaranSakramen(){
 
         $baptis = Baptis::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Pending')->get(['id', 'umat_id', 'tanggal_daftar']);
-        // $baptis = Baptis::with(['umat:id,nama_lengkap,email,no_hp'])->get(['id', 'umat_id', 'tanggal_daftar']);
-
-        $baptis = $baptis->map(function ($item) {
-            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
-            return $item;
-        });
 
         $komuni = Komuni::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Pending')->get(['id', 'umat_id', 'tanggal_daftar']);
 
-        $komuni = $komuni->map(function ($item) {
-            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
-            return $item;
-        });
-
         $krisma = Krisma::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Pending')->get(['id', 'umat_id', 'tanggal_daftar']);
 
-        $krisma = $krisma->map(function ($item) {
-            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
-            return $item;
-        });
-
         $pernikahan = Pernikahan::with(['umatPria:id,nama_lengkap,email,no_hp', 'umatWanita:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Pending')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id_pria', 'umat_id_wanita', 'nama_lengkap_pria', 'nama_lengkap_wanita', 'tanggal_daftar', 'tanggal_terima']);
-
-        $pernikahan = $pernikahan->map(function ($item) {
-            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
-            return $item;
-        });
 
         return view('layouts.pendaftaransakramen', [
             'baptis' => $baptis,
@@ -215,34 +213,13 @@ class SekretarisController extends Controller
     // SAKRAMEN -> PENERIMAAN
     public function penerimaanSakramen(){
 
-        $baptis = Baptis::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id', 'tanggal_terima']);
-        // $baptis = Baptis::with(['umat:id,nama_lengkap,email,no_hp'])->get(['id', 'umat_id', 'tanggal_daftar']);
+        $baptis = Baptis::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id', 'tanggal_daftar']);
 
-        $baptis = $baptis->map(function ($item) {
-            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
-            return $item;
-        });
+        $komuni = Komuni::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id', 'tanggal_daftar']);
 
-        $komuni = Komuni::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id', 'tanggal_terima']);
+        $krisma = Krisma::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id', 'tanggal_daftar']);
 
-        $komuni = $komuni->map(function ($item) {
-            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
-            return $item;
-        });
-
-        $krisma = Krisma::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id', 'tanggal_terima']);
-
-        $krisma = $krisma->map(function ($item) {
-            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
-            return $item;
-        });
-
-        $pernikahan = Pernikahan::with(['umatPria:id,nama_lengkap,email,no_hp', 'umatWanita:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id_pria', 'umat_id_wanita', 'nama_lengkap_pria', 'nama_lengkap_wanita', 'tanggal_daftar', 'tanggal_terima']);
-
-        $pernikahan = $pernikahan->map(function ($item) {
-            $item->tanggal_daftar = Carbon::parse($item->tanggal_daftar)->format('d M Y');
-            return $item;
-        });
+        $pernikahan = Pernikahan::with(['umatPria:id,nama_lengkap,email,no_hp', 'umatWanita:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id_pria', 'umat_id_wanita', 'nama_lengkap_pria', 'nama_lengkap_wanita', 'tanggal_daftar',]);
 
         return view('layouts.penerimaansakramen', [
             'baptis' => $baptis,

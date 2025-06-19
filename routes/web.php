@@ -21,6 +21,7 @@ use App\Http\Controllers\KrismaController;
 use App\Http\Controllers\PendaftaranPernikahan_InvController;
 use App\Http\Controllers\PernikahanController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PenganturanSakramen;
 use App\Http\Controllers\SekretarisController;
 
 Route::middleware('guest')->group(function () {
@@ -138,28 +139,26 @@ Route::middleware(['auth', 'roles:sekretaris'])->prefix('sekretaris')->name('sek
         Route::post('/penerimaan/pernikahan/setuju/{pernikahan}', [SekretarisController::class, 'setujuPenerimaanPernikahan'])->name('setujuPernikahan.penerimaan');
         Route::post('/penerimaan/pernikahan/tolak/{pernikahan}', [SekretarisController::class, 'tolakPenerimaanPernikahan'])->name('tolakPernikahan.penerimaan');
 
-    // view tanggal pembukaan sakramen
-    Route::get('pembukaan_pendaftaran', function (){
-        return view('layouts.pembukaan_pendaftaran');
-    })->name('sakramen.index');
+        // pengaturan sakramen
+        Route::get('pengaturan_sakramen', [PenganturanSakramen::class, 'index'])->name('pengaturan_sakramen');
+        Route::post('pengaturan_sakramen/update/', [PenganturanSakramen::class, 'updatePengaturanSakramen'])->name('pengaturan_sakramen.update');
 
-    // forum umat
-    Route::get('/forum', [ForumUmatController::class, 'sekretarisIndex'])->name('forum');
-    Route::post('/forum/{id}/answer', [ForumUmatController::class, 'answer'])->name('forum.answer');
-    Route::delete('/forum/{id}', [ForumUmatController::class, 'destroy'])->name('forum.destroy');
+        // forum umat
+        Route::get('/forum', [ForumUmatController::class, 'sekretarisIndex'])->name('forum');
+        Route::post('/forum/{id}/answer', [ForumUmatController::class, 'answer'])->name('forum.answer');
+        Route::delete('/forum/{id}', [ForumUmatController::class, 'destroy'])->name('forum.destroy');
 
+        // rute informasi misa
+        Route::get('/informasi-misa', [InformasiMisaController::class, 'index'])->name('informasi_misa');
+        Route::get('/informasi-misa/get-by-jenis/{jenis}', [InformasiMisaController::class, 'getByJenis']);
+        Route::put('/informasi-misa/{id}', [InformasiMisaController::class, 'update'])->name('informasi_misa.update');
 
-    // rute informasi misa
-    Route::get('/informasi-misa', [InformasiMisaController::class, 'index'])->name('informasi_misa');
-    Route::get('/informasi-misa/get-by-jenis/{jenis}', [InformasiMisaController::class, 'getByJenis']);
-    Route::put('/informasi-misa/{id}', [InformasiMisaController::class, 'update'])->name('informasi_misa.update');
-
-    // rute pengumuman
-    Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman');
-    Route::get('/pengumuman/get-by-jenis/{jenis}', [PengumumanController::class, 'getByJenis']);
-    Route::put('/pengumuman/{id}', [PengumumanController::class, 'update'])->name('pengumuman.update');
-    Route::get('/pengumuman/image/{filename}', [PengumumanController::class, 'showImage'])->name('sekretaris.pengumuman.image');
-    Route::get('/image/{filename}', [PengumumanController::class, 'showImage'])->name('image.show');
+        // rute pengumuman
+        Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman');
+        Route::get('/pengumuman/get-by-jenis/{jenis}', [PengumumanController::class, 'getByJenis']);
+        Route::put('/pengumuman/{id}', [PengumumanController::class, 'update'])->name('pengumuman.update');
+        Route::get('/pengumuman/image/{filename}', [PengumumanController::class, 'showImage'])->name('sekretaris.pengumuman.image');
+        Route::get('/image/{filename}', [PengumumanController::class, 'showImage'])->name('image.show');
 });
 
 // ketua lingkungan

@@ -27,7 +27,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data_pernikahan->nama_lengkap_pria }}</td>
                         <td>{{ $data_pernikahan->nama_lengkap_wanita }}</td>
-                        <td>{{ $data_pernikahan->tanggal_daftar}}</td>
+                        <td>{{ $data_pernikahan->tanggal_daftar->format('d M Y')}}</td>
                         <td>
                             <div class="flex-wrap gap-2 d-flex justify-content-center">
                                 {{-- Lihat --}}
