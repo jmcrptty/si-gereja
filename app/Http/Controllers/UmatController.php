@@ -111,9 +111,31 @@ class UmatController extends Controller
      */
     public function show(Umat $umat)
     {
-        // dd($umat);
+        $umat->load(['baptis', 'komuni', 'krisma']);
+
+        if ($umat->jenis_kelamin == 'Pria') {
+            $umat->load(['pernikahanPria']);
+        } else {
+            $umat->load(['pernikahanWanita']);
+        }
+
+        $formattedSakramen = [
+            'Baptis' => $umat->baptis ? optional($umat->baptis)->tanggal_terima?->format('Y-m-d') : null,
+            'Komuni' => $umat->komuni ? optional($umat->komuni)->tanggal_terima?->format('Y-m-d') : null,
+            'Krisma' => $umat->krisma ? optional($umat->krisma)->tanggal_terima?->format('Y-m-d') : null,
+            'Pernikahan' => null,
+        ];
+
+        if ($umat->jenis_kelamin == 'Pria' && $umat->pernikahanPria) {
+            $formattedSakramen['Pernikahan'] = optional($umat->pernikahanPria)->tanggal_terima?->format('Y-m-d');
+        } elseif ($umat->jenis_kelamin == 'Wanita' && $umat->pernikahanWanita) {
+            $formattedSakramen['Pernikahan'] = optional($umat->pernikahanWanita)->tanggal_terima?->format('Y-m-d');
+        }
+
+
         return view('layouts.ketualingkungan.umat.show', [
-            'umat' => $umat
+            'umat' => $umat,
+            'tanggal_terima' => $formattedSakramen
         ]);
     }
 
@@ -230,6 +252,13 @@ class UmatController extends Controller
         //     abort(404, 'File not found');
         // }
         // mungkin sebaiknya perlu error handling yang lebih bagus, tapi untuk sekarang nonaktifkan linknya aja
+
+        return response()->file(storage_path("app/{$path}"));
+    }
+
+    public function downloadFilePernikahan($type, $filename)
+    {
+        $path = "private/pernikahans/{$type}/{$filename}";
 
         return response()->file(storage_path("app/{$path}"));
     }

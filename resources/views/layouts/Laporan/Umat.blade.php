@@ -3,24 +3,24 @@
 @section('title', 'Laporan Data Umat')
 
 @section('content')
-<div class="container-fluid px-4">
+<div class="px-4 container-fluid">
     <h1 class="mt-4">Laporan Data Umat</h1>
-    <ol class="breadcrumb mb-4">
+    <ol class="mb-4 breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('pastorparoki.dashboard') }}">Dashboard</a></li>
         <li class="breadcrumb-item active">Laporan Data Umat</li>
     </ol>
 
-    <div class="row mb-4">
+    <div class="mb-4 row">
         <div class="col-xl-12">
-            <div class="card bg-primary text-white h-100 shadow">
+            <div class="text-white shadow card bg-primary h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-white-75 small">Total Umat Diterima</div>
-                            <div class="text-lg fw-bold">Tahun {{ $year }}</div>
+                            <div class="text-lg fw-bold">Tahun {{ $tahun }}</div>
                         </div>
                         <div>
-                            <h1 class="display-4 mb-0">{{ $totalUmat }}</h1>
+                            <h1 class="mb-0 display-4">{{ $totalUmat }}</h1>
                             <div class="small text-white-75">Orang</div>
                         </div>
                     </div>
@@ -29,30 +29,30 @@
         </div>
     </div>
 
-    <div class="card mb-4">
+    <div class="mb-4 card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <i class="fas fa-table me-1"></i>
-                    Data Umat Diterima Tahun {{ $year }}
+                    Data Umat Diterima Tahun {{ $tahun }}
                 </div>
-                <div class="d-flex gap-3 align-items-center">
+                <div class="gap-3 d-flex align-items-center">
                     <!-- Search Input -->
-                    <form action="{{ route('pastorparoki.laporan.umat') }}" method="GET" class="d-flex gap-2" id="searchForm">
+                    <form action="{{ route('pastorparoki.laporan.umat') }}" method="GET" class="gap-2 d-flex" id="searchForm">
                         <div class="input-group" style="width: 350px;">
-                            <input type="text" 
-                                   name="search" 
-                                   class="form-control" 
-                                   placeholder="Cari umat" 
+                            <input type="text"
+                                   name="search"
+                                   class="form-control"
+                                   placeholder="Cari umat"
                                    value="{{ request('search') }}">
                             <button class="btn btn-outline-secondary" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <!-- Year Select with onchange event -->
-                        <select name="year" class="form-select" onchange="this.form.submit()">
+                        <!-- Tahun select with onchange event -->
+                        <select name="tahun" class="form-select" onchange="this.form.submit()">
                             @for($y = date('Y'); $y >= 2020; $y--)
-                                <option value="{{ $y }}" {{ request('year', date('Y')) == $y ? 'selected' : '' }}>
+                                <option value="{{ $y }}" {{ (int) request('tahun', date('Y')) === $y ? 'selected' : '' }}>
                                     {{ $y }}
                                 </option>
                             @endfor
@@ -79,15 +79,14 @@
                             <td>{{ $u->nama_lengkap }}</td>
                             <td>{{ $u->lingkungan }}</td>
                             <td class="text-center">
-                                {{-- <a href="{{ route('pastorparoki.laporan.umat.detail', $u->id) }}" 
-                                   class="btn btn-primary btn-sm">
-                                    <i class="fas fa-eye"></i> Detail
-                                </a> --}}
+                                <a href="{{ route('pastorparoki.umat.show', $u->id) }}" class="btn btn-sm bg-primary" title="Lihat">
+                                    <i class="fa-solid fa-eye"></i> Lihat
+                                </a>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center">Tidak ada data umat diterima untuk tahun {{ $year }}</td>
+                            <td colspan="4" class="text-center">Tidak ada data umat diterima untuk tahun {{ $tahun }}</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -101,8 +100,6 @@
             @endif
         </div>
     </div>
-
-     
 </div>
 
 @push('styles')
@@ -140,7 +137,7 @@
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
-        var table = $('#dataTable').DataTable({
+        $('#dataTable').DataTable({
             "pageLength": 10,
             "ordering": true,
             "info": true,
@@ -150,11 +147,6 @@
             "dom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
                    "<'row'<'col-sm-12'tr>>" +
                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
-        });
-
-        // Custom search box functionality
-        $('#searchInput').on('keyup', function() {
-            table.search(this.value).draw();
         });
     });
 </script>

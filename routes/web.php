@@ -169,6 +169,7 @@ Route::middleware(['auth', 'roles:ketua lingkungan'])->prefix('ketualingkungan')
     Route::post('/umat/setuju/{umat}', [UmatController::class, 'setuju'])->name('umat.setuju');
     Route::post('/umat/tolak/{umat}', [UmatController::class, 'tolak'])->name('umat.tolak');
     Route::get('/umat/file/{type}/{filename}', [UmatController::class, 'downloadFile'])->name('umat.downloadFile');
+    Route::get('/pernikahan/file/{type}/{filename}', [SekretarisController::class, 'downloadFilePernikahan'])->name('pernikahan.downloadFile');
     Route::resource('/umat', UmatController::class);
 
 });
@@ -185,7 +186,10 @@ Route::middleware(['auth', 'roles:pastor paroki'])->prefix('pastorparoki')->name
 
     // Laporan Data Umat
     Route::get('/laporan/umat', [LaporanController::class, 'umat'])->name('laporan.umat');
+    Route::get('/umat/{umat}', [LaporanController::class, 'umat_show'])->name('umat.show');
     Route::get('/laporan/umat/export', [LaporanController::class, 'exportUmat'])->name('laporan.umat.export');
+    Route::get('/umat/file/{type}/{filename}', [UmatController::class, 'downloadFile'])->name('umat.downloadFile');
+    Route::get('/pernikahan/file/{type}/{filename}', [SekretarisController::class, 'downloadFilePernikahan'])->name('pernikahan.downloadFile');
 });
 
 // lain

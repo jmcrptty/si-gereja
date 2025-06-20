@@ -307,7 +307,7 @@
                                             <label for="akte_file_wanita" class="form-label">Surat Krisma</label>
                                             <div>
                                                 @if ($umat->pernikahanPria->akte_file_wanita)
-                                                    <a href="{{ route('sekretaris.pernikahan.downloadFile', ['type' => 'akte', 'filename' => basename($umat->pernikahanPria->akte_file_wanita)]) }}"
+                                                    <a href="{{ route('sekretaris.pernikahan.downloadFile', ['type' => 'akte_file', 'filename' => basename($umat->pernikahanPria->akte_file_wanita)]) }}"
                                                         class="btn btn-outline-primary d-block" target="_blank">
                                                         Lihat Akte Kelahiran
                                                     </a>
@@ -411,7 +411,7 @@
                         </div>
 
                         <div class="mt-5 button-group text-end">
-                            <a href="{{ route('sekretaris.umat.index') }}" class="border-0 rounded btn-warning btn btn-lg">Kembali</a>
+                            <a href="{{ route('pastorparoki.laporan.umat') }}" class="border-0 rounded btn-warning btn btn-lg">Kembali</a>
                         </div>
                     </form>
                 </div>
