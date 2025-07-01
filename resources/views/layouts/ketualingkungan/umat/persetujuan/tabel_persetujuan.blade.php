@@ -37,16 +37,16 @@
                             <div class="flex-wrap gap-2 d-flex justify-content-center">
                                 {{-- Lihat --}}
                                 <a href="{{ route('ketualingkungan.umat.show', $umat->id) }}" class="border-0 badge bg-primary fs-6" title="Lihat" style="text-decoration: none">
-                                    <i class="fa-solid fa-eye"></i> Lihat
+                                    <i class="fa-solid fa-eye"></i>
                                 </a>
                                 {{-- Konfirmasi --}}
-                                <button type="button" class="border-0 badge bg-success fs-6" data-bs-toggle="modal" data-bs-target="#confirmModal{{ $umat->id }}">
-                                    <i class="fa-solid fa-check"></i> Setujui
+                                <button type="button" class="border-0 badge bg-success fs-6" title="Setujui" data-bs-toggle="modal" data-bs-target="#confirmModal{{ $umat->id }}">
+                                    <i class="fa-solid fa-check"></i>
                                 </button>
 
                                 {{-- Tolak --}}
-                                <button type="button" class="border-0 badge bg-danger fs-6" data-bs-toggle="modal" data-bs-target="#rejectModalLabel{{ $umat->id }}">
-                                    <i class="fa-solid fa-xmark"></i> Tolak
+                                <button type="button" class="border-0 badge bg-danger fs-6" title="Tolak" data-bs-toggle="modal" data-bs-target="#rejectModalLabel{{ $umat->id }}">
+                                    <i class="fa-solid fa-xmark"></i> 
                                 </button>
                             </div>
                         </td>

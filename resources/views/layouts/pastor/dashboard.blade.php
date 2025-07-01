@@ -2,171 +2,137 @@
 
 @section('title', 'Dashboard')
 
-@push('styles')
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+@section('content')
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm bg-white">
+                <div class="card-body p-3 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                    <div>
+                        <h2 class="h4 fw-bold text-dark mb-2">Dashboard</h2>
+                        <p class="text-muted mb-0">
+                            <i class="bi bi-person-circle me-2"></i>
+                            Selamat datang, {{ Auth::user()->name }}
+                        </p>
+                    </div>
+                    <form method="GET" action="{{ route('dashboard') }}" class="mt-3 mt-md-0">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light border-0">
+                                <i class="bi bi-calendar3 text-primary"></i>
+                            </span>
+                            <select name="year" class="form-select border-0 shadow-sm fw-semibold" onchange="this.form.submit()">
+                                @foreach ($availableYears as $availableYear)
+                                    <option value="{{ $availableYear }}" {{ $availableYear == $year ? 'selected' : '' }}>
+                                        {{ $availableYear }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Umat (besar) + Sakramen (kanan) -->
+    <div class="row g-3 mb-4">
+        <!-- Total Umat -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100 text-center p-3">
+                <div class="mb-2 text-primary" style="font-size: 2.5rem;">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <h6 class="text-muted fw-semibold">Total Umat Terdaftar</h6>
+                <h2 class="fw-bold text-primary mb-1" style="font-size: 2.8rem;">{{ number_format($totalUmat ?? 0) }}</h2>
+                <small class="text-muted">
+                    <i class="bi bi-calendar-check me-1"></i>
+                    Tahun {{ $year }}
+                </small>
+            </div>
+        </div>
+
+        <!-- Sakramen Cards -->
+        <div class="col-md-6">
+            <div class="row g-2">
+                @php
+                    $sakramenData = [
+                        ['icon' => 'bi-droplet-fill', 'label' => 'Baptis', 'color' => 'info', 'jumlah' => $sakramen['baptis'] ?? 0],
+                        ['icon' => 'bi-cup-fill', 'label' => 'Komuni', 'color' => 'success', 'jumlah' => $sakramen['komuni'] ?? 0],
+                        ['icon' => 'bi-fire', 'label' => 'Krisma', 'color' => 'warning', 'jumlah' => $sakramen['krisma'] ?? 0],
+                        ['icon' => 'bi-heart-fill', 'label' => 'Pernikahan', 'color' => 'danger', 'jumlah' => $sakramen['pernikahan'] ?? 0],
+                    ];
+                @endphp
+
+                @foreach ($sakramenData as $sak)
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm text-center p-2 h-100">
+                        <div class="text-{{ $sak['color'] }}" style="font-size: 1.5rem;">
+                            <i class="bi {{ $sak['icon'] }}"></i>
+                        </div>
+                        <h6 class="text-muted fw-semibold mb-1" style="font-size: 0.9rem;">{{ $sak['label'] }}</h6>
+                        <h5 class="fw-bold text-{{ $sak['color'] }} mb-0" style="font-size: 1.4rem;">{{ $sak['jumlah'] }}</h5>
+                        <small class="text-muted">umat</small>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <!-- Ringkasan -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 p-3">
+                    <h6 class="fw-bold mb-0">
+                        <i class="bi bi-bar-chart-fill text-primary me-2"></i>
+                        Ringkasan Sakramen Tahun {{ $year }}
+                    </h6>
+                </div>
+                <div class="card-body p-3">
+                    @php
+                        $totalSakramen = array_sum(array_column($sakramenData, 'jumlah'));
+                    @endphp
+                    <div class="row text-center g-3">
+                        <div class="col-md-3 border-end">
+                            <h4 class="fw-bold text-primary mb-0">{{ number_format($totalSakramen) }}</h4>
+                            <small class="text-muted">Total Penerima</small>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row text-center">
+                                @foreach ($sakramenData as $sak)
+                                <div class="col-6 col-sm-3">
+                                    <div class="progress mb-1" style="height: 6px;">
+                                        <div class="progress-bar bg-{{ $sak['color'] }}" style="width: {{ $totalSakramen > 0 ? ($sak['jumlah'] / $totalSakramen) * 100 : 0 }}%"></div>
+                                    </div>
+                                    <h6 class="fw-bold text-{{ $sak['color'] }} mb-0">{{ $sak['jumlah'] }}</h6>
+                                    <small class="text-muted">{{ $sak['label'] }}</small>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <style>
-    :root {
-        --primary: #1a1f2c;
-        --primary-dark: #131720;
-        --success: #2c614f;
-        --success-dark: #1f4437;
-        --warning: #c5a028;
-        --warning-hover: #d4af37;
-        --light: #f8f9fa;
-        --dark: #2d3748;
-        --gray-100: #f7fafc;
-        --gray-200: #edf2f7;
-    }
-
-    body {
-        font-family: 'Lora', serif;
-        background-color: var(--gray-100);
-    }
-
-    .container-fluid {
-        padding: 2rem 2.5rem;
-    }
-
-    h1.mt-4 {
-        color: var(--primary);
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        font-size: 2.25rem;
-    }
-
-    .card {
-        border: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-        transition: all 0.3s ease;
-        border-radius: 0.75rem;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .bg-primary {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
-    }
-
-    .bg-success {
-        background: linear-gradient(135deg, var(--success), var(--success-dark)) !important;
-    }
-
-    .badge.bg-warning {
-        background: linear-gradient(135deg, var(--warning), var(--warning-hover)) !important;
-        color: var(--dark) !important;
-        font-family: 'Lora', serif;
-        font-weight: 600;
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-    }
-
-    .list-group-item {
-        border: none;
-        padding: 1.25rem;
-        margin-bottom: 0.5rem;
-        border-radius: 0.5rem !important;
-        background-color: rgba(255, 255, 255, 0.1) !important;
-        transition: all 0.3s ease;
-    }
-
-    .list-group-item:hover {
-        background-color: rgba(255, 255, 255, 0.15) !important;
-    }
-
-    h1, h2, h5 {
-        font-family: 'Lora', serif;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-    }
-
-    .card-title {
-        font-size: 1.25rem;
-        margin-bottom: 1.25rem;
-        opacity: 0.9;
-    }
-
-    .card-text {
-        font-weight: 700;
-        letter-spacing: 0.5px;
+@media (max-width: 768px) {
+    .display-3 {
         font-size: 2rem;
     }
 
-    .welcome-card {
-        background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
-        border-left: 5px solid var(--primary);
+    .h2, h2 {
+        font-size: 1.75rem;
     }
 
-    .welcome-card .card-body {
-        padding: 1.5rem;
-        color: var(--primary);
+    .h5, h5 {
+        font-size: 1.25rem;
     }
-
-    .stats-container {
-        margin-top: 2rem;
-    }
-
-    .rounded-pill {
-        border-radius: 50rem !important;
-    }
-
-    .text-white {
-        color: rgba(255, 255, 255, 0.95) !important;
-    }
+}
 </style>
-@endpush
-
-@section('content')
-<div class="container-fluid">
-    <h1 class="mt-4">Dashboard</h1>
-    
-    <div class="card mb-4 welcome-card">
-        <div class="card-body">
-            <h5 class="mb-0">Selamat Datang, {{ Auth::user()->name }}!</h5>
-            <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
-        </div>
-    </div>
-
-    {{-- Card Statistik Utama --}}
-    <div class="row stats-container">
-        {{-- Total Umat Terdaftar --}}
-        <div class="col-md-4 mb-4">
-            <div class="card text-white bg-primary h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Total Umat Terdaftar</h5>
-                    <h2 class="card-text">{{ $totalUmat ?? 0 }} Umat</h2>
-                </div>
-            </div>
-        </div>
-
-        {{-- Total Penerima Sakramen per Tahun --}}
-        <div class="col-md-8 mb-4">
-            <div class="card text-white bg-success h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Total Penerima Sakramen Tahun {{ date('Y') }}</h5>
-                    <ul class="list-group list-group-flush text-white">
-                        <li class="list-group-item bg-success d-flex justify-content-between align-items-center">
-                            Sakramen Baptis
-                            <span class="badge bg-warning rounded-pill">{{ $sakramen['baptis'] ?? 0 }} Umat</span>
-                        </li>
-                        <li class="list-group-item bg-success d-flex justify-content-between align-items-center">
-                            Sakramen Komuni Pertama
-                            <span class="badge bg-warning rounded-pill">{{ $sakramen['komuni'] ?? 0 }} Umat</span>
-                        </li>
-                        <li class="list-group-item bg-success d-flex justify-content-between align-items-center">
-                            Sakramen Krisma
-                            <span class="badge bg-warning rounded-pill">{{ $sakramen['krisma'] ?? 0 }} Umat</span>
-                        </li>
-                        <li class="list-group-item bg-success d-flex justify-content-between align-items-center">
-                            Sakramen Pernikahan
-                            <span class="badge bg-warning rounded-pill">{{ $sakramen['pernikahan'] ?? 0 }} Umat</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

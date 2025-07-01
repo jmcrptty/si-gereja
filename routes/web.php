@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BaptisController;
 use App\Http\Controllers\UmatController;
-use App\Http\Controllers\KetlingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PendaftaranUmat_InvController;
@@ -23,6 +22,8 @@ use App\Http\Controllers\PernikahanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenganturanSakramen;
 use App\Http\Controllers\SekretarisController;
+use App\Http\Controllers\KetlingController;
+
 
 Route::middleware('guest')->group(function () {
 
@@ -159,11 +160,17 @@ Route::middleware(['auth', 'roles:sekretaris'])->prefix('sekretaris')->name('sek
         Route::put('/pengumuman/{id}', [PengumumanController::class, 'update'])->name('pengumuman.update');
         Route::get('/pengumuman/image/{filename}', [PengumumanController::class, 'showImage'])->name('sekretaris.pengumuman.image');
         Route::get('/image/{filename}', [PengumumanController::class, 'showImage'])->name('image.show');
+
+        // MANAJEMAN AKUN KETUA LINGKUNGAN
+         Route::get('/ketua-lingkungan', [KetlingController::class, 'index'])->name('ketling.index');
+        Route::post('/ketua-lingkungan', [KetlingController::class, 'store'])->name('ketling.store');
+        Route::delete('/ketua-lingkungan/{id}', [KetlingController::class, 'destroy'])->name('ketling.destroy');
 });
 
 // ketua lingkungan
 Route::middleware(['auth', 'roles:ketua lingkungan'])->prefix('ketualingkungan')->name('ketualingkungan.')->group(function () {
 
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/lingkungan', LingkunganController::class);
     Route::get('/umat/persetujuan', [UmatController::class, 'persetujuan'])->name('umat.persetujuan');
     Route::post('/umat/setuju/{umat}', [UmatController::class, 'setuju'])->name('umat.setuju');
@@ -177,12 +184,17 @@ Route::middleware(['auth', 'roles:ketua lingkungan'])->prefix('ketualingkungan')
 // pastor paroki
 Route::middleware(['auth', 'roles:pastor paroki'])->prefix('pastorparoki')->name('pastorparoki.')->group(function () {
     // Dashboard pastor
-    Route::get('/dashboard', function () {
-        return view('layouts.pastor.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     //laporan sakramen
     Route::get('/laporan/sakramen', [LaporanController::class, 'sakramen'])->name('laporan.sakramen');
+
+    // Laporan Data Penerimaan Sakramen
+   Route::post('/laporan/umat/download', [LaporanController::class, 'downloadUmatPdf'])->name('laporan.umat.download');
+   Route::post('/laporan/sakramen/download', [LaporanController::class, 'downloadSakramenPdf'])->name('laporan.sakramen.download');
+
+
+
 
     // Laporan Data Umat
     Route::get('/laporan/umat', [LaporanController::class, 'umat'])->name('laporan.umat');

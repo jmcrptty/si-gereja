@@ -422,6 +422,43 @@
             border-color: var(--accent-burgundy);
         }
 
+        /* Button Styles */
+        .btn-gold {
+            background-color: var(--accent-gold);
+            color: white;
+            border: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-gold:hover, .btn-gold:focus {
+            background-color: #b08a20;
+            color: white;
+        }
+
+        .btn-primary-dark {
+            background-color: var(--primary-dark);
+            color: white;
+            border: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-primary-dark:hover, .btn-primary-dark:focus {
+            background-color: #1a202c;
+            color: white;
+        }
+
+        .btn-outline-gold {
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            background: transparent;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-outline-gold:hover, .btn-outline-gold:focus {
+            background-color: var(--accent-gold);
+            color: white;
+        }
+
         /* Responsive Design */
         @media (max-width: 992px) {
             .navbar {
@@ -478,6 +515,51 @@
             color: #6c757d !important;
             font-size: 0.9rem !important;
         }
+
+        .text-truncate-3 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+     .btn-search {
+        background-color: var(--accent-gold);
+        color: white;
+        border: none;
+    }
+
+    .btn-search:hover {
+        background-color: #b08a20;
+    }
+
+    .btn-primary-custom {
+        background-color: var(--primary-dark);
+        color: white;
+        border: none;
+    }
+
+    .btn-primary-custom:hover {
+        background-color: #1a202c;
+    }
+
+    .btn-outline-primary-custom {
+        color: var(--primary-dark);
+        border-color: var(--primary-dark);
+    }
+
+    .btn-outline-primary-custom:hover {
+        background-color: var(--primary-dark);
+        color: white;
+    }
+
+    .text-truncate-3 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
     </style>
 </head>
 <body>
@@ -541,9 +623,9 @@
 </section>
 
 <!-- Content Section -->
-<section class="content-section">
+<section class="content-section py-5">
     <div class="container">
-        <!-- Success Alert -->
+        <!-- Alert -->
         @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
             <i class="bi bi-check-circle me-2"></i>
@@ -552,85 +634,72 @@
         </div>
         @endif
 
-        <div class="row">
-            <!-- Questions List -->
-            <div class="col-lg-8">
-                <!-- Search Section -->
-                <div class="search-section">
-                    <form method="GET" action="{{ route('forum.index') }}">
-                        <div class="input-group">
-                            <input 
-                                type="text" 
-                                name="search" 
-                                class="form-control search-input" 
-                                placeholder="Cari pertanyaan yang ingin Anda ketahui..." 
-                                value="{{ old('search', $search ?? '') }}"
-                                autocomplete="off"
-                            >
-                            <button class="btn btn-search" type="submit">
-                                <i class="bi bi-search me-2"></i>Cari
-                            </button>
-                        </div>
-                    </form>
-                </div>
+        <!-- Search -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <form method="GET" action="{{ route('forum.index') }}">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            name="search" 
+                            class="form-control search-input" 
+                            placeholder="Cari pertanyaan yang ingin Anda ketahui..." 
+                            value="{{ old('search', $search ?? '') }}"
+                            autocomplete="off"
+                        >
+                        <button class="btn btn-gold" type="submit">
+                            <i class="fas fa-search"></i> Cari
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-                <!-- Pertanyaan & Jawaban Terbaru -->
-                <h4 class="mb-4 text-center" style="color: var(--primary-dark); font-weight: 600;">Pertanyaan & Jawaban Terbaru</h4>
-                
-                @forelse($questions as $q)
-                <div class="question-card">
+        <!-- Pertanyaan & Form Ajukan -->
+        <div class="row g-4 mb-4">
+            @foreach($questions->take(2) as $q)
+            <div class="col-lg-4 col-md-6">
+                <div class="question-card shadow-sm rounded bg-white h-100">
                     <div class="card-body p-3">
-                        <div class="question-header">
-                            <div class="user-avatar">
-                                <i class="bi bi-person-fill"></i>
+                        <div class="question-header d-flex align-items-center mb-3">
+                            <div class="user-avatar me-3">
+                                <i class="bi bi-person-fill fs-2"></i>
                             </div>
                             <div class="user-info">
-                                <h6>{{ $q->name }}</h6>
+                                <h6 class="mb-0">{{ $q->name }}</h6>
                                 <small class="text-muted">
                                     <i class="bi bi-calendar3 me-1"></i>{{ $q->created_at->format('d M Y') }}
                                 </small>
                             </div>
                         </div>
-                        <h5 class="question-title">{{ $q->question }}</h5>
-                        
+                        <h5 class="question-title">{{ Str::limit($q->question, 100, '...') }}</h5>
+
                         @if($q->answer)
-                        <div class="answer-section">
-                            <div class="answer-label">Jawaban:</div>
-                            <p class="mb-1">{{ $q->answer }}</p>
-                            <small class="text-muted">
+                        <div class="answer-section mt-3 p-3 rounded bg-light border-start border-warning">
+                            <div class="answer-label fw-bold text-danger mb-2">Jawaban:</div>
+                            <p class="mb-1">{{ Str::limit($q->answer, 280, '...') }}</p>
+                            <small class="text-muted d-block mb-2">
                                 <i class="bi bi-clock me-1"></i>{{ $q->answered_at->format('d M Y, H:i') }}
                             </small>
+                            <button class="btn btn-sm btn-outline-primary" onclick="showModal(`{{ $q->question }}`, `{{ $q->answer }}`)">Lihat Lebih Banyak</button>
                         </div>
                         @else
-                        <div class="text-muted small">
+                        <div class="text-muted small mt-3">
                             <i class="bi bi-hourglass-split me-2"></i>Menunggu jawaban...
                         </div>
                         @endif
                     </div>
                 </div>
-                @empty
-                <div class="empty-state">
-                    <i class="bi bi-chat-dots"></i>
-                    <h5>Belum ada pertanyaan</h5>
-                    <p>Jadilah yang pertama mengajukan pertanyaan di forum ini.</p>
-                </div>
-                @endforelse
-
-                <!-- Pagination -->
-                @if($questions->hasPages())
-                <div class="d-flex justify-content-center mt-4">
-                    {{ $questions->links('pagination::bootstrap-5') }}
-                </div>
-                @endif
             </div>
+            @endforeach
 
-            <!-- Ask Question Form -->
-            <div class="col-lg-4">
-                <div class="form-section">
-                    <h4 class="form-title">Ajukan Pertanyaan</h4>
+            <!-- Form Ajukan Pertanyaan -->
+            <div class="col-lg-4 col-md-6">
+                <div class="form-section p-4 shadow rounded bg-white h-100">
+                    <h4 class="form-title mb-3">Ajukan Pertanyaan</h4>
                     <form method="POST" action="{{ route('forum.store') }}">
                         @csrf
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label class="form-label">
                                 <i class="bi bi-person me-2"></i>Nama Lengkap
                             </label>
@@ -647,7 +716,7 @@
                             @enderror
                         </div>
                         
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label class="form-label">
                                 <i class="bi bi-chat-question me-2"></i>Pertanyaan
                             </label>
@@ -663,15 +732,104 @@
                             @enderror
                         </div>
                         
-                        <button type="submit" class="btn btn-submit">
+                        <button type="submit" class="btn btn-primary-dark w-100">
                             <i class="bi bi-send me-2"></i>Kirim Pertanyaan
                         </button>
                     </form>
                 </div>
             </div>
         </div>
+
+        <!-- Pertanyaan Lainnya -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach($questions->skip(2) as $q)
+            <div class="col">
+                <div class="question-card shadow-sm rounded bg-white h-100">
+                    <div class="card-body d-flex flex-column p-3">
+                        <!-- Header -->
+                        <div class="question-header d-flex align-items-center mb-3">
+                            <div class="user-avatar me-3">
+                                <i class="bi bi-person-fill fs-2"></i>
+                            </div>
+                            <div class="user-info">
+                                <h6 class="mb-0">{{ $q->name }}</h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar3 me-1"></i>{{ $q->created_at->format('d M Y') }}
+                                </small>
+                            </div>
+                        </div>
+
+                        <!-- Pertanyaan -->
+                        <h5 class="question-title mb-3">{{ Str::limit($q->question, 100, '...') }}</h5>
+
+                        <!-- Jawaban selalu di bawah -->
+                        <div class="mt-auto">
+                            @if($q->answer)
+                            <div class="answer-section p-3 rounded bg-light border-start border-warning d-flex flex-column justify-content-between" style="min-height: 160px;">
+                                <div>
+                                    <div class="answer-label fw-bold text-danger mb-2">Jawaban:</div>
+                                    <p class="mb-1 text-truncate-3">{{ $q->answer }}</p>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted d-block mb-2">
+                                        <i class="bi bi-clock me-1"></i>{{ $q->answered_at->format('d M Y, H:i') }}
+                                    </small>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="showModal(`{{ $q->question }}`, `{{ $q->answer }}`)">Lihat Lebih Banyak</button>
+                                </div>
+                            </div>
+                            @else
+                            <div class="text-muted small mt-3">
+                                <i class="bi bi-hourglass-split me-2"></i>Menunggu jawaban...
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+
+        <!-- Pagination -->
+        @if($questions->hasPages())
+        <div class="d-flex justify-content-center mt-4">
+            {{ $questions->links('pagination::bootstrap-5') }}
+        </div>
+        @endif
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detail Pertanyaan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="mb-3" id="modalQuestion"></h6>
+                    <div class="border-top pt-3">
+                        <strong>Jawaban:</strong>
+                        <p id="modalAnswer" class="mt-2"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
+<!-- Script untuk modal -->
+<script>
+    function showModal(question, answer) {
+        document.getElementById('modalQuestion').innerText = question;
+        document.getElementById('modalAnswer').innerText = answer;
+
+        const modal = new bootstrap.Modal(document.getElementById('questionModal'));
+        modal.show();
+    }
+</script>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

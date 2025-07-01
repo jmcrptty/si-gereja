@@ -93,18 +93,27 @@
                                 @enderror
                             </div>
 
-                            <div class="col-sm-6">
-                                <label for="lingkungan" class="form-label">Lingkungan</label>
-                                <select type="text" class="form-control @error ('lingkungan')is-invalid @enderror" id="lingkungan" name="lingkungan" placeholder="" value="" required>
-                                    <option selected disabled value="">Pilih Lingkungan</option>
-                                    <option value="st.petrus">St. Petrus</option>
-                                    <option value="st.yohanes">St. Yohanes</option>
-                                    <option value="st.maria">St. Maria</option>
-                                </select>
-                                @error('lingkungan')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @php
+    $user = Auth::user();
+@endphp
+
+@if($user && $user->role === 'ketua lingkungan')
+    <input type="hidden" name="lingkungan" value="{{ $user->lingkungan }}">
+@else
+    <div class="col-sm-6">
+        <label for="lingkungan" class="form-label">Lingkungan</label>
+        <select class="form-control @error('lingkungan') is-invalid @enderror" name="lingkungan" required>
+            <option selected disabled value="">Pilih Lingkungan</option>
+            <option value="st.petrus">St. Petrus</option>
+            <option value="st.yohanes">St. Yohanes</option>
+            <option value="st.maria">St. Maria</option>
+        </select>
+        @error('lingkungan')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+@endif
+
 
                             <h1 class="pt-1 mt-4">Berkas</h1>
 

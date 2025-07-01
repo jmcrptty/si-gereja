@@ -22,13 +22,15 @@ class PendaftaranBaptis_InvController extends Controller
         $request->validate(['email' => 'required|email']);
 
         // cek apakah ada umat yang memiliki email tersebut
+        
         $umat = Umat::where('email', $request->email)->first();
-        $sudahBaptis = Baptis::where('umat_id', $umat->id)->first();
 
         if(!$umat){
             // jika umat belum terdaftar
             return back()->with('Pemberitahuan', 'Belum terdaftar sebagai umat, silahkan melakukan pendaftaran');
         }
+
+        $sudahBaptis = Baptis::where('umat_id', $umat->id)->first();
 
         if($sudahBaptis){
             return back()->with('Pemberitahuan', 'Anda sudah terdaftar');

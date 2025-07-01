@@ -18,7 +18,7 @@
                         <div class="me-3">
                             <div class="text-white-75 small">Total Penerimaan Sakramen</div>
                             <div class="text-lg fw-bold">
-                                {{ $sakramen_id ? $sakramen_list->find($sakramen_id)->nama_sakramen : 'Semua Sakramen' }}
+                                {{ $sakramen_id ? optional($sakramen_list->firstWhere('id', $sakramen_id))->nama_sakramen : 'Semua Sakramen' }}
                                 Tahun {{ $year }}
                             </div>
                         </div>
@@ -76,6 +76,10 @@
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             Data Penerimaan Sakramen
+
+            <a href="#" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#modalDownloadSakramenPDF">
+                <i class="fas fa-file-pdf me-1"></i> Download PDF
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -118,4 +122,43 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Konfirmasi -->
+<div class="modal fade" id="modalDownloadSakramenPDF" tabindex="-1" aria-labelledby="modalLabelSakramen" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabelSakramen">Konfirmasi Download</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body">
+        Yakin ingin mengunduh laporan sakramen tahun {{ $year }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <form id="formDownloadSakramenPDF"
+              action="{{ route('pastorparoki.laporan.sakramen.download') }}"
+              method="POST"
+              target="_blank"
+              onsubmit="closeModalSakramen()">
+            @csrf
+            <input type="hidden" name="year" value="{{ $year }}">
+            <input type="hidden" name="search" value="{{ $search }}">
+            <input type="hidden" name="sakramen_id" value="{{ $sakramen_id }}">
+            <button type="submit" class="btn btn-primary">Ya, Unduh</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function closeModalSakramen() {
+        var modal = bootstrap.Modal.getInstance(document.getElementById('modalDownloadSakramenPDF'));
+        if (modal) {
+            modal.hide();
+        }
+    }
+</script>
+
 @endsection
