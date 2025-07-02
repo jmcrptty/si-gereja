@@ -97,6 +97,12 @@ Route::middleware(['auth', 'roles:sekretaris'])->prefix('sekretaris')->name('sek
 
     Route::get('/dashboard', [SekretarisController::class, 'index'])->name('dashboard');
 
+    // rute laporan
+     Route::get('/laporan/umat', [LaporanController::class, 'umat'])->name('laporan.umat');
+    Route::get('/laporan/sakramen', [LaporanController::class, 'sakramen'])->name('laporan.sakramen');
+    Route::post('/laporan/umat/download', [LaporanController::class, 'downloadUmatPdf'])->name('laporan.umat.download');
+    Route::post('/laporan/sakramen/download', [LaporanController::class, 'downloadSakramenPdf'])->name('laporan.sakramen.download');
+
         // sekretaris -> umat
         Route::get('/umat', [SekretarisController::class, 'umat_index'])->name('umat.index');
         Route::get('/umat/{umat}', [SekretarisController::class, 'umat_show'])->name('umat.show'); // <- ingat kalo ada (Umat $umat) di controller, nama idnya harus sesuai (route model binding)

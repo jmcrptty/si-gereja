@@ -16,22 +16,16 @@ class UmatController extends Controller
      */
 public function index()
 {
-    $userLingkungan = Auth::user()->lingkungan;
+    $user = Auth::user();
 
-    $umats = Umat::where('status_pendaftaran', 'Pending')
-        ->where('lingkungan', $userLingkungan)
+    $umats = Umat::where('status_pendaftaran', 'Diterima')
+        ->where('lingkungan', $user->lingkungan)
+        ->select('id', 'nama_lengkap', 'lingkungan', 'no_hp', 'alamat')
         ->get();
 
-    $umatsDiterima = Umat::where('status_pendaftaran', 'Diterima')
-        ->where('lingkungan', $userLingkungan)
-        ->get();
-
-    $umatsDitolak = Umat::where('status_pendaftaran', 'Ditolak')
-        ->where('lingkungan', $userLingkungan)
-        ->get();
-
-    return view('layouts.ketualingkungan.umat.index', compact('umats', 'umatsDiterima', 'umatsDitolak'));
+    return view('layouts.ketualingkungan.umat.index', compact('umats'));
 }
+
 
 
 
@@ -76,7 +70,7 @@ public function index()
         'nik.max' => 'NIK maksimal 20 karakter.',
         'nik.unique' => 'NIK sudah terdaftar.',
         'jenis_kelamin.required' => 'Jenis kelamin wajib diisi.',
-        'jenis_kelamin.in' => 'Jenis kelamin harus Pria atau Wanita.',
+        'jenis_kelamin.in' => 'Jenis kelamin harus Priaz atau Wanita.',
         'nama_ayah.required' => 'Nama ayah wajib diisi.',
         'nama_ibu.required' => 'Nama ibu wajib diisi.',
         'tempat_lahir.required' => 'Tempat lahir wajib diisi.',
@@ -251,11 +245,10 @@ public function index()
 
     // tambahan
 
-    public function persetujuan()
+   public function persetujuan()
 {
     $user = Auth::user();
 
-    // Jika ketua lingkungan, hanya ambil umat dari lingkungannya
     if ($user->role === 'ketua lingkungan') {
         $umats = Umat::where('status_pendaftaran', 'Pending')
                     ->where('lingkungan', $user->lingkungan)
@@ -269,18 +262,14 @@ public function index()
                     ->where('lingkungan', $user->lingkungan)
                     ->count();
     } else {
-        // Untuk role lain (misalnya sekretaris atau pastor), tampilkan semua
         $umats = Umat::where('status_pendaftaran', 'Pending')->get();
         $umats_tolak = Umat::where('status_pendaftaran', 'Ditolak')->get();
         $jumlahPending = Umat::where('status_pendaftaran', 'Pending')->count();
     }
 
-    return view('layouts.ketualingkungan.umat.persetujuan.persetujuan', [
-        'umats' => $umats,
-        'umats_tolak' => $umats_tolak,
-        'jumlahPending' => $jumlahPending
-    ]);
+    return view('layouts.ketualingkungan.umat.persetujuan.persetujuan', compact('umats', 'umats_tolak', 'jumlahPending'));
 }
+
 
 
    public function setuju(Umat $umat)

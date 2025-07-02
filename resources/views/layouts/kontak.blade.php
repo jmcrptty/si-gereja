@@ -455,7 +455,7 @@
           <i class="bi bi-envelope-fill me-3" style="font-size: 1.5rem;"></i>
           <div>
             <h5>Email</h5>
-            <p><a href="mailto:info@katedralmerauke.or.id">info@katedralmerauke.or.id</a></p>
+            <p><a href="mailto:info@katedralmerauke.or.id">pfransiskusxaveirusmerauke@gmail.com</a></p>
           </div>
         </div>
       </div>
@@ -482,8 +482,8 @@
         <div class="d-flex align-items-center mb-4">
           <i class="bi bi-wallet2 me-3" style="font-size: 1.5rem;"></i>
           <div>
-            <h5>Rekening BCA 1 (kolekte 1)</h5>
-            <p>287 303 6001<br>PGDP Paroki Katedral</p>
+            <h5>Rekening BCA (kolekte)</h5>
+            <p>8316009625<br>Paroki Katedral Merauke</p>
           </div>
         </div>
       </div>
@@ -492,8 +492,8 @@
         <div class="d-flex align-items-center mb-4">
           <i class="bi bi-wallet2 me-3" style="font-size: 1.5rem;"></i>
           <div>
-            <h5>Rekening BCA 1 (kolekte 2)</h5>
-            <p>287 303 6001<br>PGDP Paroki Katedral</p>
+            <h5>Rekening BNI (Pembangunan)</h5>
+            <p>1130023806<br>Paroki Katedral Merauke</p>
           </div>
         </div>
       </div>

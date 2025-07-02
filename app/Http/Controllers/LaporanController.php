@@ -217,14 +217,27 @@ public function downloadSakramenPdf(Request $request)
 
     $sorted = $data->sortByDesc('tanggal_terima')->values();
 
+    // 🔍 INI BAGIAN TAMBAHANNYA
+    if (is_null($sakramen_id)) {
+        // Jika user memilih "semua sakramen", pakai view khusus
+        $pdf = PDF::loadView('layouts.laporan.pdf.semua_sakramen', [
+            'data' => $sorted,
+            'year' => $year
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->stream("laporan_semua_sakramen_{$year}.pdf");
+    }
+
+    // Kalau hanya 1 jenis sakramen
     $pdf = PDF::loadView('layouts.laporan.pdf.sakramen', [
         'data' => $sorted,
         'year' => $year,
-        'sakramen' => $sakramen_id ? ucfirst($sakramen_id) : 'Semua Sakramen'
+        'sakramen' => ucfirst($sakramen_id)
     ])->setPaper('a4', 'portrait');
 
-    return $pdf->stream('laporan_sakramen_' . now()->format('Ymd_His') . '.pdf');
+    return $pdf->stream("laporan_sakramen_{$sakramen_id}_{$year}.pdf");
 }
+
 
 
 

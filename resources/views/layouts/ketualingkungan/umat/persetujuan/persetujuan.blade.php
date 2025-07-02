@@ -4,7 +4,7 @@
 @section('content')
     <main>
         <div class="px-4 container-fluid">
-            <h1 class="mt-4">Persetujuan Umat haha</h1>
+            <h1 class="mt-4">Persetujuan Umat</h1>
             <ol class="mb-4 breadcrumb">
                 <li class="breadcrumb-item active">Verifikasi dan Konfirmasi Data Umat</li>
             </ol>
@@ -83,4 +83,3 @@
         @endif
     </script>
 @endpush
-

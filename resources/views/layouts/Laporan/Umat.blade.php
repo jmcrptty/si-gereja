@@ -116,11 +116,17 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            
+           @php
+                $role = Auth::user()->role;
+                $routePrefix = $role === 'sekretaris' ? 'sekretaris' : 'pastorparoki';
+            @endphp
+
             <form id="formDownloadPDF"
-                  action="{{ route('pastorparoki.laporan.umat.download') }}"
-                  method="POST"
-                  target="_blank"
-                  onsubmit="closeModal()">
+                action="{{ route($routePrefix . '.laporan.umat.download') }}"
+                method="POST"
+                target="_blank"
+                onsubmit="closeModal()">
                 @csrf
                 <input type="hidden" name="tahun" value="{{ $tahun }}">
                 <input type="hidden" name="search" value="{{ request('search') }}">

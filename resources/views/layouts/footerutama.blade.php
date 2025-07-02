@@ -16,7 +16,7 @@
         <ul class="footer-contact">
           <li><i class="bi bi-geo-alt"></i>Jl. Raya Mandala No.30, Maro, Kec. Merauke, Kabupaten Merauke, Papua 99614</li>
           <li><i class="bi bi-telephone"></i> (+62) 82239322236</li>
-          <li><i class="bi bi-envelope"></i> info@katedralmerauke.or.id</li>
+          <li><i class="bi bi-envelope"></i> pfransiskusxaveirusmerauke@gmail.com</li>
           <li><i class="bi bi-clock"></i> Senin - Jumat: 08.00 - 14.00 WIT</li>
         </ul>
       </div>

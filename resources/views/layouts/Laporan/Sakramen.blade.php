@@ -136,11 +136,16 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+       @php
+            $role = Auth::user()->role;
+            $routePrefix = $role === 'sekretaris' ? 'sekretaris' : 'pastorparoki';
+        @endphp
+
         <form id="formDownloadSakramenPDF"
-              action="{{ route('pastorparoki.laporan.sakramen.download') }}"
-              method="POST"
-              target="_blank"
-              onsubmit="closeModalSakramen()">
+            action="{{ route($routePrefix . '.laporan.sakramen.download') }}"
+            method="POST"
+            target="_blank"
+            onsubmit="closeModalSakramen()">
             @csrf
             <input type="hidden" name="year" value="{{ $year }}">
             <input type="hidden" name="search" value="{{ $search }}">

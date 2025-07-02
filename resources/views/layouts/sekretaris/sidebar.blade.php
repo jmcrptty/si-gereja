@@ -55,8 +55,8 @@
                     </a>
                     <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="laporan-sakramen.html">Penerimaan Sakramen</a>
-                            <a class="nav-link" href="laporan-umat.html">Data Umat</a>
+                            <a class="nav-link" href="{{ route('sekretaris.laporan.sakramen') }}">Penerimaan Sakramen</a>
+                            <a class="nav-link" href="{{ route('sekretaris.laporan.umat') }}">Data Umat</a>
                         </nav>
                     </div>
 
