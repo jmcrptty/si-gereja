@@ -23,12 +23,15 @@ class PendaftaranKomuni_InvController extends Controller
 
         // cek apakah ada umat yang memiliki email tersebut
         $umat = Umat::where('email', $request->email)->first();
-        $sudahKomuni = Komuni::where('umat_id', $umat->id)->first();
 
         if(!$umat){
             // jika umat belum terdaftar
             return back()->with('Pemberitahuan', 'Belum terdaftar sebagai umat, silahkan melakukan pendaftaran');
         }
+
+        $sudahKomuni = Komuni::where('umat_id', $umat->id)->first();
+
+
 
         if($sudahKomuni){
             return back()->with('Pemberitahuan', 'Anda sudah terdaftar');
