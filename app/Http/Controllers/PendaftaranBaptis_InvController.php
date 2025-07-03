@@ -22,6 +22,7 @@ class PendaftaranBaptis_InvController extends Controller
         $request->validate(['email' => 'required|email']);
 
         // cek apakah ada umat yang memiliki email tersebut
+
         $umat = Umat::where('email', $request->email)->first();
 
         if(!$umat){

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\PenerimaanSakramen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class LaporanController extends Controller
 {
@@ -82,6 +84,162 @@ class LaporanController extends Controller
 
         return response()->file(storage_path("app/{$path}"));
     }
+
+
+    // Download PDF for Umat
+    
+    public function downloadUmatPdf(Request $request)
+{
+    $tahun = $request->input('tahun', date('Y'));
+    $search = $request->input('search');
+
+    $umatQuery = Umat::query()
+        ->whereYear('tanggal_daftar', $tahun)
+        ->where('status_pendaftaran', 'Diterima');
+
+    if ($search) {
+        $umatQuery->where(function ($q) use ($search) {
+            $q->where('nama_lengkap', 'like', "%{$search}%")
+              ->orWhere('lingkungan', 'like', "%{$search}%");
+        });
+    }
+
+    $umat = $umatQuery->get();
+
+    $pdf = Pdf::loadView('layouts.Laporan.pdf.umat', [
+        'umat' => $umat,
+        'tahun' => $tahun,
+    ])->setPaper('a4', 'portrait');
+
+    return $pdf->stream("laporan-umat-{$tahun}.pdf");
+}
+
+
+// Download PDF for Sakramen
+public function downloadSakramenPdf(Request $request)
+{
+    $year = $request->input('year', date('Y'));
+    $search = $request->input('search');
+    $sakramen_id = $request->input('sakramen_id');
+
+    $data = collect();
+
+    if ($sakramen_id === 'baptis' || is_null($sakramen_id)) {
+        $query = DB::table('baptis')
+            ->join('umat', 'umat.id', '=', 'baptis.umat_id')
+            ->where('baptis.status_penerimaan', 'Diterima')
+            ->whereYear('baptis.tanggal_terima', $year)
+            ->when($search, function ($q) use ($search) {
+                $q->where(function ($s) use ($search) {
+                    $s->where('umat.nama_lengkap', 'like', "%$search%")
+                      ->orWhere('umat.lingkungan', 'like', "%$search%");
+                });
+            })
+            ->select(
+                'umat.nama_lengkap',
+                'umat.lingkungan',
+                DB::raw("'Baptis' as nama_sakramen"),
+                'baptis.tanggal_terima'
+            )
+            ->get();
+
+        $data = $data->merge($query);
+    }
+
+    if ($sakramen_id === 'komuni' || is_null($sakramen_id)) {
+        $query = DB::table('komuni')
+            ->join('umat', 'umat.id', '=', 'komuni.umat_id')
+            ->where('komuni.status_penerimaan', 'Diterima')
+            ->whereYear('komuni.tanggal_terima', $year)
+            ->when($search, function ($q) use ($search) {
+                $q->where(function ($s) use ($search) {
+                    $s->where('umat.nama_lengkap', 'like', "%$search%")
+                      ->orWhere('umat.lingkungan', 'like', "%$search%");
+                });
+            })
+            ->select(
+                'umat.nama_lengkap',
+                'umat.lingkungan',
+                DB::raw("'Komuni' as nama_sakramen"),
+                'komuni.tanggal_terima'
+            )
+            ->get();
+
+        $data = $data->merge($query);
+    }
+
+    if ($sakramen_id === 'krisma' || is_null($sakramen_id)) {
+        $query = DB::table('krisma')
+            ->join('umat', 'umat.id', '=', 'krisma.umat_id')
+            ->where('krisma.status_penerimaan', 'Diterima')
+            ->whereYear('krisma.tanggal_terima', $year)
+            ->when($search, function ($q) use ($search) {
+                $q->where(function ($s) use ($search) {
+                    $s->where('umat.nama_lengkap', 'like', "%$search%")
+                      ->orWhere('umat.lingkungan', 'like', "%$search%");
+                });
+            })
+            ->select(
+                'umat.nama_lengkap',
+                'umat.lingkungan',
+                DB::raw("'Krisma' as nama_sakramen"),
+                'krisma.tanggal_terima'
+            )
+            ->get();
+
+        $data = $data->merge($query);
+    }
+
+    if ($sakramen_id === 'pernikahan' || is_null($sakramen_id)) {
+        $query = DB::table('pernikahans')
+            ->leftJoin('umat as pria', 'pernikahans.umat_id_pria', '=', 'pria.id')
+            ->leftJoin('umat as wanita', 'pernikahans.umat_id_wanita', '=', 'wanita.id')
+            ->where('pernikahans.status_penerimaan', 'Diterima')
+            ->whereYear('pernikahans.tanggal_terima', $year)
+            ->when($search, function ($q) use ($search) {
+                $q->where(function ($s) use ($search) {
+                    $s->where('pria.nama_lengkap', 'like', "%$search%")
+                      ->orWhere('pria.lingkungan', 'like', "%$search%")
+                      ->orWhere('wanita.nama_lengkap', 'like', "%$search%")
+                      ->orWhere('wanita.lingkungan', 'like', "%$search%");
+                });
+            })
+            ->select(
+                DB::raw("CONCAT_WS(' & ', pria.nama_lengkap, wanita.nama_lengkap) as nama_lengkap"),
+                DB::raw("CONCAT_WS(' & ', pria.lingkungan, wanita.lingkungan) as lingkungan"),
+                DB::raw("'Pernikahan' as nama_sakramen"),
+                'pernikahans.tanggal_terima'
+            )
+            ->get();
+
+        $data = $data->merge($query);
+    }
+
+    $sorted = $data->sortByDesc('tanggal_terima')->values();
+
+    // 🔍 INI BAGIAN TAMBAHANNYA
+    if (is_null($sakramen_id)) {
+        // Jika user memilih "semua sakramen", pakai view khusus
+        $pdf = PDF::loadView('layouts.laporan.pdf.semua_sakramen', [
+            'data' => $sorted,
+            'year' => $year
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->stream("laporan_semua_sakramen_{$year}.pdf");
+    }
+
+    // Kalau hanya 1 jenis sakramen
+    $pdf = PDF::loadView('layouts.laporan.pdf.sakramen', [
+        'data' => $sorted,
+        'year' => $year,
+        'sakramen' => ucfirst($sakramen_id)
+    ])->setPaper('a4', 'portrait');
+
+    return $pdf->stream("laporan_sakramen_{$sakramen_id}_{$year}.pdf");
+}
+
+
+
 
     public function sakramen(Request $request)
     {
@@ -205,6 +363,7 @@ class LaporanController extends Controller
             'search',
             'totalPenerimaan'
         ));
+        
     }
 
 

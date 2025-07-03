@@ -37,7 +37,6 @@
                     Data Umat Diterima Tahun {{ $tahun }}
                 </div>
                 <div class="gap-3 d-flex align-items-center">
-                    <!-- Search Input -->
                     <form action="{{ route('pastorparoki.laporan.umat') }}" method="GET" class="gap-2 d-flex" id="searchForm">
                         <div class="input-group" style="width: 350px;">
                             <input type="text"
@@ -49,7 +48,6 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <!-- Tahun select with onchange event -->
                         <select name="tahun" class="form-select" onchange="this.form.submit()">
                             @for($y = date('Y'); $y >= 2020; $y--)
                                 <option value="{{ $y }}" {{ (int) request('tahun', date('Y')) === $y ? 'selected' : '' }}>
@@ -58,6 +56,10 @@
                             @endfor
                         </select>
                     </form>
+
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDownloadPDF">
+                        <i class="fas fa-file-pdf"></i> Download PDF
+                    </button>
                 </div>
             </div>
         </div>
@@ -100,6 +102,40 @@
             @endif
         </div>
     </div>
+
+    <!-- Modal Konfirmasi -->
+    <div class="modal fade" id="modalDownloadPDF" tabindex="-1" aria-labelledby="modalDownloadPDFLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDownloadPDFLabel">Konfirmasi Download</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+          </div>
+          <div class="modal-body">
+            Anda yakin ingin mengunduh laporan umat tahun {{ $tahun }} dalam bentuk PDF?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            
+           @php
+                $role = Auth::user()->role;
+                $routePrefix = $role === 'sekretaris' ? 'sekretaris' : 'pastorparoki';
+            @endphp
+
+            <form id="formDownloadPDF"
+                action="{{ route($routePrefix . '.laporan.umat.download') }}"
+                method="POST"
+                target="_blank"
+                onsubmit="closeModal()">
+                @csrf
+                <input type="hidden" name="tahun" value="{{ $tahun }}">
+                <input type="hidden" name="search" value="{{ request('search') }}">
+                <button type="submit" class="btn btn-primary">Ya, Unduh</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 
 @push('styles')
@@ -112,19 +148,16 @@
         background-color: #fff;
         color: #0d6efd;
     }
-
     .dataTables_wrapper .dataTables_paginate .paginate_button.current {
         background-color: #0d6efd;
         border-color: #0d6efd;
         color: #fff !important;
     }
-
     .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
         background-color: #e9ecef;
         border-color: #dee2e6;
         color: #0a58ca !important;
     }
-
     .dataTables_wrapper .dataTables_length,
     .dataTables_wrapper .dataTables_filter {
         display: none;
@@ -149,6 +182,13 @@
                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
         });
     });
+
+    function closeModal() {
+        var modal = bootstrap.Modal.getInstance(document.getElementById('modalDownloadPDF'));
+        if (modal) {
+            modal.hide();
+        }
+    }
 </script>
 @endpush
 

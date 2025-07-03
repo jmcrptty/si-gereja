@@ -24,7 +24,7 @@
             --primary-dark: #2d3748;
             --primary-light: #f8f9fa;
             --accent-gold: #d4af37;
-            --accent-burgundy: #800020;
+            --accent-burgundy: #2d3748;
             --text-dark: #333;
             --text-light: #f8f9fa;
         }

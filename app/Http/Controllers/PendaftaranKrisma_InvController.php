@@ -23,12 +23,14 @@ class PendaftaranKrisma_InvController extends Controller
 
         // cek apakah ada umat yang memiliki email tersebut
         $umat = Umat::where('email', $request->email)->first();
-        $sudahKrisma = Krisma::where('umat_id', $umat->id)->first();
 
         if(!$umat){
             // jika umat belum terdaftar
             return back()->with('Pemberitahuan', 'Belum terdaftar sebagai umat, silahkan melakukan pendaftaran');
         }
+        
+        $sudahKrisma = Krisma::where('umat_id', $umat->id)->first();
+
 
         if($sudahKrisma){
             return back()->with('Pemberitahuan', 'Anda sudah terdaftar');

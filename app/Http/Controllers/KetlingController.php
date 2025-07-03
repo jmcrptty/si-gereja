@@ -2,63 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class KetlingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Menampilkan semua akun ketua lingkungan
     public function index()
     {
-        //
+        $ketuas = User::where('role', 'ketua lingkungan')->get();
+        return view('layouts.manajemanketling', compact('ketuas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Menyimpan data akun ketua lingkungan (role fixed)
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'       => 'required|string|max:255',
+            'email'      => 'required|email|unique:users,email',
+            'lingkungan' => 'required|string|max:100',
+            'role'       => 'required|string|in:ketua lingkungan',
+            'password'   => 'required|string|min:6|confirmed',
+        ]);
+
+        User::create([
+            'name'       => $request->name,
+            'email'      => $request->email,
+            'lingkungan' => $request->lingkungan,
+            'role'       => $request->role,
+            'password'   => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('sekretaris.ketling.index')->with('success', 'Akun Ketua Lingkungan berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Menghapus akun ketua lingkungan
+    public function destroy($id)
     {
-        //
-    }
+        $user = User::where('role', 'ketua lingkungan')->findOrFail($id);
+        $user->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('sekretaris.ketling.index')->with('success', 'Akun Ketua Lingkungan berhasil dihapus.');
     }
 }
