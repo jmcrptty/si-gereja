@@ -16,7 +16,8 @@ use SendinBlue\Client\Api\TransactionalEmailsApi;
 
 
 class PendaftaranPernikahan_InvController extends Controller
-{
+
+   {
     public function sendEmailPendaftaran(Request $request) {
 
         // validasi email
@@ -30,7 +31,9 @@ class PendaftaranPernikahan_InvController extends Controller
             return back()->with('Pemberitahuan', 'Belum terdaftar sebagai umat, silahkan melakukan pendaftaran');
         }
         
-        $sudahMenikah = Pernikahan::where('umat_id', $umat->id)->first();
+        $sudahMenikah = Pernikahan::where('umat_id_pria', $umat->id)
+                           ->orWhere('umat_id_wanita', $umat->id)
+                           ->first();
 
         if($sudahMenikah){
             return back()->with('Pemberitahuan', 'Anda sudah terdaftar');
