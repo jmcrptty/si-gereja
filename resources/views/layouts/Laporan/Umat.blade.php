@@ -6,7 +6,10 @@
 <div class="px-4 container-fluid">
     <h1 class="mt-4">Laporan Data Umat</h1>
     <ol class="mb-4 breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('pastorparoki.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item">
+            <a href="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.dashboard' : 'sekretaris.dashboard') }}">Dashboard</a>
+        </li>
+
         <li class="breadcrumb-item active">Laporan Data Umat</li>
     </ol>
 
@@ -37,7 +40,7 @@
                     Data Umat Diterima Tahun {{ $tahun }}
                 </div>
                 <div class="gap-3 d-flex align-items-center">
-                    <form action="{{ route('pastorparoki.laporan.umat') }}" method="GET" class="gap-2 d-flex" id="searchForm">
+                    <form action="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.laporan.umat' : 'sekretaris.laporan.umat') }}" method="GET" class="gap-2 d-flex" id="searchForm">
                         <div class="input-group" style="width: 350px;">
                             <input type="text"
                                    name="search"
@@ -81,9 +84,12 @@
                             <td>{{ $u->nama_lengkap }}</td>
                             <td>{{ $u->lingkungan }}</td>
                             <td class="text-center">
-                                <a href="{{ route('pastorparoki.umat.show', $u->id) }}" class="btn btn-sm bg-primary" title="Lihat">
+                                <a href="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.umat.show' : 'sekretaris.umat.show', $u->id) }}"
+                                class="btn btn-sm bg-primary"
+                                title="Lihat">
                                     <i class="fa-solid fa-eye"></i> Lihat
                                 </a>
+
                             </td>
                         </tr>
                         @empty
@@ -116,7 +122,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            
+
            @php
                 $role = Auth::user()->role;
                 $routePrefix = $role === 'sekretaris' ? 'sekretaris' : 'pastorparoki';
