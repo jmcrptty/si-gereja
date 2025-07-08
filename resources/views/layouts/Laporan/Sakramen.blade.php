@@ -5,7 +5,10 @@
 <div class="px-4 container-fluid">
     <h1 class="mt-4">Laporan Penerimaan Sakramen</h1>
     <ol class="mb-4 breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('pastorparoki.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item">
+            <a href="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.dashboard' : 'sekretaris.dashboard') }}">Dashboard</a>
+        </li>
+
         <li class="breadcrumb-item active">Laporan Sakramen</li>
     </ol>
 
@@ -40,7 +43,7 @@
                     <i class="fas fa-filter me-1"></i>
                     Filter Data
                 </div>
-                <form action="{{ route('pastorparoki.laporan.sakramen') }}" method="GET" class="gap-2 d-flex">
+                <form action="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.laporan.sakramen' : 'sekretaris.laporan.sakramen') }}" method="GET" class="gap-2 d-flex">
                     <select name="sakramen_id" class="form-select" onchange="this.form.submit()">
                         <option value="">Semua Sakramen</option>
                         @foreach($sakramen_list as $s)

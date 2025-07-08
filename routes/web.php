@@ -98,79 +98,79 @@ Route::middleware(['auth', 'roles:sekretaris'])->prefix('sekretaris')->name('sek
     Route::get('/dashboard', [SekretarisController::class, 'index'])->name('dashboard');
 
     // rute laporan
-     Route::get('/laporan/umat', [LaporanController::class, 'umat'])->name('laporan.umat');
+    Route::get('/laporan/umat', [LaporanController::class, 'umat'])->name('laporan.umat');
     Route::get('/laporan/sakramen', [LaporanController::class, 'sakramen'])->name('laporan.sakramen');
     Route::post('/laporan/umat/download', [LaporanController::class, 'downloadUmatPdf'])->name('laporan.umat.download');
     Route::post('/laporan/sakramen/download', [LaporanController::class, 'downloadSakramenPdf'])->name('laporan.sakramen.download');
 
-        // sekretaris -> umat
-        Route::get('/umat', [SekretarisController::class, 'umat_index'])->name('umat.index');
-        Route::get('/umat/{umat}', [SekretarisController::class, 'umat_show'])->name('umat.show'); // <- ingat kalo ada (Umat $umat) di controller, nama idnya harus sesuai (route model binding)
-        Route::get('/umat/file/{type}/{filename}', [SekretarisController::class, 'downloadFile'])->name('umat.downloadFile');
-        Route::get('/pernikahan/file/{type}/{filename}', [SekretarisController::class, 'downloadFilePernikahan'])->name('pernikahan.downloadFile');
+    // sekretaris -> umat
+    Route::get('/umat', [SekretarisController::class, 'umat_index'])->name('umat.index');
+    Route::get('/umat/{umat}', [SekretarisController::class, 'umat_show'])->name('umat.show'); // <- ingat kalo ada (Umat $umat) di controller, nama idnya harus sesuai (route model binding)
+    Route::get('/umat/file/{type}/{filename}', [SekretarisController::class, 'downloadFile'])->name('umat.downloadFile');
+    Route::get('/pernikahan/file/{type}/{filename}', [SekretarisController::class, 'downloadFilePernikahan'])->name('pernikahan.downloadFile');
 
-        // sekretaris -> pendaftaran sakramen
-        Route::get('/pendaftaransakramen', [SekretarisController::class, 'pendaftaranSakramen'])->name('pendaftaransakramen');
-        // sekertaris->sakramen->baptis
-        Route::get('/detail_sakramen/baptis/{umat}', [SekretarisController::class, 'baptis_show'])->name('detailBaptis');
-        Route::post('/persetujuan/baptis/setuju/{baptis}', [SekretarisController::class, 'setujuPendaftaranBaptis'])->name('setujuBaptis');
-        Route::post('/persetujuan/baptis/tolak/{baptis}', [SekretarisController::class, 'tolakPendaftaranBaptis'])->name('tolakBaptis');
-        // sekertaris->sakramen->komuni
-        Route::get('/detail_sakramen/komuni/{umat}', [SekretarisController::class, 'komuni_show'])->name('detailKomuni');
-        Route::post('/persetujuan/komuni/setuju/{komuni}', [SekretarisController::class, 'setujuPendaftaranKomuni'])->name('setujuKomuni');
-        Route::post('/persetujuan/komuni/tolak/{komuni}', [SekretarisController::class, 'tolakPendaftaranKomuni'])->name('tolakKomuni');
-        // sekretaris->sakramen->krisma
-        Route::get('/detail_sakramen/krisma/{umat}', [SekretarisController::class, 'krisma_show'])->name('detailKrisma');
-        Route::post('/persetujuan/krisma/setuju/{krisma}', [SekretarisController::class, 'setujuPendaftaranKrisma'])->name('setujuKrisma');
-        Route::post('/persetujuan/krisma/tolak/{krisma}', [SekretarisController::class, 'tolakPendaftaranKrisma'])->name('tolakKrisma');
-        // sekretaris->sakramen->pernikahan
-        Route::get('/detail_sakramen/pernikahan/{pernikahan}', [SekretarisController::class, 'pernikahan_show'])->name('detailPernikahan');
-        Route::post('/persetujuan/pernikahan/setuju/{pernikahan}', [SekretarisController::class, 'setujuPendaftaranPernikahan'])->name('setujuPernikahan');
-        Route::post('/persetujuan/pernikahan/tolak/{pernikahan}', [SekretarisController::class, 'tolakPendaftaranPernikahan'])->name('tolakPernikahan');
+    // sekretaris -> pendaftaran sakramen
+    Route::get('/pendaftaransakramen', [SekretarisController::class, 'pendaftaranSakramen'])->name('pendaftaransakramen');
+    // sekertaris->sakramen->baptis
+    Route::get('/detail_sakramen/baptis/{umat}', [SekretarisController::class, 'baptis_show'])->name('detailBaptis');
+    Route::post('/persetujuan/baptis/setuju/{baptis}', [SekretarisController::class, 'setujuPendaftaranBaptis'])->name('setujuBaptis');
+    Route::post('/persetujuan/baptis/tolak/{baptis}', [SekretarisController::class, 'tolakPendaftaranBaptis'])->name('tolakBaptis');
+    // sekertaris->sakramen->komuni
+    Route::get('/detail_sakramen/komuni/{umat}', [SekretarisController::class, 'komuni_show'])->name('detailKomuni');
+    Route::post('/persetujuan/komuni/setuju/{komuni}', [SekretarisController::class, 'setujuPendaftaranKomuni'])->name('setujuKomuni');
+    Route::post('/persetujuan/komuni/tolak/{komuni}', [SekretarisController::class, 'tolakPendaftaranKomuni'])->name('tolakKomuni');
+    // sekretaris->sakramen->krisma
+    Route::get('/detail_sakramen/krisma/{umat}', [SekretarisController::class, 'krisma_show'])->name('detailKrisma');
+    Route::post('/persetujuan/krisma/setuju/{krisma}', [SekretarisController::class, 'setujuPendaftaranKrisma'])->name('setujuKrisma');
+    Route::post('/persetujuan/krisma/tolak/{krisma}', [SekretarisController::class, 'tolakPendaftaranKrisma'])->name('tolakKrisma');
+    // sekretaris->sakramen->pernikahan
+    Route::get('/detail_sakramen/pernikahan/{pernikahan}', [SekretarisController::class, 'pernikahan_show'])->name('detailPernikahan');
+    Route::post('/persetujuan/pernikahan/setuju/{pernikahan}', [SekretarisController::class, 'setujuPendaftaranPernikahan'])->name('setujuPernikahan');
+    Route::post('/persetujuan/pernikahan/tolak/{pernikahan}', [SekretarisController::class, 'tolakPendaftaranPernikahan'])->name('tolakPernikahan');
 
-        // sekretaris -> penerimaan sakramen
-        Route::get('/penerimaansakramen', [SekretarisController::class, 'penerimaansakramen'])->name('penerimaansakramen');
-        // sekertaris->sakramen->baptis
-        Route::get('/detail_sakramen/penerimaan/baptis/{umat}', [SekretarisController::class, 'baptis_penerimaan_show'])->name('detailBaptis.penerimaan');
-        Route::post('/penerimaan/baptis/setuju/{baptis}', [SekretarisController::class, 'setujuPenerimaanBaptis'])->name('setujuBaptis.penerimaan');
-        Route::post('/penerimaan/baptis/tolak/{baptis}', [SekretarisController::class, 'tolakPenerimaanBaptis'])->name('tolakBaptis.penerimaan');
-        // sekertaris->sakramen->komuni
-        Route::get('/detail_sakramen/penerimaan/komuni/{umat}', [SekretarisController::class, 'komuni_penerimaan_show'])->name('detailKomuni.penerimaan');
-        Route::post('/penerimaan/komuni/setuju/{komuni}', [SekretarisController::class, 'setujuPenerimaanKomuni'])->name('setujuKomuni.penerimaan');
-        Route::post('/penerimaan/komuni/tolak/{komuni}', [SekretarisController::class, 'tolakPenerimaanKomuni'])->name('tolakKomuni.penerimaan');
-        // sekertaris->sakramen->krisma
-        Route::get('/detail_sakramen/penerimaan/krisma/{umat}', [SekretarisController::class, 'krisma_penerimaan_show'])->name('detailKrisma.penerimaan');
-        Route::post('/penerimaan/krisma/setuju/{krisma}', [SekretarisController::class, 'setujuPenerimaanKrisma'])->name('setujuKrisma.penerimaan');
-        Route::post('/penerimaan/krisma/tolak/{krisma}', [SekretarisController::class, 'tolakPenerimaanKrisma'])->name('tolakKrisma.penerimaan');
-        // sekretaris->sakramen->pernikahan
-        Route::post('/penerimaan/pernikahan/setuju/{pernikahan}', [SekretarisController::class, 'setujuPenerimaanPernikahan'])->name('setujuPernikahan.penerimaan');
-        Route::post('/penerimaan/pernikahan/tolak/{pernikahan}', [SekretarisController::class, 'tolakPenerimaanPernikahan'])->name('tolakPernikahan.penerimaan');
+    // sekretaris -> penerimaan sakramen
+    Route::get('/penerimaansakramen', [SekretarisController::class, 'penerimaansakramen'])->name('penerimaansakramen');
+    // sekertaris->sakramen->baptis
+    Route::get('/detail_sakramen/penerimaan/baptis/{umat}', [SekretarisController::class, 'baptis_penerimaan_show'])->name('detailBaptis.penerimaan');
+    Route::post('/penerimaan/baptis/setuju/{baptis}', [SekretarisController::class, 'setujuPenerimaanBaptis'])->name('setujuBaptis.penerimaan');
+    Route::post('/penerimaan/baptis/tolak/{baptis}', [SekretarisController::class, 'tolakPenerimaanBaptis'])->name('tolakBaptis.penerimaan');
+    // sekertaris->sakramen->komuni
+    Route::get('/detail_sakramen/penerimaan/komuni/{umat}', [SekretarisController::class, 'komuni_penerimaan_show'])->name('detailKomuni.penerimaan');
+    Route::post('/penerimaan/komuni/setuju/{komuni}', [SekretarisController::class, 'setujuPenerimaanKomuni'])->name('setujuKomuni.penerimaan');
+    Route::post('/penerimaan/komuni/tolak/{komuni}', [SekretarisController::class, 'tolakPenerimaanKomuni'])->name('tolakKomuni.penerimaan');
+    // sekertaris->sakramen->krisma
+    Route::get('/detail_sakramen/penerimaan/krisma/{umat}', [SekretarisController::class, 'krisma_penerimaan_show'])->name('detailKrisma.penerimaan');
+    Route::post('/penerimaan/krisma/setuju/{krisma}', [SekretarisController::class, 'setujuPenerimaanKrisma'])->name('setujuKrisma.penerimaan');
+    Route::post('/penerimaan/krisma/tolak/{krisma}', [SekretarisController::class, 'tolakPenerimaanKrisma'])->name('tolakKrisma.penerimaan');
+    // sekretaris->sakramen->pernikahan
+    Route::post('/penerimaan/pernikahan/setuju/{pernikahan}', [SekretarisController::class, 'setujuPenerimaanPernikahan'])->name('setujuPernikahan.penerimaan');
+    Route::post('/penerimaan/pernikahan/tolak/{pernikahan}', [SekretarisController::class, 'tolakPenerimaanPernikahan'])->name('tolakPernikahan.penerimaan');
 
-        // pengaturan sakramen
-        Route::get('pengaturan_sakramen', [PenganturanSakramen::class, 'index'])->name('pengaturan_sakramen');
-        Route::post('pengaturan_sakramen/update/', [PenganturanSakramen::class, 'updatePengaturanSakramen'])->name('pengaturan_sakramen.update');
+    // pengaturan sakramen
+    Route::get('pengaturan_sakramen', [PenganturanSakramen::class, 'index'])->name('pengaturan_sakramen');
+    Route::post('pengaturan_sakramen/update/', [PenganturanSakramen::class, 'updatePengaturanSakramen'])->name('pengaturan_sakramen.update');
 
-        // forum umat
-        Route::get('/forum', [ForumUmatController::class, 'sekretarisIndex'])->name('forum');
-        Route::post('/forum/{id}/answer', [ForumUmatController::class, 'answer'])->name('forum.answer');
-        Route::delete('/forum/{id}', [ForumUmatController::class, 'destroy'])->name('forum.destroy');
+    // forum umat
+    Route::get('/forum', [ForumUmatController::class, 'sekretarisIndex'])->name('forum');
+    Route::post('/forum/{id}/answer', [ForumUmatController::class, 'answer'])->name('forum.answer');
+    Route::delete('/forum/{id}', [ForumUmatController::class, 'destroy'])->name('forum.destroy');
 
-        // rute informasi misa
-        Route::get('/informasi-misa', [InformasiMisaController::class, 'index'])->name('informasi_misa');
-        Route::get('/informasi-misa/get-by-jenis/{jenis}', [InformasiMisaController::class, 'getByJenis']);
-        Route::put('/informasi-misa/{id}', [InformasiMisaController::class, 'update'])->name('informasi_misa.update');
+    // rute informasi misa
+    Route::get('/informasi-misa', [InformasiMisaController::class, 'index'])->name('informasi_misa');
+    Route::get('/informasi-misa/get-by-jenis/{jenis}', [InformasiMisaController::class, 'getByJenis']);
+    Route::put('/informasi-misa/{id}', [InformasiMisaController::class, 'update'])->name('informasi_misa.update');
 
-        // rute pengumuman
-        Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman');
-        Route::get('/pengumuman/get-by-jenis/{jenis}', [PengumumanController::class, 'getByJenis']);
-        Route::put('/pengumuman/{id}', [PengumumanController::class, 'update'])->name('pengumuman.update');
-        Route::get('/pengumuman/image/{filename}', [PengumumanController::class, 'showImage'])->name('sekretaris.pengumuman.image');
-        Route::get('/image/{filename}', [PengumumanController::class, 'showImage'])->name('image.show');
+    // rute pengumuman
+    Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman');
+    Route::get('/pengumuman/get-by-jenis/{jenis}', [PengumumanController::class, 'getByJenis']);
+    Route::put('/pengumuman/{id}', [PengumumanController::class, 'update'])->name('pengumuman.update');
+    Route::get('/pengumuman/image/{filename}', [PengumumanController::class, 'showImage'])->name('sekretaris.pengumuman.image');
+    Route::get('/image/{filename}', [PengumumanController::class, 'showImage'])->name('image.show');
 
-        // MANAJEMAN AKUN KETUA LINGKUNGAN
-         Route::get('/ketua-lingkungan', [KetlingController::class, 'index'])->name('ketling.index');
-        Route::post('/ketua-lingkungan', [KetlingController::class, 'store'])->name('ketling.store');
-        Route::delete('/ketua-lingkungan/{id}', [KetlingController::class, 'destroy'])->name('ketling.destroy');
+    // MANAJEMAN AKUN KETUA LINGKUNGAN
+    Route::get('/ketua-lingkungan', [KetlingController::class, 'index'])->name('ketling.index');
+    Route::post('/ketua-lingkungan', [KetlingController::class, 'store'])->name('ketling.store');
+    Route::delete('/ketua-lingkungan/{id}', [KetlingController::class, 'destroy'])->name('ketling.destroy');
 });
 
 // ketua lingkungan
@@ -198,9 +198,6 @@ Route::middleware(['auth', 'roles:pastor paroki'])->prefix('pastorparoki')->name
     // Laporan Data Penerimaan Sakramen
    Route::post('/laporan/umat/download', [LaporanController::class, 'downloadUmatPdf'])->name('laporan.umat.download');
    Route::post('/laporan/sakramen/download', [LaporanController::class, 'downloadSakramenPdf'])->name('laporan.sakramen.download');
-
-
-
 
     // Laporan Data Umat
     Route::get('/laporan/umat', [LaporanController::class, 'umat'])->name('laporan.umat');

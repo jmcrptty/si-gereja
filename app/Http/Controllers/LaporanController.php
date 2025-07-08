@@ -87,7 +87,7 @@ class LaporanController extends Controller
 
 
     // Download PDF for Umat
-    
+
     public function downloadUmatPdf(Request $request)
 {
     $tahun = $request->input('tahun', date('Y'));
@@ -363,7 +363,7 @@ public function downloadSakramenPdf(Request $request)
             'search',
             'totalPenerimaan'
         ));
-        
+
     }
 
 

@@ -31,6 +31,8 @@ class PendaftaranKomuni_InvController extends Controller
 
         $sudahKomuni = Komuni::where('umat_id', $umat->id)->first();
 
+
+
         if($sudahKomuni){
             return back()->with('Pemberitahuan', 'Anda sudah terdaftar');
         }
