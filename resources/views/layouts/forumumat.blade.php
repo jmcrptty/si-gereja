@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Forum Umat - Katedral Merauke</title>
+    <link rel="icon" href="/img/logo.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -566,46 +567,50 @@
 
 <!-- Navbar -->
 <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-        <img src="/img/logo.png" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
-        <a class="navbar-brand" href="#">ST. FRANSISKUS XAVERIUS</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <div class="container">
+     <img src="/img/logo.png" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+    <a class="navbar-brand" href="#">ST. FRANSISKUS XAVERIUS</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Beranda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tentang-paroki') }}">Tentang Paroki</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="layananDropdown" role="button" data-bs-toggle="dropdown">
-                        Layanan
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('baptis') }}">Baptis</a></li>
-                        <li><a class="dropdown-item" href="{{ route('komuni-pertama') }}">Komuni Pertama</a></li>
-                        <li><a class="dropdown-item" href="{{ route('krisma') }}">Krisma</a></li>
-                        <li><a class="dropdown-item" href="{{ route('pernikahan') }}">Pernikahan</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('forum.index') }}">Forum</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('kontak') }}">Kontak</a>
-                </li>
-            </ul>
-            
-            <a href="http://si_gereja.test/login" class="nav-link d-flex align-items-center ms-3" style="color: white;">
-                <i class="bi bi-box-arrow-in-right fs-5 me-1"></i>
-                <span>Masuk</span>
-            </a>
-        </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Beranda</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('tentang-paroki') }}">Tentang Paroki</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="layananDropdown" role="button" data-bs-toggle="dropdown">
+            Layanan
+          </a>
+          <ul class="dropdown-menu">
+           <li><a class="dropdown-item" href="{{ route('baptis') }}">Baptis</a></li>
+            <li><a class="dropdown-item" href="{{ route('komuni-pertama') }}">Komuni Pertama</a></li>
+            <li><a class="dropdown-item" href="{{ route('krisma') }}">Krisma</a></li>
+            <li><a class="dropdown-item" href="{{ route('pernikahan') }}">Pernikahan</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('pendaftaran-umat') }}">Pendaftaran Umat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('kontak') }}">Kontak</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link" href="{{ route('forum.index') }}">Forum Umat</a>
+        </li>
+      </ul>
+
+      {{-- <a href="http://si_gereja.test/login" class="nav-link d-flex align-items-center ms-3" style="color: white;">
+        <i class="bi bi-box-arrow-in-right fs-5 me-1"></i>
+        <span>Masuk</span>
+      </a> --}}
+
     </div>
+  </div>
 </nav>
 
 <!-- Hero Section -->
@@ -657,7 +662,7 @@
 
         <!-- Pertanyaan & Form Ajukan -->
         <div class="row g-4 mb-4">
-            @foreach($questions->take(2) as $q)
+            @foreach($utama as $q)
             <div class="col-lg-4 col-md-6">
                 <div class="question-card shadow-sm rounded bg-white h-100">
                     <div class="card-body p-3">
@@ -681,7 +686,7 @@
                             <small class="text-muted d-block mb-2">
                                 <i class="bi bi-clock me-1"></i>{{ $q->answered_at->format('d M Y, H:i') }}
                             </small>
-                            <button class="btn btn-sm btn-outline-primary" onclick="showModal(`{{ $q->question }}`, `{{ $q->answer }}`)">Lihat Lebih Banyak</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="showModal(`{{ $q->question }}`, `{{ $q->answer }}`, `{{ $q->name }}`)">Lihat Lebih Banyak</button>
                         </div>
                         @else
                         <div class="text-muted small mt-3">
@@ -694,7 +699,7 @@
             @endforeach
 
             <!-- Form Ajukan Pertanyaan -->
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-4 col-md-6 order-0 order-md-last">
                 <div class="form-section p-4 shadow rounded bg-white h-100">
                     <h4 class="form-title mb-3">Ajukan Pertanyaan</h4>
                     <form method="POST" action="{{ route('forum.store') }}">
@@ -742,7 +747,8 @@
 
         <!-- Pertanyaan Lainnya -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            @foreach($questions->skip(2) as $q)
+            @foreach($questions as $q)
+
             <div class="col">
                 <div class="question-card shadow-sm rounded bg-white h-100">
                     <div class="card-body d-flex flex-column p-3">
@@ -774,7 +780,7 @@
                                     <small class="text-muted d-block mb-2">
                                         <i class="bi bi-clock me-1"></i>{{ $q->answered_at->format('d M Y, H:i') }}
                                     </small>
-                                    <button class="btn btn-sm btn-outline-primary" onclick="showModal(`{{ $q->question }}`, `{{ $q->answer }}`)">Lihat Lebih Banyak</button>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="showModal(`{{ $q->question }}`, `{{ $q->answer }}`,`{{ $q->name }}`)">Lihat Lebih Banyak</button>
                                 </div>
                             </div>
                             @else
@@ -784,18 +790,19 @@
                             @endif
                         </div>
                     </div>
+                    
                 </div>
+                
             </div>
             @endforeach
         </div>
-
-
         <!-- Pagination -->
-        @if($questions->hasPages())
-        <div class="d-flex justify-content-center mt-4">
+    @if ($questions->hasPages())
+        <div class="mt-4 d-flex justify-content-end">
             {{ $questions->links('pagination::bootstrap-5') }}
         </div>
-        @endif
+    @endif
+    
     </div>
 
     <!-- MODAL -->
@@ -807,6 +814,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                 </div>
                 <div class="modal-body">
+                    <strong id="modalname" class="mt-2"></strong>
                     <h6 class="mb-3" id="modalQuestion"></h6>
                     <div class="border-top pt-3">
                         <strong>Jawaban:</strong>
@@ -820,9 +828,10 @@
 
 <!-- Script untuk modal -->
 <script>
-    function showModal(question, answer) {
+    function showModal(question, answer, name) {
         document.getElementById('modalQuestion').innerText = question;
         document.getElementById('modalAnswer').innerText = answer;
+        document.getElementById('modalname').innerText = name;
 
         const modal = new bootstrap.Modal(document.getElementById('questionModal'));
         modal.show();
