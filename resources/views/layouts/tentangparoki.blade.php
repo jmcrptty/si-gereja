@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tentang Paroki Katedral</title>
+  <link rel="icon" href="/img/logo.ico" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -435,107 +436,85 @@
           <div class="card-body">
             <h4 class="card-title">Sejarah Paroki</h4>
             <p class="card-text">
-              Paroki St. Fransiskus Xaverius Merauke didirikan untuk memenuhi kebutuhan umat Katolik yang tersebar di daerah Merauke, Papua. Paroki ini berawal dari komunitas kecil yang ingin menyebarkan ajaran Kristus di daerah ini. Seiring waktu, paroki berkembang menjadi pusat spiritualitas bagi umat Katolik di Merauke dan sekitarnya. Gereja ini telah menjadi tempat untuk berbagi iman, harapan, dan kasih.
-            </p>
-            <p class="card-text">
-              Sejak didirikan, Paroki St. Fransiskus Xaverius terus mengembangkan pelayanan kepada umat, termasuk pelayanan sakramen, pendidikan agama, dan pelayanan sosial. Kami berkomitmen untuk melayani dengan kasih, baik bagi umat Katolik maupun masyarakat sekitar, dan berusaha menjadi saksi hidup akan ajaran Kristus di tanah Papua.
+              Misionaris Katolik pertama tiba di Merauke pada awal abad ke-20, sekitar tahun 1905. Mereka berasal dari ordo Misionaris Hati Kudus Yesus (Missionarii Sacratissimi Cordis, MSC). Rombongan pertama MSC yang tiba di Merauke tanggal 14 Agustus 1905 adalah Pastor Henri Nollen MSC, Pastor Philipus Braun MSC, Bruder Andrian van Roesel MSC dan Bruder Melchior Oomen MSC. Mereka mendirikan gereja kecil di Kampung Wendu di pesisir pantai lalu berpindah ke Kampung Buti.<br>
+              <br>Pada tahun 1922, Paroki St. Fransiskus Xaverius Merauke resmi didirikan. Nama paroki diambil dari St. Fransiskus Xaverius, seorang misionaris besar dari abad ke-16 yang dikenal karena karyanya dalam menyebarkan agama Katolik di Asia. Paroki ini menjadi salah satu paroki pertama di wilayah Papua, menandai tonggak penting dalam sejarah perkembangan gereja Katolik di Indonesia bagian timur.Pada tahun 1966, status Paroki St. Fransiskus Xaverius Merauke ditingkatkan menjadi pusat dari Keuskupan Agung Merauke yaitu Katedral Merauke. Keuskupan ini mencakup wilayah yang sangat luas di Papua, termasuk beberapa paroki dan stasi misi lainnya. Dengan status baru ini, Katedral Merauke menjadi pusat administrasi dan kegiatan keuskupan.<br>
+              <br>Paroki Katedral Merauke saat ini dipimpin oleh Seorang Pastor Paroki yaitu Reverendus Pater Hendrikus Kariwop, MSC. Paroki Katedral terletak di Jalan Raya Mandala No. 30, Merauke, Papua Selatan. Jumlah umat paroki diperkirakan 5.588 jiwa berdasarkan data statistik keuskupan agung Merauke tahun 2024.Luas wilayah paroki Katedral yang cukup besar terbagi menjadi 6 Wilayah Kecil, yaitu St. Hermanus, St. Jakobus, St. Nicholas, St. Philipus, St. Petrus, dan St. Benediktus. Masing-masing wilayah kecil ini kemudian dibagi lagi menjadi 18 Lingkungan atau Basis Doa, yaitu Santo Paulus, Santa Anna, Santa Bernadetha, Santo Yoseph, Ratu Rosario Bunda Allah (RRBA), Ratu Rosari Semesta Alam (RRSA), Santo Kornelis, Santo Agustinus, Santo Marselino, Santa Agnes, Eusebius Damianus, Santo Petrus, Regina Pacis, Stella Maris, Santo Hermanus, Santo Don Bosco, Santo Anthonius, dan St. Fransiskus Xaverius. Pembagian wilayah ini bertujuan untuk memudahkan pelayanan kepada umat dan memastikan semua jemaat terlayani dengan baik.
+
             </p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Lingkungan-Lingkungan Paroki -->
-    <div class="row mb-4">
-      <div class="col-md-12">
-        <div class="card shadow-sm border-light">
-          <div class="card-body">
-            <h4 class="card-title">Lingkungan-Lingkungan Paroki</h4>
-            <p class="card-text">
-              Paroki St. Fransiskus Xaverius terdiri dari beberapa lingkungan yang masing-masing memiliki karakteristik dan tanggung jawab sosial yang unik. Setiap lingkungan berfungsi untuk mempererat hubungan umat dan memperkuat komunitas dalam iman. Berikut adalah beberapa lingkungan yang ada di paroki kami:
-            </p>
-            <ul class="list-unstyled ms-4">
-              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Maria</li>
-              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Yoseph</li>
-              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Antonius</li>
-              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Teresa</li>
-              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Yosef</li>
-              <li><i class="bi bi-check-circle text-primary"></i> Lingkungan St. Petrus</li>
+<!-- Visi dan Misi -->
+<div class="row mb-4">
+  <div class="col-md-12">
+    <div class="card shadow-sm border-light">
+      <div class="card-body">
+        <h4 class="card-title">Visi dan Misi Paroki</h4>
+        <h5 class="mt-3">Visi</h5>
+        <p class="card-text">
+         “Menjadi Gereja Lokal yang Mandiri, Partisipatif dan Mengutamakan Persaudaraan”
+        </p>
+        <h5 class="mt-3">Misi</h5>
+        <ul class="ms-4">
+          <li></i>Meningkatkan kemandirian secara finansial dan pengelolaannya; kemandirian SDM (ketenagaan: baik calon imam maupun para imam yang bersedia melayani di Keuskupan Agung Merauke bekerjasama dengan Keuskupan Amboina dan beberapa Kongregasi Religius); kemandirian sarana dan prasarana; kemandirian pola berpastoral yang sesuai dengan konteks Papua, khusus Keuskupan Agung Merauke.</li>
+          <li></i>Meningkatkan partisipasi dan persekutuan umat dalam panca tugas Gereja (Leiturgia, Koinonia, Diakonia, Martyria dan Kerygma).</li>
+          <li></i>Membangun dan merawat persaudaraan internal (antara uskup dan para imam, dan dengan semua umat beriman di Keuskupan Agung Merauke) dan juga eksternal (dengan umat beragama lain).</li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lingkungan-Lingkungan Paroki -->
+<!-- Lingkungan-Lingkungan Paroki -->
+<div class="row mb-4">
+  <div class="col-md-12">
+    <div class="card shadow-sm border-light">
+      <div class="card-body">
+        <h4 class="card-title">Lingkungan-Lingkungan Paroki</h4>
+        <p class="card-text">
+          Paroki St. Fransiskus Xaverius memiliki 18 lingkungan atau basis doa yang tersebar di seluruh wilayah pelayanan. Setiap lingkungan berperan sebagai komunitas dasar umat untuk membangun iman, kebersamaan, dan pelayanan.
+        </p>
+
+        <div class="row">
+          <div class="col-md-6">
+            <ul class="list-unstyled ms-3">
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Eusebius Damianus</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Regina Pacis</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Ratu Rosari Bunda Allah (RRBA)</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Ratu Rosari Semesta Alam (RRSA)</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santa Agnes</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santa Anna</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santa Bernadetha</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santo Agustinus</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santo Anthonius</li>
+            </ul>
+          </div>
+
+          <div class="col-md-6">
+            <ul class="list-unstyled ms-3">
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santo Yohanes Don Bosco</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santo Hermanus</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santo Kornelis</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santo Marselino</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santo Paulus</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santo Petrus</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Santo Yoseph</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> St. Fransiskus Xaverius</li>
+              <li><i class="bi bi-check-circle text-primary me-1"></i> Stella Maris</li>
             </ul>
           </div>
         </div>
+
       </div>
     </div>
-
-    <!-- Gambar Lingkungan Paroki -->
-    <div class="row justify-content-center">
-      <div class="col-md-10 text-center">
-        <h4>Gambar Lingkungan Paroki</h4>
-        <p class="mb-4">Di bawah ini adalah gambar yang menjelaskan pembagian wilayah lingkungan di Paroki St. Fransiskus Xaverius Merauke.</p>
-        
-        <!-- Card dengan Gambar dan Lingkungan -->
-        <div class="card shadow-sm">
-          <img src="path_to_your_image.jpg" class="card-img-top" alt="Lingkungan Paroki St. Fransiskus Xaverius">
-          <div class="card-body">
-
-            <!-- Replace the existing lingkungan section with this -->
-<div class="row justify-content-center">
-    <div class="col-md-10">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h4 class="card-title text-center mb-4">Wilayah Lingkungan</h4>
-                <div class="row">
-                    <!-- Kolom 1 -->
-                    <div class="col-md-6">
-                        <ul class="list-unstyled">
-                            <li class="mb-3">
-                                <div class="d-flex align-items-center">
-                                    <span class="bg-primary rounded-circle me-2" style="width: 12px; height: 12px;"></span>
-                                    <strong>Lingkungan St. Yoseph</strong>
-                                </div>
-                            </li>
-                            <li class="mb-3">
-                                <div class="d-flex align-items-center">
-                                    <span class="bg-success rounded-circle me-2" style="width: 12px; height: 12px;"></span>
-                                    <strong>Lingkungan St. Maria</strong>
-                                </div>
-                            </li>
-                            <li class="mb-3">
-                                <div class="d-flex align-items-center">
-                                    <span class="bg-warning rounded-circle me-2" style="width: 12px; height: 12px;"></span>
-                                    <strong>Lingkungan St. Antonius</strong>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Kolom 2 -->
-                    <div class="col-md-6">
-                        <ul class="list-unstyled">
-                            <li class="mb-3">
-                                <div class="d-flex align-items-center">
-                                    <span class="bg-danger rounded-circle me-2" style="width: 12px; height: 12px;"></span>
-                                    <strong>Lingkungan St. Teresa</strong>
-                                </div>
-                            </li>
-                            <li class="mb-3">
-                                <div class="d-flex align-items-center">
-                                    <span class="bg-info rounded-circle me-2" style="width: 12px; height: 12px;"></span>
-                                    <strong>Lingkungan St. Petrus</strong>
-                                </div>
-                            </li>
-                            <li class="mb-3">
-                                <div class="d-flex align-items-center">
-                                    <span class="bg-secondary rounded-circle me-2" style="width: 12px; height: 12px;"></span>
-                                    <strong>Lingkungan St. Paulus</strong>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
+
+
           </div>
         </div>
       </div>

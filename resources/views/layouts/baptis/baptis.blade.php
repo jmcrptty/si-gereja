@@ -10,7 +10,13 @@
 
 @section('judul-hero')
     <h1 class="mb-4 display-4">Persyaratan Baptis <br>Katedral Merauke</h1>
+    
+    <a href="#info-baptis" class="btn btn-outline-light btn-lg rounded-pill px-4">
+    Lihat Informasi Baptis
+</a>
 @endsection
+
+
 
 @section('content')
     @if (session('success'))
@@ -67,59 +73,72 @@
         </div>
     @endif
 
-    <div class="container">
-        <div class="container">
-        <h3 class="mb-4 text-center">Syarat Penerimaan Sakramen Baptis</h3>
+    <div class="container" id="info-baptis">
+    <h3 class="mb-4 text-center">Syarat Penerimaan Sakramen Baptis</h3>
 
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <!-- Wali Baptis -->
-                <h5 class="mb-3">1. Wali Baptis</h5>
-                <p>
-                    Wali Baptis bukan saudara kandung dari Orang Tua Calon Baptis. Wali Baptis bisa seorang pria atau seorang wanita atau pria dan wanita. Umur wali baptis sebaiknya tidak berbeda lebih dari 30 tahun dengan umur calon baptis.
-                </p>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
 
-                <!-- Orang Tua dan Wali Baptis -->
-                <h5 class="mb-3">2. Orang Tua dan Wali Baptis</h5>
-                <p>
-                    Orang tua (suami dan isteri) dan wali baptis wajib mengikuti pembekalan/rekoleksi sebelum pembaptisan.
-                </p>
+            <!-- Penjelasan Umum -->
+            <p class="mb-4">
+                Berikut adalah berkas-berkas dan informasi yang perlu disiapkan oleh calon penerima Sakramen Baptis.
+            </p>
 
-                <!-- Jadwal Pembekalan/Rekoleksi -->
-                <h5 class="mb-3">3. Jadwal Pembekalan/Rekoleksi</h5>
-                <p>
-                    Jadwal pembekalan/rekoleksi bisa disesuaikan dengan ketersediaan waktu orang tua dan wali baptis.
-                </p>
+            <!-- Syarat Administratif -->
+            <h5 class="mb-3">1. Berkas Administratif</h5>
+            <ul class="list-unstyled ms-4 mb-4">
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Akta Kelahiran <small class="text-muted">(diunggah)</small></li>
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Kartu Keluarga <small class="text-muted">(diunggah)</small></li>
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Surat Nikah Katolik Orang Tua <small class="text-muted">(diunggah)</small></li>
+            </ul>
 
-                <!-- Catatan -->
-                <h4 class="mt-4 text-center">Catatan</h4>
-                <ul class="list-unstyled ms-4">
-                    <li><i class="bi bi-check-circle text-primary"></i> Pendaftaran dan penyerahan dokumen syarat administratif dapat dilakukan langsung melalui tombol Daftar <strong>Online</strong> di bawah ini.</li>
-                    <li><i class="bi bi-check-circle text-primary"></i> Surat Baptis akan diberikan pada saat Penerimaan Sakramen Baptis.</li>
-                </ul>
+            <!-- Pilihan Wali Baptis -->
+            <h5 class="mb-3">2. Wali Baptis</h5>
+            <p class="mb-2">
+                Pilih salah satu bentuk wali baptis: <strong>1 orang wali</strong> atau <strong>pasangan suami istri</strong>.
+            </p>
 
-                <!-- Syarat Administratif -->
-                <h5 class="mt-4">Syarat Administratif</h5>
-                <ul class="list-unstyled ms-4">
-                    <li><i class="bi bi-dot text-primary me-2"></i>Fotokopi Akta Kelahiran</li>
-                    <li><i class="bi bi-dot text-primary me-2"></i>Fotokopi KTP Orang Tua</li>
-                    <li><i class="bi bi-dot text-primary me-2"></i>Surat Nikah Gereja Orang Tua</li>
-                    <li><i class="bi bi-dot text-primary me-2"></i>Data Wali Baptis (Katolik)</li>
-                    <li><i class="bi bi-dot text-primary me-2"></i>Mengikuti Katekese Baptis</li>
-                    <li><i class="bi bi-dot text-primary me-2"></i>Pas Foto 3x4 (2 lembar)</li>
-                </ul>
-            </div>
+            <ul class="list-unstyled ms-4 mb-4">
+                <li><i class="bi bi-dot text-primary me-2"></i> Jika memilih <strong>1 orang wali baptis</strong>:
+                    <ul class="list-unstyled ms-4 mt-1">
+                        <li><i class="bi bi-check-circle text-primary me-2"></i> Surat Krisma Wali <small class="text-muted">(diunggah)</small></li>
+                    </ul>
+                </li>
+                <li class="mt-2"><i class="bi bi-dot text-primary me-2"></i> Jika memilih <strong>pasangan suami istri</strong> sebagai wali:
+                    <ul class="list-unstyled ms-4 mt-1">
+                        <li><i class="bi bi-check-circle text-primary me-2"></i> Surat Nikah Katolik Pasangan Wali <small class="text-muted">(diunggah)</small></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Kontak -->
+            <h5 class="mb-3">3. Kontak</h5>
+            <ul class="list-unstyled ms-4">
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Nomor WhatsApp aktif untuk dihubungi panitia</li>
+            </ul>
+
+            <!-- Catatan -->
+            <h5 class="mt-4 text-center">Catatan</h5>
+            <ul class="list-unstyled ms-4">
+                <li><i class="bi bi-info-circle text-warning me-2"></i> Pastikan semua dokumen yang diunggah jelas dan dapat terbaca.</li>
+                <li><i class="bi bi-info-circle text-warning me-2"></i> Pendaftaran bisa dilakukan melalui form <strong>Daftar Baptis</strong> di bawah halaman ini.</li>
+            </ul>
+
         </div>
+    </div>
+</div>
+
+
 
         <br>
 
         {{-- Pendaftaran Baptis --}}
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" >
             <div class="col-md-8">
                 <div class="shadow-sm card">
-                    <div class="text-center card-body">
+                    <div class="text-center card-body" >
                         @if($pendaftaran_dibuka)
-                            <h4 class="text-center card-title">Daftar</h4>
+                            <h4 class="text-center card-title" id="info-baptis">Daftar Baptis</h4>
                             <form action="{{ route('baptis.mail') }}" method="POST">
                                 @csrf
                                 <div class="mb-4">
@@ -127,7 +146,7 @@
                                     <input type="text" class="form-control" id="email" name='email' placeholder="Masukkan email" required>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-dark">Cek Status</button>
+                                    <button type="submit" class="btn btn-dark">Kirim</button>
                                 </div>
                             </form>
                         @else

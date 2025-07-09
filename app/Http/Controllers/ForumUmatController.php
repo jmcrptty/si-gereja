@@ -12,16 +12,29 @@ class ForumUmatController extends Controller
     public function umatIndex(Request $request)
     {
         $search = $request->query('search');
+        
 
-        $questions = ForumQuestion::whereNotNull('answer')
-            ->when($search, function ($query, $search) {
-                return $query->where('question', 'like', "%{$search}%")
-                             ->orWhere('answer', 'like', "%{$search}%");
-            })
-            ->orderBy('answered_at', 'desc')
-            ->paginate(10);
+        $utama = ForumQuestion::whereNotNull('answer')
+                ->when($search, function ($query, $search) {
+                    $query->where('question', 'like', '%' . $search . '%');
+                })
+                ->orderBy('answered_at', 'desc')
+                ->take(2)
+                ->get();
 
-        return view('layouts.forumumat', compact('questions', 'search'));
+        $excludedIds = $utama->pluck('id');
+         $questions = ForumQuestion::whereNotNull('answer')
+        ->when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('question', 'like', "%{$search}%")
+                  ->orWhere('answer', 'like', "%{$search}%");
+            });
+        })
+        ->whereNotIn('id', $excludedIds)
+        ->orderBy('answered_at', 'desc')
+        ->paginate(6);
+
+        return view('layouts.forumumat', compact('questions', 'search','utama'));
     }
 
     // Simpan pertanyaan dari umat

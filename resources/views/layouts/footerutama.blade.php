@@ -23,9 +23,11 @@
       <div class="col-lg-4 footer-column">
         <h4 class="footer-heading">Tautan Cepat</h4>
         <ul class="footer-links">
-          <li><a href="#">Jadwal Misa</a></li>
-          <li><a href="#">Pendaftaran Baptis</a></li>
-          <li><a href="#">Pendaftaran Pernikahan</a></li>
+          <li><a href="/">Jadwal Misa</a></li>
+          <li><a href="{{ route('baptis') }}">Pendaftaran Baptis</a></li>
+          <li><a href="{{ route('komuni-pertama') }}">Pendaftaran komuni Pertama</a></li>
+          <li><a href="{{ route('krisma') }}">Pendaftaran krisma</a></li>
+          <li><a href="{{ route('pernikahan') }}">Pendaftaran Pernikahan</a></li>
         </ul>
       </div>
     </div>

@@ -67,81 +67,79 @@
         </div>
     @endif
 
-    <div class="container">
-        <div class="container">
-            <h3 class="mb-4 text-center">Syarat Penerimaan Sakramen Komuni Pertama</h3>
+    <div class="container" id="info-komuni">
+    <h3 class="mb-4 text-center">Syarat Penerimaan Sakramen Komuni Pertama</h3>
 
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <!-- Wali Baptis -->
-                    <h5 class="mb-3">1. Wali Baptis</h5>
-                    <p>
-                        Wali Baptis bukan saudara kandung dari Orang Tua Calon Baptis. Wali Baptis bisa seorang pria atau seorang wanita atau pria dan wanita. Umur wali baptis sebaiknya tidak berbeda lebih dari 30 tahun dengan umur calon baptis.
-                    </p>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
 
-                    <!-- Orang Tua dan Wali Baptis -->
-                    <h5 class="mb-3">2. Orang Tua dan Wali Baptis</h5>
-                    <p>
-                        Orang tua (suami dan isteri) dan wali baptis wajib mengikuti pembekalan/rekoleksi sebelum pembaptisan.
-                    </p>
+            <!-- Penjelasan Umum -->
+            <p class="mb-4">
+                Berikut adalah berkas dan informasi yang perlu disiapkan oleh calon penerima Sakramen Komuni Pertama.
+            </p>
 
-                    <!-- Jadwal Pembekalan/Rekoleksi -->
-                    <h5 class="mb-3">3. Jadwal Pembekalan/Rekoleksi</h5>
-                    <p>
-                        Jadwal pembekalan/rekoleksi bisa disesuaikan dengan ketersediaan waktu orang tua dan wali baptis.
-                    </p>
+            <!-- Syarat Administratif -->
+            <h5 class="mb-3">1. Berkas Administratif</h5>
+            <ul class="list-unstyled ms-4 mb-4">
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Akta Kelahiran <small class="text-muted">(diunggah)</small></li>
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Kartu Keluarga <small class="text-muted">(diunggah)</small></li>
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Surat Nikah Katolik Orang Tua <small class="text-muted">(diunggah)</small></li>
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Surat Baptis <small class="text-muted">(diunggah)</small></li>
+            </ul>
 
-                    <!-- Catatan -->
-                    <h4 class="mt-4 text-center">Catatan</h4>
-                    <ul class="list-unstyled ms-4">
-                        <li><i class="bi bi-check-circle text-primary"></i> Pendaftaran dan penyerahan dokumen syarat administratif dapat dilakukan langsung melalui tombol Daftar <strong>Online</strong> di bawah ini.</li>
-                        <li><i class="bi bi-check-circle text-primary"></i> Surat Baptis akan diberikan pada saat Penerimaan Sakramen Baptis.</li>
-                    </ul>
+            <!-- Informasi Tambahan -->
+            <h5 class="mb-3">2. Informasi Tambahan</h5>
+            <ul class="list-unstyled ms-4 mb-4">
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Tempat dan Tanggal Menerima Baptis</li>
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Alamat Lengkap & Asal Lingkungan</li>
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Nama Ayah & Nama Ibu</li>
+            </ul>
 
-                    <!-- Syarat Administratif -->
-                    <h5 class="mt-4">Syarat Administratif</h5>
-                    <ul class="list-unstyled ms-4">
-                        <li><i class="bi bi-dot text-primary me-2"></i>Fotokopi Akta Kelahiran</li>
-                        <li><i class="bi bi-dot text-primary me-2"></i>Fotokopi KTP Orang Tua</li>
-                        <li><i class="bi bi-dot text-primary me-2"></i>Surat Nikah Gereja Orang Tua</li>
-                        <li><i class="bi bi-dot text-primary me-2"></i>Data Wali Baptis (Katolik)</li>
-                        <li><i class="bi bi-dot text-primary me-2"></i>Mengikuti Katekese Baptis</li>
-                        <li><i class="bi bi-dot text-primary me-2"></i>Pas Foto 3x4 (2 lembar)</li>
-                    </ul>
-                </div>
-            </div>
+            <!-- Kontak -->
+            <h5 class="mb-3">3. Kontak</h5>
+            <ul class="list-unstyled ms-4">
+                <li><i class="bi bi-check-circle text-primary me-2"></i> Nomor WhatsApp aktif untuk dihubungi panitia</li>
+            </ul>
 
-            <br>
-
-            {{-- Pendaftaran Komuni --}}
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="shadow-sm card">
-                        <div class="text-center card-body">
-                            @if($pendaftaran_dibuka)
-                                <h4 class="text-center card-title">Daftar</h4>
-                                    <form action="{{ route('komuni-pertama.mail') }}" method="POST">
-                                    @csrf
-                                    <div class="mb-4">
-                                        <label for="email" class="form-label">Masukkan email anda untuk memulai pendaftaran</label>
-                                        <input type="text" class="form-control" id="email" name='email' placeholder="Masukkan email" required>
-                                    </div>
-                                    <div class="text-center">
-                                            <button type="submit" class="btn btn-dark">Cek Status</button>
-                                    </div>
-                                </form>
-                            @else
-                                <h4 class="text-center card-title">Informasi</h4>
-                                <p class="mt-3">Pendaftaran Komuni saat ini <strong>belum dibuka</strong>.<br>
-                                Silakan tunggu informasi selanjutnya dari Gereja Katedral Merauke.</p>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Catatan -->
+            <h5 class="mt-4 text-center">Catatan</h5>
+            <ul class="list-unstyled ms-4">
+                <li><i class="bi bi-info-circle text-warning me-2"></i> Pastikan semua dokumen yang diunggah jelas dan dapat terbaca.</li>
+                <li><i class="bi bi-info-circle text-warning me-2"></i> Pendaftaran dilakukan melalui form <strong>Daftar Komuni Pertama</strong> di bawah ini.</li>
+            </ul>
         </div>
     </div>
+
+    <br>
+
+    <!-- Pendaftaran Komuni Pertama -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="shadow-sm card">
+                <div class="text-center card-body">
+                    @if($pendaftaran_dibuka)
+                        <h4 class="text-center card-title">Daftar Komuni Pertama</h4>
+                        <form action="{{ route('komuni-pertama.mail') }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label for="email" class="form-label">Masukkan email anda untuk memulai pendaftaran</label>
+                                <input type="email" class="form-control" id="email" name='email' placeholder="Masukkan email" required>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-dark">Kirim</button>
+                            </div>
+                        </form>
+                    @else
+                        <h4 class="text-center card-title">Informasi</h4>
+                        <p class="mt-3">Pendaftaran Komuni Pertama saat ini <strong>belum dibuka</strong>.<br>
+                        Silakan tunggu informasi selanjutnya dari Gereja Katedral Merauke.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 

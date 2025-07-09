@@ -430,7 +430,6 @@
   <div class="overlay"></div>
   <div class="text-center text-white hero-content position-absolute top-50 start-50 translate-middle">
     <h1 class="mb-4 display-4">Paroki St. Fransiskus Xaverius<br>Katedral Merauke</h1>
-    <p class="mb-4 lead">Menjadi Komunitas Iman yang Bersaudara, Melayani dan Bersaksi</p>
     <a href="#pengumuman-section" class="btn btn-elegant">Pengumuman Gereja</a>
   </div>
 </div>
