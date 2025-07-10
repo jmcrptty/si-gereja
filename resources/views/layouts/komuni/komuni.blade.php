@@ -104,6 +104,11 @@
             <!-- Catatan -->
             <h5 class="mt-4 text-center">Catatan</h5>
             <ul class="list-unstyled ms-4">
+                <li>
+                        <i class="bi bi-info-circle text-warning me-2"></i>
+                        Untuk dapat mendaftar sakramen, Anda diwajibkan terlebih dahulu terdaftar sebagai umat.
+                        <strong><a href="{{ route('pendaftaran-umat') }}">Klik di sini</a></strong> untuk pendaftaran umat.
+                </li>
                 <li><i class="bi bi-info-circle text-warning me-2"></i> Pastikan semua dokumen yang diunggah jelas dan dapat terbaca.</li>
                 <li><i class="bi bi-info-circle text-warning me-2"></i> Pendaftaran dilakukan melalui form <strong>Daftar Komuni Pertama</strong> di bawah ini.</li>
             </ul>

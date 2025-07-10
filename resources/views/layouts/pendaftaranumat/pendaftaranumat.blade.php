@@ -70,6 +70,13 @@
             <p class="text-center">
             Silahkan Masukan email anda agar mendapatkan email yang berisi link formulir pendaftaran umat.
             </p>
+            <p class="text-center">
+            Setelah mengisi formulir pendaftaran, Anda akan menerima email konfirmasi. Pastikan untuk memeriksa folder spam jika tidak menemukan email di inbox Anda.
+            </p>
+            <p class="text-center">
+            Setelah mengisi formulir, konfirmasi akan diproses oleh ketua lingkungan maksimal dalam 2 hari kerja.
+            Jika belum ada kabar, silakan hubungi ketua lingkungan Anda atau berikan informasi pada <Strong><a href="{{ route('forum.index') }}">forum umat</a></Strong>
+            </p>
         </div>
         </div>
 

@@ -90,6 +90,11 @@
             <!-- Informasi Penting -->
             <h5 class="mb-3 mt-4">2. Informasi Penting</h5>
             <ul class="list-unstyled ms-4">
+                <li>
+                        <i class="bi bi-check-circle text-primary"></i>
+                        Untuk dapat mendaftar sakramen, Anda diwajibkan terlebih dahulu terdaftar sebagai umat.
+                        <strong><a href="{{ route('pendaftaran-umat') }}">Klik di sini</a></strong> untuk pendaftaran umat.
+                </li>
                 <li><i class="bi bi-check-circle text-primary"></i> Calon penerima krisma harus sudah dibaptis dan menerima komuni pertama.</li>
                 <li><i class="bi bi-check-circle text-primary"></i> Nama calon krisma harus sesuai dengan dokumen resmi (akte/surat baptis).</li>
                 <li><i class="bi bi-check-circle text-primary"></i> Peserta wajib mengikuti pembekalan atau katekese sebelum penerimaan krisma.</li>

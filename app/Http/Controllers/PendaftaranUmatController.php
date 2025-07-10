@@ -105,7 +105,7 @@ class PendaftaranUmatController extends Controller
         Umat::create($request_valid);
 
         // balik ke index
-        return redirect()->route('pendaftaran-umat')->with('success', 'Anda berhasil mendaftar! Tunggu informasi lebih lanjut mengenai persetujuan oleh ketua lingkungan');
+        return redirect()->route('pendaftaran-umat')->with('success', 'Anda berhasil mendaftar! Mohon menunggu konfirmasi dari ketua lingkungan dalam waktu maksimal 2 hari kerja.');
     }
 
 }

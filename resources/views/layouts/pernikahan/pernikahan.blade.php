@@ -88,6 +88,11 @@
             <!-- Catatan -->
             <h5 class="mt-4 text-center">Catatan</h5>
             <ul class="list-unstyled ms-4">
+                <li>
+                        <i class="bi bi-info-circle text-warning me-2"></i>
+                        Untuk dapat mendaftar sakramen, Anda diwajibkan terlebih dahulu terdaftar sebagai umat.
+                        <strong><a href="{{ route('pendaftaran-umat') }}">Klik di sini</a></strong> untuk pendaftaran umat.
+                </li>
                 <li><i class="bi bi-info-circle text-warning me-2"></i> Pernsyaratan Lainnya akan di kirimkan melalui email jika sudah menyelesaikan pendaftaran online</li>
                 <li><i class="bi bi-info-circle text-warning me-2"></i> Semua dokumen wajib diunggah dengan jelas dan dapat terbaca.</li>
                 <li><i class="bi bi-info-circle text-warning me-2"></i> Proses pendaftaran dapat dilakukan melalui form <strong>Daftar Pernikahan</strong> di bawah.</li>
