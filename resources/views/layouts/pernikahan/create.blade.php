@@ -343,6 +343,15 @@
                                 </div>
                             @else
                                 {{-- jika umat bukan wanita atau belum upload berkas: minta akte kelahiran --}}
+                                @if (session('uploaded_akte_pria'))
+                                    <div class="mb-2">
+                                        <span class="p-2 px-3 py-2 badge bg-success fs-6">
+                                            ✔ Sudah Diupload
+                                        </span>
+                                    </div>
+                                    <input type="hidden" name="akte_path_pria" value="{{ session('uploaded_akte_pria') }}">
+                                @endif
+
                                 <div class="col-sm-6">
                                     <label for="akte_wanita_manual" id="wrapper_akte_wanita_manual" class="form-label">Akte Kelahiran</label>
                                     <input type="file" class="form-control @error('akte_wanita') is-invalid @enderror" id="akte_wanita_manual" name="akte_wanita" required>
@@ -381,14 +390,17 @@
                                 @else
                                     {{-- jika bukan umat -> mungkin katolik dan memiliki lingkungan --}}
                                     <label for="agama_wanita" class="form-label">Agama</label>
-                                    <select type="text" class="form-control @error ('agama_wanita')is-invalid @enderror" id="agama_wanita" name="agama_wanita" placeholder="" value="" required>
-                                        <option selected disabled value="">Pilih Agama</option>
-                                        <option value="Katolik">Katolik</option>
-                                        <option value="Kristen">Kristen</option>
-                                        <option value="Islam">Islam</option>
-                                        <option value="Hindu">Hindu</option>
-                                        <option value="Buddha">Buddha</option>
-                                        <option value="Khonghucu">Khonghucu</option>
+                                    <select class="form-control @error('agama_wanita') is-invalid @enderror"
+                                            id="agama_wanita"
+                                            name="agama_wanita"
+                                            required>
+                                        <option disabled selected value="">Pilih Agama</option>
+                                        <option value="Katolik" {{ old('agama_wanita') == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+                                        <option value="Kristen" {{ old('agama_wanita') == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+                                        <option value="Islam" {{ old('agama_wanita') == 'Islam' ? 'selected' : '' }}>Islam</option>
+                                        <option value="Hindu" {{ old('agama_wanita') == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                                        <option value="Buddha" {{ old('agama_wanita') == 'Buddha' ? 'selected' : '' }}>Buddha</option>
+                                        <option value="Khonghucu" {{ old('agama_wanita') == 'Khonghucu' ? 'selected' : '' }}>Khonghucu</option>
                                     </select>
                                     @error('agama_wanita')
                                         <div class="invalid-feedback">{{ $message }}</div>

@@ -58,7 +58,7 @@
                                         </span>
                                     </div>
                                 @else
-                                    <input type="file" class="form-control @error('fotokopi_ktp_ortu') is-invalid @enderror" id="fotokopi_ktp_ortu" name="fotokopi_ktp_ortu">
+                                    <input type="file" class="form-control @error('fotokopi_ktp_ortu') is-invalid @enderror" id="fotokopi_ktp_ortu" name="fotokopi_ktp_ortu" required>
                                     @error('fotokopi_ktp_ortu')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -74,7 +74,7 @@
                                         </span>
                                     </div>
                                 @else
-                                    <input type="file" class="form-control @error('surat_pernikahan_katolik_ortu') is-invalid @enderror" id="surat_pernikahan_katolik_ortu" name="surat_pernikahan_katolik_ortu">
+                                    <input type="file" class="form-control @error('surat_pernikahan_katolik_ortu') is-invalid @enderror" id="surat_pernikahan_katolik_ortu" name="surat_pernikahan_katolik_ortu" required>
                                     @error('surat_pernikahan_katolik_ortu')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -88,7 +88,7 @@
                                 @if ($data_baptis?->nama_baptis)
                                     <input disabled readonly type="text" class="form-control" id="nama_baptis" name="nama_baptis" value="{{ $data_baptis->nama_baptis }}">
                                 @else
-                                    <input type="text" class="form-control @error ('nama_baptis')is-invalid @enderror" id="nama_baptis" name="nama_baptis" value="{{ old('nama_baptis') }}">
+                                    <input type="text" class="form-control @error ('nama_baptis')is-invalid @enderror" id="nama_baptis" name="nama_baptis" value="{{ old('nama_baptis') }}" required>
                                     @error('nama_baptis')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -100,7 +100,7 @@
                                 @if ($data_baptis?->gereja_tempat_baptis)
                                     <input disabled readonly type="text" class="form-control" id="gereja_tempat_baptis" name="gereja_tempat_baptis" value="{{ $data_baptis->gereja_tempat_baptis }}">
                                 @else
-                                    <input type="text" class="form-control @error ('gereja_tempat_baptis')is-invalid @enderror" id="gereja_tempat_baptis" name="gereja_tempat_baptis" value="{{ old('gereja_tempat_baptis') }}">
+                                    <input type="text" class="form-control @error ('gereja_tempat_baptis')is-invalid @enderror" id="gereja_tempat_baptis" name="gereja_tempat_baptis" value="{{ old('gereja_tempat_baptis') }}" required>
                                     @error('gereja_tempat_baptis')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -112,7 +112,7 @@
                                 @if ($data_baptis?->tanggal_terima)
                                     <input disabled readonly type="date" class="form-control" id="tanggal_baptis" name="tanggal_baptis" value="{{ $data_baptis->tanggal_terima }}">
                                 @else
-                                    <input type="date" class="form-control @error ('tanggal_baptis')is-invalid @enderror" id="tanggal_baptis" name="tanggal_baptis" value="{{ old('tanggal_baptis') }}">
+                                    <input type="date" class="form-control @error ('tanggal_baptis')is-invalid @enderror" id="tanggal_baptis" name="tanggal_baptis" value="{{ old('tanggal_baptis') }}" required>
                                     @error('tanggal_baptis')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -127,7 +127,7 @@
                                         </span>
                                     </div>
                                 @else
-                                    <input type="file" class="form-control @error ('surat_baptis')is-invalid @enderror" id="surat_baptis" name="surat_baptis" value="{{ old('surat_baptis') }}" >
+                                    <input type="file" class="form-control @error ('surat_baptis')is-invalid @enderror" id="surat_baptis" name="surat_baptis" value="{{ old('surat_baptis') }}" required>
                                     @error('surat_baptis')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -141,7 +141,7 @@
                                 @if ($data_komuni?->tanggal_terima)
                                     <input disabled readonly type="date" class="form-control" id="tanggal_komuni" name="tanggal_komuni" value="{{ $data_komuni->tanggal_terima }}">
                                 @else
-                                    <input type="date" class="form-control @error ('tanggal_komuni')is-invalid @enderror" id="tanggal_komuni" name="tanggal_komuni" value="{{ old('tanggal_komuni') }}">
+                                    <input type="date" class="form-control @error ('tanggal_komuni')is-invalid @enderror" id="tanggal_komuni" name="tanggal_komuni" value="{{ old('tanggal_komuni') }}" required>
                                     @error('tanggal_komuni')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -153,7 +153,7 @@
                                 @if ($data_komuni?->gereja_tempat_komuni)
                                     <input readonly disabled type="text" class="form-control" id="gereja_tempat_komuni" name="gereja_tempat_komuni" value="{{ $data_komuni->gereja_tempat_komuni }}">
                                 @else
-                                    <input type="text" class="form-control @error ('gereja_tempat_komuni')is-invalid @enderror" id="gereja_tempat_komuni" name="gereja_tempat_komuni" value="{{ old('gereja_tempat_komuni') }}">
+                                    <input type="text" class="form-control @error ('gereja_tempat_komuni')is-invalid @enderror" id="gereja_tempat_komuni" name="gereja_tempat_komuni" value="{{ old('gereja_tempat_komuni') }}" required>
                                     @error('gereja_tempat_komuni')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -162,16 +162,16 @@
 
                             <div class="col-sm-6">
                                 <label for="surat_komuni" class="form-label">Surat Komuni Pertama</label>
-                                <input type="file" class="form-control @error ('surat_komuni')is-invalid @enderror" id="surat_komuni" name="surat_komuni" value="{{ old('surat_komuni') }}" >
+                                <input type="file" class="form-control @error ('surat_komuni')is-invalid @enderror" id="surat_komuni" name="surat_komuni" value="{{ old('surat_komuni') }}" required>
                                 @error('surat_komuni')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="mt-5 button-group text-end">
-                            <a href="{{ route('krisma') }}" class="border-0 rounded btn btn-warning btn-lg">Kembali</a>
+                            <a href="{{ route('krisma') }}" class="btn btn-dark">Kembali</a>
 
-                            <button class="border-0 rounded btn bg-primary btn-lg" type="submit">Daftar</button>
+                            <button class="btn btn-dark" type="submit">Daftar</button>
                         </div>
                     </form>
                 </div>
