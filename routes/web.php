@@ -2,27 +2,28 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\BaptisController;
 use App\Http\Controllers\UmatController;
+use App\Http\Controllers\BaptisController;
+use App\Http\Controllers\KomuniController;
+use App\Http\Controllers\KrismaController;
+use App\Http\Controllers\KetlingController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ForumUmatController;
+use App\Http\Controllers\PenganturanSakramen;
+use App\Http\Controllers\LingkunganController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\PernikahanController;
+use App\Http\Controllers\SekretarisController;
+use App\Http\Controllers\InformasiMisaController;
+use App\Http\Controllers\PendaftaranUmatController;
 use App\Http\Controllers\PendaftaranUmat_InvController;
 use App\Http\Controllers\PendaftaranBaptis_InvController;
 use App\Http\Controllers\PendaftaranKomuni_InvController;
 use App\Http\Controllers\PendaftaranKrisma_InvController;
-use App\Http\Controllers\LingkunganController;
-use App\Http\Controllers\PengumumanController;
-use App\Http\Controllers\InformasiMisaController;
-use App\Http\Controllers\PendaftaranUmatController;
-use App\Http\Controllers\ForumUmatController;
-use App\Http\Controllers\KomuniController;
-use App\Http\Controllers\KrismaController;
+use App\Http\Controllers\SekretarisPersetujuanController;
 use App\Http\Controllers\PendaftaranPernikahan_InvController;
-use App\Http\Controllers\PernikahanController;
-use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\PenganturanSakramen;
-use App\Http\Controllers\SekretarisController;
-use App\Http\Controllers\KetlingController;
 
 
 Route::middleware('guest')->group(function () {
@@ -113,19 +114,19 @@ Route::middleware(['auth', 'roles:sekretaris'])->prefix('sekretaris')->name('sek
     Route::get('/pendaftaransakramen', [SekretarisController::class, 'pendaftaranSakramen'])->name('pendaftaransakramen');
     // sekertaris->sakramen->baptis
     Route::get('/detail_sakramen/baptis/{umat}', [SekretarisController::class, 'baptis_show'])->name('detailBaptis');
-    Route::post('/persetujuan/baptis/setuju/{baptis}', [SekretarisController::class, 'setujuPendaftaranBaptis'])->name('setujuBaptis');
+    Route::post('/persetujuan/baptis/setuju/{baptis}', [SekretarisPersetujuanController::class, 'setujuPendaftaranBaptis'])->name('setujuBaptis');
     Route::post('/persetujuan/baptis/tolak/{baptis}', [SekretarisController::class, 'tolakPendaftaranBaptis'])->name('tolakBaptis');
     // sekertaris->sakramen->komuni
     Route::get('/detail_sakramen/komuni/{umat}', [SekretarisController::class, 'komuni_show'])->name('detailKomuni');
-    Route::post('/persetujuan/komuni/setuju/{komuni}', [SekretarisController::class, 'setujuPendaftaranKomuni'])->name('setujuKomuni');
+    Route::post('/persetujuan/komuni/setuju/{komuni}', [SekretarisPersetujuanController::class, 'setujuPendaftaranKomuni'])->name('setujuKomuni');
     Route::post('/persetujuan/komuni/tolak/{komuni}', [SekretarisController::class, 'tolakPendaftaranKomuni'])->name('tolakKomuni');
     // sekretaris->sakramen->krisma
     Route::get('/detail_sakramen/krisma/{umat}', [SekretarisController::class, 'krisma_show'])->name('detailKrisma');
-    Route::post('/persetujuan/krisma/setuju/{krisma}', [SekretarisController::class, 'setujuPendaftaranKrisma'])->name('setujuKrisma');
+    Route::post('/persetujuan/krisma/setuju/{krisma}', [SekretarisPersetujuanController::class, 'setujuPendaftaranKrisma'])->name('setujuKrisma');
     Route::post('/persetujuan/krisma/tolak/{krisma}', [SekretarisController::class, 'tolakPendaftaranKrisma'])->name('tolakKrisma');
     // sekretaris->sakramen->pernikahan
     Route::get('/detail_sakramen/pernikahan/{pernikahan}', [SekretarisController::class, 'pernikahan_show'])->name('detailPernikahan');
-    Route::post('/persetujuan/pernikahan/setuju/{pernikahan}', [SekretarisController::class, 'setujuPendaftaranPernikahan'])->name('setujuPernikahan');
+    Route::post('/persetujuan/pernikahan/setuju/{pernikahan}', [SekretarisPersetujuanController::class, 'setujuPendaftaranPernikahan'])->name('setujuPernikahan');
     Route::post('/persetujuan/pernikahan/tolak/{pernikahan}', [SekretarisController::class, 'tolakPendaftaranPernikahan'])->name('tolakPernikahan');
 
     // sekretaris -> penerimaan sakramen

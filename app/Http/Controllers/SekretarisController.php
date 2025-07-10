@@ -101,13 +101,6 @@ class SekretarisController extends Controller
         ]);
     }
 
-    public function setujuPendaftaranBaptis(Baptis $baptis)
-    {
-        $baptis->update(['status_pendaftaran' => 'Diterima']);
-
-        return redirect()->route('sekretaris.pendaftaransakramen')->with('status', 'Umat berhasil diverifikasi!');
-    }
-
     public function tolakPendaftaranBaptis(Baptis $baptis)
     {
         $baptis->update(['status_pendaftaran' => 'Ditolak']);
@@ -124,19 +117,6 @@ class SekretarisController extends Controller
         return view('layouts.sekretaris.sakramen.komuniShow', [
             'umat' => $umat
         ]);
-    }
-
-    public function setujuPendaftaranKomuni(Komuni $komuni)
-    {
-        // tolak kalau tidak ada baptis yang status pendaftarannya belum disetujui
-        $baptis = Baptis::where('umat_id', $komuni->umat_id)->first();
-        if (!$baptis || $baptis->status_pendaftaran !== 'Diterima') {
-            return back()->with('status_error', 'Gagal memverifikasi karena data baptis belum disetujui.');
-        }
-
-        $komuni->update(['status_pendaftaran' => 'Diterima']);
-
-        return redirect()->route('sekretaris.pendaftaransakramen')->with('status', 'Umat berhasil diverifikasi!');
     }
 
     public function tolakPendaftaranKomuni(Komuni $komuni)
@@ -157,29 +137,6 @@ class SekretarisController extends Controller
         ]);
     }
 
-    public function setujuPendaftaranKrisma(Krisma $krisma)
-    {
-        // tolak kalau tidak ada baptis atau komuni yang status pendaftarannya belum disetujui
-        $baptis = Baptis::where('umat_id', $krisma->umat_id)->first();
-        $komuni = Komuni::where('umat_id', $krisma->umat_id)->first();
-
-        if ((!$baptis || $baptis->status_pendaftaran !== 'Diterima') && (!$komuni || $komuni->status_penerimaan !== 'Diterima')) {
-            return back()->with('status_error', 'Gagal memverifikasi karena data baptis dan komuni belum disetujui.');
-        }
-
-        if (!$baptis || $baptis->status_pendaftaran !== 'Diterima') {
-            return back()->with('status_error', 'Gagal memverifikasi karena data baptis belum disetujui.');
-        }
-
-        if (!$komuni || $komuni->status_pendaftaran !== 'Diterima') {
-            return back()->with('status_error', 'Gagal memverifikasi karena data komuni belum disetujui.');
-        }
-
-        $krisma->update(['status_pendaftaran' => 'Diterima']);
-
-        return redirect()->route('sekretaris.pendaftaransakramen')->with('status', 'Umat berhasil diverifikasi!');
-    }
-
     public function tolakPendaftaranKrisma(Krisma $krisma)
     {
         $krisma->update(['status_pendaftaran' => 'Ditolak']);
@@ -194,13 +151,6 @@ class SekretarisController extends Controller
         return view('layouts.sekretaris.sakramen.pernikahanShow', [
             'pernikahan' => $pernikahan
         ]);
-    }
-
-    public function setujuPendaftaranPernikahan(Pernikahan $pernikahan)
-    {
-        $pernikahan->update(['status_pendaftaran' => 'Diterima']);
-
-        return redirect()->route('sekretaris.pendaftaransakramen')->with('status', 'Umat berhasil diverifikasi!');
     }
 
     public function tolakPendaftaranPernikahan(Pernikahan $pernikahan)
