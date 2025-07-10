@@ -79,7 +79,9 @@ class PernikahanController extends Controller
         }
 
         // cek apakah sudah daftar
-        $sudah_daftar = Pernikahan::where('umat_id', $umat_id)->first();
+       $sudah_daftar = Pernikahan::where('umat_id_pria', $umat_id)
+    ->orWhere('umat_id_wanita', $umat_id)
+    ->first();
         if($sudah_daftar){
             return redirect('krisma')->with('Pemberitahuan', 'Anda telah terdaftar. Mohon tunggu pengumuman lebih lanjut');
         }
