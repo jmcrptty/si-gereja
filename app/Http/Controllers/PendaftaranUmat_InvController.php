@@ -86,7 +86,7 @@ class PendaftaranUmat_InvController extends Controller
         }
 
 
-        return back()->with('Pemberitahuan', 'Link undangan telah dikirim ke email anda!');
+        return back()->with('Pemberitahuan', 'Link Formulir telah dikirim ke email anda!');
 
     }
 }

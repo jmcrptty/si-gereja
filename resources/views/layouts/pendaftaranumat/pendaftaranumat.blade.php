@@ -12,7 +12,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="border-0 shadow modal-content">
                 <div class="pb-0 border-0 modal-header">
-                    <h5 class="modal-title fw-bold text-success" id="successModalOutsideLabel"><i class="fas fa-check-circle"></i> Success</h5>
+                    <h5 class="modal-title fw-bold text-success" id="successModalOutsideLabel"><i class="fas fa-check-circle"></i> Berhasil</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="pt-1 text-center modal-body">

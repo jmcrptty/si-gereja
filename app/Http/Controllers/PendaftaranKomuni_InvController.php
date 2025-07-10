@@ -84,7 +84,7 @@ class PendaftaranKomuni_InvController extends Controller
             } catch (\Exception $e) {
                 return back()->with('Pemberitahuan', 'Gagal mengirim email: ' . $e->getMessage());
             }
-            return back()->with('Pemberitahuan', 'Link undangan telah dikirim ke email anda!');
+            return back()->with('Pemberitahuan', 'Link Formulir telah dikirim ke email anda!');
         }
         elseif($umat->status_pendaftaran == 'Pending'){
             // jika umat statusnya masih pending

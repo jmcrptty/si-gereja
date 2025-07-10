@@ -19,7 +19,7 @@ class PendaftaranUmatController extends Controller
 
         // jika tidak ada, kembalikan ke halaman utama
         if(!$invitation){
-            return redirect('pendaftaran-umat')->with('Pemberitahuan', 'Undangan yang anda masukan sudah kadaluarsa. Mohon isi kembali email pada form di bawah');
+            return redirect('pendaftaran-umat')->with('Pemberitahuan', 'formulir yang anda masukan sudah kadaluarsa. Mohon isi kembali email pada form di bawah');
         }
         // jika ada, tampilkan halaman login
         return view('layouts.pendaftaranumat.create', [
