@@ -156,7 +156,7 @@
                             @if (($umat->jenis_kelamin == 'Pria') && !empty($umat->akte_file))
                                 {{-- jika umat adalah pria yang sudah mengupload akte: tampilkan badge sudah upload dan masukkan ke hidden input --}}
                                 <div class="col-sm-6">
-                                    <label for="akte_pria" class="form-label">Akte Kelahiran V0</label>
+                                    <label for="akte_pria" class="form-label">Akte Kelahiran</label>
                                     <div class="mb-2">
                                         <span class="p-2 px-3 py-2 badge bg-success fs-6">
                                             ✔ Sudah Diupload
@@ -170,7 +170,7 @@
                             @else
                                 {{-- jika umat bukan pria atau belum upload berkas: minta akte kelahiran --}}
                                 <div class="col-sm-6">
-                                    <label for="akte_pria_manual" id="wrapper_akte_pria_manual" class="form-label">Akte Kelahiran V1</label>
+                                    <label for="akte_pria_manual" id="wrapper_akte_pria_manual" class="form-label">Akte Kelahiran</label>
                                     <input type="file" class="form-control @error('akte_pria') is-invalid @enderror" id="akte_pria_manual" name="akte_pria" required>
                                     @error('akte_pria')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -180,7 +180,7 @@
 
                             {{-- tampil kalau umat jalur cari email --}}
                             <div class="col-sm-6" id="wrapper_akte_pria_otomatis" style="display: none">
-                                <div class="form-label">Akte Kelahiran V2</div>
+                                <div class="form-label">Akte Kelahiran</div>
                                 <div class="mb-2">
                                     <span class="p-2 px-3 py-2 badge bg-success fs-6">
                                         ✔ Sudah Diupload
@@ -330,7 +330,7 @@
                             @if (($umat->jenis_kelamin == 'Wanita') && !empty($umat->akte_file))
                                 {{-- jika umat adalah wanita yang sudah mengupload akte: tampilkan badge sudah upload dan masukkan ke hidden input --}}
                                 <div class="col-sm-6">
-                                    <label for="akte_wanita" class="form-label">Akte Kelahiran V0</label>
+                                    <label for="akte_wanita" class="form-label">Akte Kelahiran</label>
                                     <div class="mb-2">
                                         <span class="p-2 px-3 py-2 badge bg-success fs-6">
                                             ✔ Sudah Diupload
@@ -344,7 +344,7 @@
                             @else
                                 {{-- jika umat bukan wanita atau belum upload berkas: minta akte kelahiran --}}
                                 <div class="col-sm-6">
-                                    <label for="akte_wanita_manual" id="wrapper_akte_wanita_manual" class="form-label">Akte Kelahiran V1</label>
+                                    <label for="akte_wanita_manual" id="wrapper_akte_wanita_manual" class="form-label">Akte Kelahiran</label>
                                     <input type="file" class="form-control @error('akte_wanita') is-invalid @enderror" id="akte_wanita_manual" name="akte_wanita" required>
                                     @error('akte_wanita')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -354,7 +354,7 @@
 
                             {{-- tampil kalau umat jalur cari email --}}
                             <div class="col-sm-6" id="wrapper_akte_wanita_otomatis" style="display: none">
-                                <div class="form-label">Akte Kelahiran V2</div>
+                                <div class="form-label">Akte Kelahiran</div>
                                 <div class="mb-2">
                                     <span class="p-2 px-3 py-2 badge bg-success fs-6">
                                         ✔ Sudah Diupload
@@ -475,6 +475,44 @@
                     }
                 }
             }
+
+            // wanita
+            const agama_select_wanita = document.getElementById('agama_wanita');
+            const lingkunganTextWanitaWrapper = document.getElementById('wrapper_lingkungan_wanita_manual');
+            const lingkunganTextWanita = document.getElementById('lingkungan_wanita_manual');
+            const lingkunganSelectWanita = document.getElementById('lingkungan_wanita');
+
+            if (agama_select_wanita) {
+                agama_select_wanita.addEventListener('change', function () {
+                    const selectedValue = this.value;
+                    if (selectedValue === 'Katolik') {
+                        lingkunganTextWanitaWrapper.style.display = 'block';
+                        lingkunganTextWanita.disabled = false;
+                        lingkunganTextWanita.value = "";
+
+                        if (lingkunganSelectWanita) {
+                            lingkunganSelectWanita.disabled = true;
+                        }
+                    } else {
+                        lingkunganTextWanitaWrapper.style.display = 'none';
+                        lingkunganTextWanita.disabled = true;
+
+                        if (lingkunganSelectWanita) {
+                            lingkunganSelectWanita.disabled = false;
+                        }
+                    }
+                });
+
+                if (agama_select_wanita.value === 'Katolik') {
+                    lingkunganTextWanitaWrapper.style.display = 'block';
+                    lingkunganTextWanita.disabled = false;
+
+                    if (lingkunganSelectWanita) {
+                        lingkunganSelectWanita.disabled = true;
+                    }
+                }
+            }
+
         });
 
         $(document).ready(function(){

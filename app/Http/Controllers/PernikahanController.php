@@ -169,6 +169,11 @@ class PernikahanController extends Controller
         }
         else {
             // PRIA BUKAN UMAT GEREJA
+            if ($request->agama_pria == 'Katolik' && !$pria_adalah_umat) { // pastikan beragama katolik dan bukan umat
+                $request->merge([
+                    'lingkungan_pria' => $request->input('lingkungan_pria_manual') // masukkan field lingkungan manual ke lingkungan_pria
+                ]);
+            }
             $request_valid_pria = $request->validate([
                 // Calon pria
                 'email_pria' => ['required', 'email:rfc,dns', 'max:50'],
@@ -295,6 +300,11 @@ class PernikahanController extends Controller
         }
         else {
             // WANITA BUKAN UMAT GEREJA
+            if ($request->agama_wanita == 'Katolik' && !$wanita_adalah_umat) { // pastikan beragama katolik dan bukan umat
+                $request->merge([
+                    'lingkungan_wanita' => $request->input('lingkungan_wanita_manual') // masukkan field lingkungan manual ke lingkungan_wanita
+                ]);
+            }
             $request_valid_wanita = $request->validate([
                 // Calon Wanita
                 'email_wanita' => ['required', 'email:rfc,dns', 'max:50'],
