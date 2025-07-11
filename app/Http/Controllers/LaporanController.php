@@ -229,7 +229,7 @@ public function downloadSakramenPdf(Request $request)
     }
 
     // Kalau hanya 1 jenis sakramen
-    $pdf = PDF::loadView('layouts.laporan.pdf.sakramen', [
+    $pdf = PDF::loadView('layouts.Laporan.pdf.sakramen', [
         'data' => $sorted,
         'year' => $year,
         'sakramen' => ucfirst($sakramen_id)
