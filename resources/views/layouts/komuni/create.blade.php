@@ -96,7 +96,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <label for="gereja_tempat_baptis" class="form-label">Gerjea Tempat Pembaptisan</label>
+                                <label for="gereja_tempat_baptis" class="form-label">Gereja Tempat Pembaptisan</label>
                                 @if ($data_baptis?->gereja_tempat_baptis)
                                     <input readonly type="text" class="form-control pseudo-disabled" id="gereja_tempat_baptis" name="gereja_tempat_baptis" value="{{ $data_baptis->gereja_tempat_baptis }}">
                                 @else
@@ -110,7 +110,7 @@
                             <div class="col-sm-6">
                                 <label for="tanggal_baptis" class="form-label">Tanggal Pembaptisan</label>
                                 @if ($data_baptis?->tanggal_terima)
-                                    <input disabled readonly type="date" class="form-control" id="tanggal_baptis" name="tanggal_baptis" value="{{ $data_baptis->tanggal_terima }}">
+                                    <input type="date" class="form-control pseudo-disabled" id="tanggal_baptis" name="tanggal_baptis" value="{{ \Carbon\Carbon::parse($data_baptis->tanggal_terima)->format('Y-m-d') }}">
                                 @else
                                     <input type="date" class="form-control @error ('tanggal_baptis')is-invalid @enderror" id="tanggal_baptis" name="tanggal_baptis" value="{{ old('tanggal_baptis') }}" required>
                                     @error('tanggal_baptis')

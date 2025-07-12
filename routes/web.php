@@ -103,6 +103,9 @@ Route::middleware(['auth', 'roles:sekretaris'])->prefix('sekretaris')->name('sek
     Route::get('/laporan/sakramen', [LaporanController::class, 'sakramen'])->name('laporan.sakramen');
     Route::post('/laporan/umat/download', [LaporanController::class, 'downloadUmatPdf'])->name('laporan.umat.download');
     Route::post('/laporan/sakramen/download', [LaporanController::class, 'downloadSakramenPdf'])->name('laporan.sakramen.download');
+    Route::post('/penerimaan/pernikahan/tambah-tanggal/{pernikahan}', [LaporanController::class, 'tambahTanggalPernikahan'])->name('tambahTanggalPernikahan');
+
+
 
     // sekretaris -> umat
     Route::get('/umat', [SekretarisController::class, 'umat_index'])->name('umat.index');

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Data Pembaptisan')
+@section('title', 'Data Komuni')
 
 @section('content')
     <main>
@@ -136,6 +136,41 @@
                                         <a href="{{ route('sekretaris.umat.downloadFile', ['type' => 'surat_baptis', 'filename' => basename($umat->baptis->surat_baptis)]) }}"
                                             class="btn btn-outline-primary d-block" target="_blank">
                                             Lihat Surat Baptis
+                                        </a>
+                                    @else
+                                        <span class="btn btn-outline-secondary disabled d-block">Belum ada</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <h1 class="pt-1 mt-4">Penerimaan Sakramen Komuni</h1>
+
+                            <div class="col-sm-6">
+                                <label for="gereja_tempat_komuni" class="form-label">Gereja Tempat Penerimaan Komuni Pertama</label>
+                                <input disabled readonly type="text" class="form-control" id="gereja_tempat_komuni"
+                                    value="{{ optional($umat->komuni)->gereja_tempat_komuni ?? 'Belum Ada' }}">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="tanggal_komuni" class="form-label">Tanggal Komuni Pertama</label>
+                                @if(optional($umat->komuni)->tanggal_terima)
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_komuni"
+                                        value="{{ optional($umat->komuni->tanggal_terima)->format('Y-m-d') }}">
+                                @else
+                                    <input disabled readonly type="text" class="form-control" id="tanggal_komuni" value="Belum Ada">
+                                @endif
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="surat_komuni" class="form-label">Surat Komuni Pertama</label>
+                                <div>
+                                    @if(optional($umat->komuni)->surat_komuni)
+                                        <a href="{{ route('sekretaris.umat.downloadFile', [
+                                                'type' => 'surat_komuni',
+                                                'filename' => basename(optional($umat->komuni)->surat_komuni)
+                                            ]) }}"
+                                            class="btn btn-outline-primary d-block" target="_blank">
+                                            Lihat Surat Komuni
                                         </a>
                                     @else
                                         <span class="btn btn-outline-secondary disabled d-block">Belum ada</span>

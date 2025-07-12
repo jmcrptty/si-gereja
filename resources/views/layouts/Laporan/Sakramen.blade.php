@@ -94,9 +94,11 @@
                             <th>Lingkungan</th>
                             <th>Sakramen</th>
                             <th>Tanggal Terima</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {{-- {{ dd($penerimaan->get(2)->umat_id) }} --}}
                         @forelse($penerimaan as $index => $data)
                             <tr>
                                 <td>{{ $penerimaan->firstItem() + $index }}</td>
@@ -104,6 +106,24 @@
                                 <td>{{ $data->lingkungan }}</td>
                                 <td>{{ $data->nama_sakramen }}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->tanggal_terima)->format('d/m/Y') }}</td>
+                                <td class="text-center">
+                                    @php $sakramen = strtolower($data->nama_sakramen); @endphp
+
+                                    @if($sakramen === 'baptis')
+                                        <a href="{{ route('sekretaris.detailBaptis.penerimaan', ['umat' => $data->umat_id]) }}"
+                                        class="badge bg-primary"><i class="fa fa-eye"></i></a>
+                                    @elseif($sakramen === 'komuni')
+                                        <a href="{{ route('sekretaris.detailKomuni', ['umat' => $data->umat_id]) }}"
+                                        class="badge bg-primary"><i class="fa fa-eye"></i></a>
+                                    @elseif($sakramen === 'krisma')
+                                        <a href="{{ route('sekretaris.detailKrisma', ['umat' => $data->umat_id]) }}"
+                                        class="badge bg-primary"><i class="fa fa-eye"></i></a>
+                                    @elseif($sakramen === 'pernikahan')
+                                        <a href="{{ route('sekretaris.detailPernikahan', $data->umat_id) }}" class="badge bg-primary" title="Lihat">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>

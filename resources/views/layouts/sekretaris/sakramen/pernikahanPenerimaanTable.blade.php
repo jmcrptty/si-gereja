@@ -33,18 +33,36 @@
                                 <div class="flex-wrap gap-2 d-flex justify-content-center">
                                     {{-- Lihat --}}
                                     <a href="{{ route('sekretaris.detailPernikahan', $data_pernikahan->id) }}" class="border-0 badge bg-primary fs-6" title="Lihat" style="text-decoration: none">
-                                        <i class="fa-solid fa-eye"></i> 
+                                        <i class="fa-solid fa-eye"></i>
                                     </a>
-                                    {{-- Konfirmasi --}}
-                                    <button type="button" class="border-0 badge bg-success fs-6" data-bs-toggle="modal" data-bs-target="#confirmModalPernikahan{{ $data_pernikahan->id }}">
-                                        <i class="fa-solid fa-check"></i> 
-                                    </button>
+
+                                    {{-- Tombol Tambahkan Tanggal --}}
+                                    @if (empty($data_pernikahan->tanggal_terima))
+                                        <button type="button" class="border-0 badge bg-danger fs-6"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#addTanggalModalPernikahan{{ $data_pernikahan->id }}">
+                                            <i class="fa-solid fa-calendar-plus"></i>
+                                        </button>
+                                    @endif
+
+                                    {{-- Tombol Konfirmasi --}}
+                                    @if (!empty($data_pernikahan->tanggal_terima))
+                                        <button type="button" class="border-0 badge bg-success fs-6"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmModalPernikahan{{ $data_pernikahan->id }}">
+                                            <i class="fa-solid fa-check"></i>
+                                        </button>
+                                    @endif
+
                                     {{-- Tolak --}}
-                                    <button type="button" class="border-0 badge bg-danger fs-6" data-bs-toggle="modal" data-bs-target="#rejectModalLabelPernikahan{{ $data_pernikahan->id }}">
-                                        <i class="fa-solid fa-xmark"></i> 
+                                    <button type="button" class="border-0 badge bg-danger fs-6"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#rejectModalLabelPernikahan{{ $data_pernikahan->id }}">
+                                        <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 </div>
                             </td>
+
                         </tr>
 
                         <!-- Modal Konfirmasi -->
@@ -110,6 +128,35 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Modal Tambah Tanggal Pernikahan -->
+                        <div class="modal fade" id="addTanggalModalPernikahan{{ $data_pernikahan->id }}" tabindex="-1" aria-labelledby="addTanggalModalPernikahanLabel{{ $data_pernikahan->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="border-0 shadow modal-content">
+                                    <div class="border-0 modal-header">
+                                        <h5 class="modal-title fw-bold" id="addTanggalModalPernikahanLabel{{ $data_pernikahan->id }}">
+                                            <i class="fa-solid fa-calendar-plus text-danger"></i> Tambah Tanggal Pernikahan
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                                    </div>
+                                    <div class="text-center modal-body">
+                                        <form action="{{ route('sekretaris.tambahTanggalPernikahan', $data_pernikahan->id) }}" method="POST">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="tanggal_terima_{{ $data_pernikahan->id }}" class="form-label">Tanggal Pernikahan</label>
+                                                <input type="date" name="tanggal_terima" id="tanggal_terima_{{ $data_pernikahan->id }}" class="form-control" required>
+                                            </div>
+                                            <div class="gap-2 d-flex justify-content-center">
+                                                <button type="submit" class="px-4 btn btn-danger">Simpan</button>
+                                                <button type="button" class="px-4 btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     @endforeach
                 </tbody>
             </table>

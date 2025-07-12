@@ -169,7 +169,7 @@ class SekretarisController extends Controller
 
         $krisma = Krisma::with(['umat:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id', 'tanggal_daftar']);
 
-        $pernikahan = Pernikahan::with(['umatPria:id,nama_lengkap,email,no_hp', 'umatWanita:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id_pria', 'umat_id_wanita', 'nama_lengkap_pria', 'nama_lengkap_wanita', 'tanggal_daftar',]);
+        $pernikahan = Pernikahan::with(['umatPria:id,nama_lengkap,email,no_hp', 'umatWanita:id,nama_lengkap,email,no_hp'])->where('status_pendaftaran', 'Diterima')->where('status_penerimaan', 'Pending')->get(['id', 'umat_id_pria', 'umat_id_wanita', 'nama_lengkap_pria', 'nama_lengkap_wanita', 'tanggal_daftar', 'tanggal_terima']);
 
         return view('layouts.penerimaansakramen', [
             'baptis' => $baptis,
@@ -300,4 +300,5 @@ class SekretarisController extends Controller
 
         return redirect()->route('sekretaris.penerimaansakramen')->with('status', 'Data umat ditolak!');
     }
+
 }

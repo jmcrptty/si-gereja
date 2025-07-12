@@ -122,6 +122,24 @@
                                 </div>
                             </div>
 
+                            <h1 class="pt-1 mt-4">Detail Penerimaan Sakramen Pernikahan</h1>
+
+                            <div class="col-sm-6">
+                                <label for="gereja_tempat_komuni" class="form-label">Gereja Tempat Penerimaan Sakramen Perniakahan</label>
+                                <input disabled readonly type="text" class="form-control" id="gereja_tempat_komuni"
+                                    value="Gereja Katedral Santo Fransiskus Xaverius Merauke">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="tanggal_komuni" class="form-label">Tanggal Pernikahan</label>
+                                @if(optional($pernikahan->tanggal_terima))
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_komuni"
+                                        value="{{ optional($pernikahan->tanggal_terima)->format('Y-m-d') }}">
+                                @else
+                                    <input disabled readonly type="text" class="form-control" id="tanggal_komuni" value="Belum Ada">
+                                @endif
+                            </div>
+
                         <div class="mt-5 button-group text-end">
                             <a href="{{ url()->previous() }}" class="border-0 rounded btn-warning btn btn-lg">Kembali</a>
                         </div>

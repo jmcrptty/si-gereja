@@ -56,15 +56,7 @@ class KrismaController extends Controller
 
         $data_komuni = Komuni::select('gereja_tempat_komuni', 'tanggal_terima')->where('status_penerimaan', 'Diterima')->where('umat_id', $umat_id)->first();
 
-        if ($data_komuni && $data_komuni->tanggal_terima) {
-            $data_komuni->tanggal_terima = \Carbon\Carbon::parse($data_komuni->tanggal_terima)->format('Y-m-d');
-        }
-
         $data_baptis = Baptis::select('nama_baptis','fotokopi_ktp_ortu', 'surat_pernikahan_katolik_ortu', 'gereja_tempat_baptis', 'tanggal_terima', 'surat_baptis',)->where('status_penerimaan', 'Diterima')->where('umat_id', $umat_id)->first();
-
-        if ($data_baptis && $data_baptis->tanggal_terima) {
-            $data_baptis->tanggal_terima = \Carbon\Carbon::parse($data_baptis->tanggal_terima)->format('Y-m-d');
-        }
 
         return view('layouts.krisma.create', [
             'umat' => Umat::select('nama_lengkap', 'alamat', 'nama_ayah', 'nama_ibu', 'email')->where('email', $invitation->email)->first(),
