@@ -9,7 +9,7 @@
 @section('content')
     <main>
         <div class="px-4 container-fluid">
-            <h1 class="mt-4">Formulir Pendaftaran Sakramen Baptis</h1>
+            <h1 class="mt-4">Formulir Pendaftaran Umat</h1>
             <ol class="mb-4 breadcrumb">
                 {{-- <li class="breadcrumb-item active">Tambah, Edit, dan Hapus Data Umat</li> --}}
             </ol>

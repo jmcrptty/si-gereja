@@ -19,7 +19,26 @@ class CreateUmatTable extends Migration
             $table->text('tempat_lahir');
             $table->date('ttl');
             $table->text('alamat');
-            $table->enum('lingkungan', ['st.petrus', 'st.yohanes', 'st.maria']);
+            $table->enum('lingkungan', [
+            'Eusebius Damianus',
+            'Regina Pacis',
+            'Ratu Rosari Bunda Allah (RRBA)',
+            'Ratu Rosari Semesta Alam (RRSA)',
+            'Santa Agnes',
+            'Santa Anna',
+            'Santa Bernadetha',
+            'Santo Agustinus',
+            'Santo Anthonius',
+            'Santo Yohanes Don Bosco',
+            'Santo Hermanus',
+            'Santo Kornelis',
+            'Santo Marselino',
+            'Santo Paulus',
+            'Santo Petrus',
+            'Santo Yoseph',
+            'St. Fransiskus Xaverius',
+            'Stella Maris'
+]);
             $table->enum('status_pendaftaran', ['Pending', 'Diterima', 'Ditolak'])->default('Pending');
             $table->timestamp('tanggal_daftar')->useCurrent();
 

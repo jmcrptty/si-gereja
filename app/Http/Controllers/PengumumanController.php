@@ -6,14 +6,13 @@ use App\Models\Pengumuman;
 use App\Models\InformasiMisa;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class PengumumanController extends Controller
 {
     public function index()
     {
         $default = Pengumuman::where('jenis_pengumuman', 'Mingguan')->first();
-        
+
         $pengumuman = [
             'mingguan' => Pengumuman::where('jenis_pengumuman', 'Mingguan')->get(),
             'laporan_keuangan' => Pengumuman::where('jenis_pengumuman', 'Laporan_Keuangan')->get(),
@@ -25,20 +24,19 @@ class PengumumanController extends Controller
 
     public function showWelcome()
     {
-
-         $informasiMisa = [
-        'Harian' => InformasiMisa::where('jenis_misa', 'Harian')->first(),
-        'Jumat_Pertama' => InformasiMisa::where('jenis_misa', 'Jumat_Pertama')->first(),
-        'Minggu' => InformasiMisa::where('jenis_misa', 'Minggu')->first(),
-    ];
+        $informasiMisa = [
+            'Harian' => InformasiMisa::where('jenis_misa', 'Harian')->first(),
+            'Jumat_Pertama' => InformasiMisa::where('jenis_misa', 'Jumat_Pertama')->first(),
+            'Minggu' => InformasiMisa::where('jenis_misa', 'Minggu')->first(),
+        ];
 
         $pengumuman = [
             'mingguan' => Pengumuman::where('jenis_pengumuman', 'Mingguan')->latest()->get(),
             'laporan_keuangan' => Pengumuman::where('jenis_pengumuman', 'Laporan_Keuangan')->latest()->get(),
             'pengumuman_lainnya' => Pengumuman::where('jenis_pengumuman', 'Pengumuman_Lainnya')->latest()->get(),
         ];
-        
-        return view('welcome', compact('pengumuman','informasiMisa'));
+
+        return view('welcome', compact('pengumuman', 'informasiMisa'));
     }
 
     public function getByJenis($jenis)
@@ -53,21 +51,10 @@ class PengumumanController extends Controller
         }
     }
 
-    public function showImage($filename)
-    {
-        $path = storage_path('app/private/pengumuman_images/' . $filename);
-
-        if (!file_exists($path)) {
-            abort(404);
-        }
-
-        return response()->file($path);
-    }
-
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_pengumuman' => 'required|in:Mingguan,Laporan_Keuangan,pengumuman lainnya',
+            'jenis_pengumuman' => 'required|in:Mingguan,Laporan_Keuangan,Pengumuman_Lainnya',
             'title' => 'required|string|max:255',
             'sub' => 'nullable|string',
             'content' => 'required|string',
@@ -111,7 +98,7 @@ class PengumumanController extends Controller
             if ($pengumuman->image) {
                 Storage::disk('public')->delete($pengumuman->image);
             }
-            
+
             $path = $request->file('image')->store('pengumuman_images', 'public');
             $pengumuman->image = $path;
         }
@@ -122,14 +109,14 @@ class PengumumanController extends Controller
             ->with('success', 'Pengumuman berhasil diperbarui.');
     }
 
-  public function showByJenis($jenis)
+    public function showByJenis($jenis)
     {
         $type = match ($jenis) {
             'laporan-keuangan' => 'Laporan_Keuangan',
             'pengumuman-lainnya' => 'Pengumuman_Lainnya',
             default => 'Mingguan',
         };
-        
+
         $pengumuman = [
             str_replace('-', '_', $jenis) => Pengumuman::where('jenis_pengumuman', $type)
                 ->latest()

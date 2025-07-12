@@ -26,7 +26,7 @@ class PenerimaanSakramenSeeder extends Seeder
                 'tempat_lahir' => 'Merauke',
                 'ttl' => '2000-01-01',
                 'alamat' => 'Jl. Gereja No. 123',
-                'lingkungan' => 'st.petrus',
+                'lingkungan' => 'Santo Petrus',
                 'status_pendaftaran' => 'Diterima',
                 'no_hp' => '081234567890',
                 'email' => 'andreas@example.com',
