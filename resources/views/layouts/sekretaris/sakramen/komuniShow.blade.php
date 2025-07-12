@@ -115,13 +115,15 @@
 
                             <div class="col-sm-6">
                                 <label for="gereja_tempat_baptis" class="form-label">Gereja Tempat Baptis</label>
-                                <input disabled readonly type="text" class="form-control" id="gereja_tempat_baptis" value="{{ $umat->baptis->gereja_tempat_baptis }}">
+                                <input disabled readonly type="text" class="form-control" id="gereja_tempat_baptis"
+                                    value="{{ optional($umat->baptis)->gereja_tempat_baptis ?? 'Belum Ada' }}">
                             </div>
 
                             <div class="col-sm-6">
                                 <label for="tanggal_baptis" class="form-label">Tanggal Baptis</label>
-                                @if ($umat->baptis->tanggal_terima)
-                                    <input disabled readonly type="date" class="form-control" id="tanggal_baptis" value="{{ $umat->baptis->tanggal_terima->format('Y-m-d') }}">
+                                @if (optional($umat->baptis)->tanggal_terima)
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_baptis"
+                                        value="{{ optional($umat->baptis->tanggal_terima)->format('Y-m-d') }}">
                                 @else
                                     <input disabled readonly type="text" class="form-control" id="tanggal_baptis" value="Belum Ada">
                                 @endif
@@ -130,7 +132,7 @@
                             <div class="col-sm-6">
                                 <label for="surat_baptis" class="form-label">Surat Pembaptisan</label>
                                 <div>
-                                    @if ($umat->baptis->surat_baptis)
+                                    @if (optional($umat->baptis)->surat_baptis)
                                         <a href="{{ route('sekretaris.umat.downloadFile', ['type' => 'surat_baptis', 'filename' => basename($umat->baptis->surat_baptis)]) }}"
                                             class="btn btn-outline-primary d-block" target="_blank">
                                             Lihat Surat Baptis
@@ -140,6 +142,7 @@
                                     @endif
                                 </div>
                             </div>
+
 
                         </div>
 

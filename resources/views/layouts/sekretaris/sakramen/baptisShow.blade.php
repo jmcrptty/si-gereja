@@ -106,7 +106,7 @@
                                 @endif
                             </div>
 
-                            <h1 class="pt-1 mt-4">Penerimaan Sakramen</h1>
+                            <h1 class="pt-1 mt-4">Penerimaan Sakramen Baptis</h1>
 
                             <div class="col-sm-6">
                                 <label for="nama_baptis" class="form-label">Nama Baptis</label>
@@ -115,8 +115,34 @@
 
                             <div class="col-sm-6">
                                 <label for="gereja_tempat_baptis" class="form-label">Gereja Tempat Baptis</label>
-                                <input disabled readonly type="text" class="form-control" id="gereja_tempat_baptis" value="{{ $umat->baptis->gereja_tempat_baptis }}">
+                                <input disabled readonly type="text" class="form-control" id="gereja_tempat_baptis"
+                                    value="{{ optional($umat->baptis)->gereja_tempat_baptis ?? 'Belum Ada' }}">
                             </div>
+
+                            <div class="col-sm-6">
+                                <label for="tanggal_baptis" class="form-label">Tanggal Baptis</label>
+                                @if (optional($umat->baptis)->tanggal_terima)
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_baptis"
+                                        value="{{ optional($umat->baptis->tanggal_terima)->format('Y-m-d') }}">
+                                @else
+                                    <input disabled readonly type="text" class="form-control" id="tanggal_baptis" value="Belum Ada">
+                                @endif
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="surat_baptis" class="form-label">Surat Pembaptisan</label>
+                                <div>
+                                    @if (optional($umat->baptis)->surat_baptis)
+                                        <a href="{{ route('sekretaris.umat.downloadFile', ['type' => 'surat_baptis', 'filename' => basename($umat->baptis->surat_baptis)]) }}"
+                                            class="btn btn-outline-primary d-block" target="_blank">
+                                            Lihat Surat Baptis
+                                        </a>
+                                    @else
+                                        <span class="btn btn-outline-secondary disabled d-block">Belum ada</span>
+                                    @endif
+                                </div>
+                            </div>
+
 
                             @if ($umat->baptis->nama_wali_baptis || $umat->baptis->surat_krisma_wali_baptis)
                                 {{-- Krisma Wali Baptis --}}

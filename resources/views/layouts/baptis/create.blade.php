@@ -148,25 +148,25 @@
             const namaWanita = document.getElementById('nama_wali_baptis_wanita');
             const suratPasangan = document.getElementById('surat_pernikahan_wali_baptis');
 
+            function clearTunggal() {
+                namaTunggal.value = '';
+                suratTunggal.value = '';
+            }
+
             function clearPasangan() {
                 namaPria.value = '';
                 namaWanita.value = '';
                 suratPasangan.value = '';
             }
 
-            function clearTunggal() {
-                namaTunggal.value = '';
-                suratTunggal.value = '';
-            }
-
             // Tunggal triggers clear pasangan
             namaTunggal.addEventListener('input', clearPasangan);
             suratTunggal.addEventListener('change', clearPasangan);
 
-            // Pasangan triggers clear tunggal
+            // Pasangan triggers clear tunggal (tidak perlu hapus saat file pasangan dipilih)
             namaPria.addEventListener('input', clearTunggal);
             namaWanita.addEventListener('input', clearTunggal);
-            suratPasangan.addEventListener('change', clearTunggal);
+
 
             // Submit validation remains the same
             document.getElementById('formPendaftaran').addEventListener('submit', function(e) {
