@@ -51,10 +51,31 @@
                 </div>
 
                 <!-- Lingkungan -->
-                <div class="col-md-4">
-                    <label class="form-label">Lingkungan</label>
-                    <input type="text" name="lingkungan" class="form-control" placeholder="Nama Lingkungan" required>
-                </div>
+              <div class="col-md-4">
+    <label class="form-label">Lingkungan</label>
+    <select name="lingkungan" class="form-control" required>
+        <option selected disabled value="">Pilih Lingkungan</option>
+        <option value="Eusebius Damianus">Eusebius Damianus</option>
+        <option value="Regina Pacis">Regina Pacis</option>
+        <option value="Ratu Rosari Bunda Allah (RRBA)">Ratu Rosari Bunda Allah (RRBA)</option>
+        <option value="Ratu Rosari Semesta Alam (RRSA)">Ratu Rosari Semesta Alam (RRSA)</option>
+        <option value="Santa Agnes">Santa Agnes</option>
+        <option value="Santa Anna">Santa Anna</option>
+        <option value="Santa Bernadetha">Santa Bernadetha</option>
+        <option value="Santo Agustinus">Santo Agustinus</option>
+        <option value="Santo Anthonius">Santo Anthonius</option>
+        <option value="Santo Yohanes Don Bosco">Santo Yohanes Don Bosco</option>
+        <option value="Santo Hermanus">Santo Hermanus</option>
+        <option value="Santo Kornelis">Santo Kornelis</option>
+        <option value="Santo Marselino">Santo Marselino</option>
+        <option value="Santo Paulus">Santo Paulus</option>
+        <option value="Santo Petrus">Santo Petrus</option>
+        <option value="Santo Yoseph">Santo Yoseph</option>
+        <option value="St. Fransiskus Xaverius">St. Fransiskus Xaverius</option>
+        <option value="Stella Maris">Stella Maris</option>
+    </select>
+</div>
+
 
                 <!-- Password -->
                 <div class="col-md-4">
@@ -87,7 +108,7 @@
                 <table class="table table-bordered table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Lingkungan</th>

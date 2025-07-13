@@ -102,12 +102,28 @@
 
                             <div class="col-sm-6">
                                 <label for="lingkungan" class="form-label">Lingkungan</label>
-                                <select type="text" class="form-control @error ('lingkungan')is-invalid @enderror" id="lingkungan" name="lingkungan" placeholder="" value="" required>
-                                    <option selected disabled value="">Pilih Lingkungan</option>
-                                    <option value="st.petrus">St. Petrus</option>
-                                    <option value="st.yohanes">St. Yohanes</option>
-                                    <option value="st.maria">St. Maria</option>
-                                </select>
+                                <select class="form-control @error('lingkungan') is-invalid @enderror" name="lingkungan" required>
+    <option disabled selected value="">Pilih Lingkungan</option>
+    <option value="Eusebius Damianus">Eusebius Damianus</option>
+    <option value="Regina Pacis">Regina Pacis</option>
+    <option value="Ratu Rosari Bunda Allah (RRBA)">Ratu Rosari Bunda Allah (RRBA)</option>
+    <option value="Ratu Rosari Semesta Alam (RRSA)">Ratu Rosari Semesta Alam (RRSA)</option>
+    <option value="Santa Agnes">Santa Agnes</option>
+    <option value="Santa Anna">Santa Anna</option>
+    <option value="Santa Bernadetha">Santa Bernadetha</option>
+    <option value="Santo Agustinus">Santo Agustinus</option>
+    <option value="Santo Anthonius">Santo Anthonius</option>
+    <option value="Santo Yohanes Don Bosco">Santo Yohanes Don Bosco</option>
+    <option value="Santo Hermanus">Santo Hermanus</option>
+    <option value="Santo Kornelis">Santo Kornelis</option>
+    <option value="Santo Marselino">Santo Marselino</option>
+    <option value="Santo Paulus">Santo Paulus</option>
+    <option value="Santo Petrus">Santo Petrus</option>
+    <option value="Santo Yoseph">Santo Yoseph</option>
+    <option value="St. Fransiskus Xaverius">St. Fransiskus Xaverius</option>
+    <option value="Stella Maris">Stella Maris</option>
+</select>
+
                                 @error('lingkungan')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
