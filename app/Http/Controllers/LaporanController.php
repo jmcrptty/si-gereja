@@ -10,7 +10,8 @@ use App\Models\PenerimaanSakramen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use App\Models\Pernikahan;
+use Illuminate\Support\Facades\Redirect;
 
 class LaporanController extends Controller
 {
@@ -258,6 +259,7 @@ public function downloadSakramenPdf(Request $request)
         $baptis = DB::table('baptis')
             ->join('umat', 'umat.id', '=', 'baptis.umat_id')
             ->select(
+                'baptis.umat_id',
                 'umat.nama_lengkap',
                 'umat.lingkungan',
                 DB::raw("'Baptis' as nama_sakramen"),
@@ -267,12 +269,14 @@ public function downloadSakramenPdf(Request $request)
                 DB::raw('baptis.tanggal_terima as tanggal_sort')
             )
             ->where('baptis.status_penerimaan', 'Diterima')
-            ->whereYear('baptis.tanggal_terima', $year);
+            ->whereYear('baptis.tanggal_terima', $year)
+            ->where('baptis.gereja_tempat_baptis', 'Gereja Katedral Santo Fransiskus Xaverius Merauke');
 
         // Query Komuni
         $komuni = DB::table('komuni')
             ->join('umat', 'umat.id', '=', 'komuni.umat_id')
             ->select(
+                'komuni.umat_id',
                 'umat.nama_lengkap',
                 'umat.lingkungan',
                 DB::raw("'Komuni' as nama_sakramen"),
@@ -282,12 +286,14 @@ public function downloadSakramenPdf(Request $request)
                 DB::raw('komuni.tanggal_terima as tanggal_sort')
             )
             ->where('komuni.status_penerimaan', 'Diterima')
-            ->whereYear('komuni.tanggal_terima', $year);
+            ->whereYear('komuni.tanggal_terima', $year)
+            ->where('komuni.gereja_tempat_komuni', 'Gereja Katedral Santo Fransiskus Xaverius Merauke');
 
         // Query Krisma
         $krisma = DB::table('krisma')
             ->join('umat', 'umat.id', '=', 'krisma.umat_id')
             ->select(
+                'krisma.umat_id',
                 'umat.nama_lengkap',
                 'umat.lingkungan',
                 DB::raw("'Krisma' as nama_sakramen"),
@@ -297,25 +303,37 @@ public function downloadSakramenPdf(Request $request)
                 DB::raw('krisma.tanggal_terima as tanggal_sort')
             )
             ->where('krisma.status_penerimaan', 'Diterima')
-            ->whereYear('krisma.tanggal_terima', $year);
+            ->whereYear('krisma.tanggal_terima', $year)
+            ->where('krisma.gereja_tempat_krisma', 'Gereja Katedral Santo Fransiskus Xaverius Merauke');
 
-        // Query Pernikahan
+        // Query Pernikahan (tidak ada gereja tempat, tetap disertakan) PERNIKAHAN
         $pernikahan = DB::table('pernikahans')
-            ->leftJoin('umat as pria', 'pernikahans.umat_id_pria', '=', 'pria.id')
-            ->leftJoin('umat as wanita', 'pernikahans.umat_id_wanita', '=', 'wanita.id')
-            ->select(
-                DB::raw("COALESCE(pria.nama_lengkap, '-') || ' & ' || COALESCE(wanita.nama_lengkap, '-') as nama_lengkap"),
-                DB::raw("COALESCE(pria.lingkungan, '-') || ' & ' || COALESCE(wanita.lingkungan, '-') as lingkungan"),
-                DB::raw("'Pernikahan' as nama_sakramen"),
-                'pernikahans.tanggal_terima',
-                DB::raw('NULL as tempat_terima'),
-                DB::raw('NULL as keterangan'),
-                DB::raw('pernikahans.tanggal_terima as tanggal_sort')
-            )
-            ->where('pernikahans.status_penerimaan', 'Diterima')
-            ->whereYear('pernikahans.tanggal_terima', $year);
+        ->leftJoin('umat as pria', 'pernikahans.umat_id_pria', '=', 'pria.id')
+        ->leftJoin('umat as wanita', 'pernikahans.umat_id_wanita', '=', 'wanita.id')
+        ->select(
+            'pernikahans.id as pernikahan_id',
 
-        // Selectively apply query based on sakramen_id
+            DB::raw("COALESCE(pria.nama_lengkap, pernikahans.nama_lengkap_pria, '-') || ' & ' || COALESCE(wanita.nama_lengkap, pernikahans.nama_lengkap_wanita, '-') as nama_lengkap"),
+
+            DB::raw("
+                CASE
+                    WHEN pria.lingkungan IS NOT NULL AND wanita.lingkungan IS NOT NULL THEN pria.lingkungan || ' & ' || wanita.lingkungan
+                    WHEN pria.lingkungan IS NOT NULL THEN pria.lingkungan
+                    WHEN wanita.lingkungan IS NOT NULL THEN wanita.lingkungan
+                    ELSE '-'
+                END as lingkungan
+            "),
+
+            DB::raw("'Pernikahan' as nama_sakramen"),
+            'pernikahans.tanggal_terima',
+            DB::raw('NULL as tempat_terima'),
+            DB::raw('NULL as keterangan'),
+            DB::raw('pernikahans.tanggal_terima as tanggal_sort')
+        )
+        ->where('pernikahans.status_penerimaan', 'Diterima')
+        ->whereYear('pernikahans.tanggal_terima', $year);
+
+
         if ($sakramen_id === 'baptis') {
             $query = $baptis;
         } elseif ($sakramen_id === 'komuni') {
@@ -328,9 +346,8 @@ public function downloadSakramenPdf(Request $request)
             $query = $baptis->unionAll($komuni)->unionAll($krisma)->unionAll($pernikahan);
         }
 
-        // Wrap subquery
         $query = DB::table(DB::raw("({$query->toSql()}) as x"))
-            ->mergeBindings($baptis) // merge from base query to support binding
+            ->mergeBindings($baptis)
             ->when($search, function ($q) use ($search) {
                 $q->where(function ($sub) use ($search) {
                     $sub->where('nama_lengkap', 'like', "%{$search}%")
@@ -339,7 +356,6 @@ public function downloadSakramenPdf(Request $request)
             })
             ->orderByDesc('tanggal_sort');
 
-        // Manual Pagination
         $perPage = 10;
         $page = $request->get('page', 1);
         $total = $query->count();
@@ -355,6 +371,8 @@ public function downloadSakramenPdf(Request $request)
 
         $totalPenerimaan = $total;
 
+        // dd($penerimaan);
+
         return view('layouts.Laporan.Sakramen', compact(
             'penerimaan',
             'sakramen_list',
@@ -363,8 +381,19 @@ public function downloadSakramenPdf(Request $request)
             'search',
             'totalPenerimaan'
         ));
-
     }
 
+    public function tambahTanggalPernikahan(Request $request, Pernikahan $pernikahan)
+    {
+        // dd($pernikahan);
+        $request->validate([
+            'tanggal_terima' => 'required|date',
+        ]);
 
+        $pernikahan->update([
+            'tanggal_terima' => Carbon::createFromFormat('Y-m-d', $request->tanggal_terima)->startOfDay(),
+        ]);
+
+        return redirect()->back()->with('status', 'Tanggal pernikahan berhasil ditambahkan.');
+    }
 }

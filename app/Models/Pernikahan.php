@@ -33,7 +33,7 @@ class Pernikahan extends Model
         'lingkungan_wanita',
 
         'status_pendaftaran',
-        'tanggal_pendaftaran',
+        'tanggal_daftar',
         'status_penerimaan',
         'tanggal_terima',
     ];

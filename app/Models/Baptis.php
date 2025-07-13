@@ -17,7 +17,7 @@ class Baptis extends Model
         'surat_krisma_wali_baptis',
         'nama_wali_baptis_pria',
         'nama_wali_baptis_wanita',
-        'nama_wali_baptis_wanita',
+        'surat_pernikahan_wali_baptis',
         'gereja_tempat_baptis',
 
         'tanggal_baptis',

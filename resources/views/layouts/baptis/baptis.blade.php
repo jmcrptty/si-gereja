@@ -10,8 +10,8 @@
 
 @section('judul-hero')
     <h1 class="mb-4 display-4">Persyaratan Baptis <br>Katedral Merauke</h1>
-    
-    <a href="#info-baptis" class="btn btn-outline-light btn-lg rounded-pill px-4">
+
+    <a href="#info-baptis" class="px-4 btn btn-outline-light btn-lg rounded-pill">
     Lihat Informasi Baptis
 </a>
 @endsection
@@ -86,7 +86,7 @@
 
             <!-- Syarat Administratif -->
             <h5 class="mb-3">1. Berkas Administratif</h5>
-            <ul class="list-unstyled ms-4 mb-4">
+            <ul class="mb-4 list-unstyled ms-4">
                 <li><i class="bi bi-check-circle text-primary me-2"></i> Akta Kelahiran <small class="text-muted">(diunggah)</small></li>
                 <li><i class="bi bi-check-circle text-primary me-2"></i> Kartu Keluarga <small class="text-muted">(diunggah)</small></li>
                 <li><i class="bi bi-check-circle text-primary me-2"></i> Surat Nikah Katolik Orang Tua <small class="text-muted">(diunggah)</small></li>
@@ -98,14 +98,14 @@
                 Pilih salah satu bentuk wali baptis: <strong>1 orang wali</strong> atau <strong>pasangan suami istri</strong>.
             </p>
 
-            <ul class="list-unstyled ms-4 mb-4">
+            <ul class="mb-4 list-unstyled ms-4">
                 <li><i class="bi bi-dot text-primary me-2"></i> Jika memilih <strong>1 orang wali baptis</strong>:
-                    <ul class="list-unstyled ms-4 mt-1">
+                    <ul class="mt-1 list-unstyled ms-4">
                         <li><i class="bi bi-check-circle text-primary me-2"></i> Surat Krisma Wali <small class="text-muted">(diunggah)</small></li>
                     </ul>
                 </li>
                 <li class="mt-2"><i class="bi bi-dot text-primary me-2"></i> Jika memilih <strong>pasangan suami istri</strong> sebagai wali:
-                    <ul class="list-unstyled ms-4 mt-1">
+                    <ul class="mt-1 list-unstyled ms-4">
                         <li><i class="bi bi-check-circle text-primary me-2"></i> Surat Nikah Katolik Pasangan Wali <small class="text-muted">(diunggah)</small></li>
                     </ul>
                 </li>
@@ -163,8 +163,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 @endsection
 

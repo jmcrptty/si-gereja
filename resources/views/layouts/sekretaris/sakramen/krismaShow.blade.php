@@ -145,13 +145,15 @@
 
                             <div class="col-sm-6">
                                 <label for="gereja_tempat_komuni" class="form-label">Gereja Tempat Penerimaan Komuni Pertama</label>
-                                <input disabled readonly type="text" class="form-control" id="gereja_tempat_komuni" value="{{ $umat->komuni->gereja_tempat_komuni }}">
+                                <input disabled readonly type="text" class="form-control" id="gereja_tempat_komuni"
+                                    value="{{ optional($umat->komuni)->gereja_tempat_komuni ?? 'Belum Ada' }}">
                             </div>
 
                             <div class="col-sm-6">
                                 <label for="tanggal_komuni" class="form-label">Tanggal Komuni Pertama</label>
-                                @if ($umat->komuni->tanggal_terima)
-                                    <input disabled readonly type="date" class="form-control" id="tanggal_komuni" value="{{ $umat->komuni->tanggal_terima->format('Y-m-d') }}">
+                                @if(optional($umat->komuni)->tanggal_terima)
+                                    <input disabled readonly type="date" class="form-control" id="tanggal_komuni"
+                                        value="{{ optional($umat->komuni->tanggal_terima)->format('Y-m-d') }}">
                                 @else
                                     <input disabled readonly type="text" class="form-control" id="tanggal_komuni" value="Belum Ada">
                                 @endif
@@ -160,8 +162,11 @@
                             <div class="col-sm-6">
                                 <label for="surat_komuni" class="form-label">Surat Komuni Pertama</label>
                                 <div>
-                                    @if ($umat->komuni->surat_komuni)
-                                        <a href="{{ route('sekretaris.umat.downloadFile', ['type' => 'surat_komuni', 'filename' => basename($umat->komuni->surat_komuni)]) }}"
+                                    @if(optional($umat->komuni)->surat_komuni)
+                                        <a href="{{ route('sekretaris.umat.downloadFile', [
+                                                'type' => 'surat_komuni',
+                                                'filename' => basename(optional($umat->komuni)->surat_komuni)
+                                            ]) }}"
                                             class="btn btn-outline-primary d-block" target="_blank">
                                             Lihat Surat Komuni
                                         </a>
@@ -170,6 +175,7 @@
                                     @endif
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="mt-5 button-group text-end">

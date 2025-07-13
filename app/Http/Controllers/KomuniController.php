@@ -53,9 +53,8 @@ class KomuniController extends Controller
 
         $data_baptis = Baptis::select('nama_baptis','fotokopi_ktp_ortu', 'surat_pernikahan_katolik_ortu', 'gereja_tempat_baptis', 'tanggal_terima', 'surat_baptis',)->where('status_penerimaan', 'Diterima')->where('umat_id', $umat_id)->first();
 
-        if ($data_baptis && $data_baptis->tanggal_terima) {
-            $data_baptis->tanggal_terima = \Carbon\Carbon::parse($data_baptis->tanggal_terima)->format('Y-m-d');
-        }
+        $data_baptis = Baptis::where('status_penerimaan', 'Diterima')->where('umat_id', $umat_id)->first();
+
 
         return view('layouts.komuni.create', [
             'umat' => Umat::select('nama_lengkap', 'alamat', 'nama_ayah', 'nama_ibu', 'email')->where('email', $invitation->email)->first(),
@@ -68,6 +67,7 @@ class KomuniController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         // buat variabel umat_id dan cek apakah umat sudah terdaftar
         $umat_id = Umat::where('email', $request->email)->value('id');
         if (!$umat_id) {
@@ -169,7 +169,7 @@ class KomuniController extends Controller
         else{
             # jika sudah baptis update tanggal dan surat baptis
             Baptis::where('umat_id', $umat_id)->update([
-                'tanggal_baptis' => $request_valid['tanggal_baptis'],
+                // 'tanggal_baptis' => $request_valid['tanggal_baptis'],
                 'surat_baptis' => $suratBaptisPath,
             ]);
         }

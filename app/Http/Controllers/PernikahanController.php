@@ -45,7 +45,7 @@ class PernikahanController extends Controller
         }
 
         return view('layouts.pernikahan.create', [
-            'umat' => Umat::select('nama_lengkap', 'alamat','tempat_lahir', 'email', 'akte_file', 'jenis_kelamin', 'ttl', 'lingkungan', 'email')->where('email', $invitation->email)->first(),
+            'umat' => Umat::select('nama_lengkap', 'alamat','tempat_lahir', 'email', 'akte_file', 'jenis_kelamin', 'ttl', 'lingkungan', 'email', 'tanggal_terima')->where('email', $invitation->email)->first(),
         ]);
     }
 
