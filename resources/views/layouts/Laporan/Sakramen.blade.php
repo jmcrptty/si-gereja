@@ -35,44 +35,71 @@
         </div>
     </div>
 
-    <!-- Filter Section -->
-    <div class="mb-4 card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <i class="fas fa-filter me-1"></i>
-                    Filter Data
+
+
+<!-- Filter Section -->
+<div class="mb-4 card">
+    <div class="card-header">
+        <div class="row gy-2 gx-3 align-items-center justify-content-between">
+            <!-- Label -->
+            <div class="col-12 col-lg-auto">
+                <div class="d-flex align-items-center filter-label">
+                    <i class="fas fa-filter me-2"></i>
+                    <strong>Filter Data</strong>
                 </div>
-                <form action="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.laporan.sakramen' : 'sekretaris.laporan.sakramen') }}" method="GET" class="gap-2 d-flex">
-                    <select name="sakramen_id" class="form-select" onchange="this.form.submit()">
-                        <option value="">Semua Sakramen</option>
-                        @foreach($sakramen_list as $s)
-                            <option value="{{ $s->id }}" {{ $sakramen_id == $s->id ? 'selected' : '' }}>
-                                {{ $s->nama_sakramen }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <select name="year" class="form-select" onchange="this.form.submit()">
-                        @for($y = date('Y'); $y >= 2020; $y--)
-                            <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
-                                {{ $y }}
-                            </option>
-                        @endfor
-                    </select>
-                    <div class="input-group">
-                        <input type="text"
-                               name="search"
-                               class="form-control"
-                               placeholder="Cari umat..."
-                               value="{{ $search }}">
-                        <button class="btn btn-outline-secondary" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
+            </div>
+
+            <!-- Form -->
+            <div class="col">
+                <form 
+                    action="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.laporan.sakramen' : 'sekretaris.laporan.sakramen') }}" 
+                    method="GET"
+                    class="row gx-2 gy-2 align-items-center justify-content-start flex-lg-nowrap flex-wrap">
+
+                    <!-- Sakramen -->
+                    <div class="col-12 col-md-auto">
+                        <select name="sakramen_id" class="form-select form-select-auto" onchange="this.form.submit()">
+                            <option value="">Semua Sakramen</option>
+                            @foreach($sakramen_list as $s)
+                                <option value="{{ $s->id }}" {{ $sakramen_id == $s->id ? 'selected' : '' }}>
+                                    {{ $s->nama_sakramen }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Tahun -->
+                    <div class="col-12 col-md-auto">
+                        <select name="year" class="form-select form-select-auto" onchange="this.form.submit()">
+                            @for($y = date('Y'); $y >= 2020; $y--)
+                                <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
+                                    {{ $y }}
+                                </option>
+                            @endfor
+                        </select>
+                    </div>
+
+                    <!-- Pencarian -->
+                    <div class="col-12 col-md">
+                        <div class="input-group">
+                            <input type="text"
+                                   name="search"
+                                   class="form-control"
+                                   placeholder="Cari umat..."
+                                   value="{{ $search }}">
+                            <button class="btn btn-outline-secondary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
+
+
+
 
     <!-- Data Table -->
     <div class="mb-4 card">
@@ -188,5 +215,44 @@
         }
     }
 </script>
+<style>
+/* Ukuran Select Responsif */
+.form-select-auto {
+  width: auto;
+  min-width: 160px;
+  max-width: 100%;
+}
+
+/* Label jarak bawah di tablet dan bawah */
+@media (max-width: 991.98px) {
+  .filter-label {
+    margin-bottom: 0.5rem;
+  }
+
+  .form-select-auto {
+    width: 100%; /* Select full width di tablet */
+  }
+}
+
+/* Mobile First - form vertikal di layar kecil */
+@media (max-width: 576px) {
+  .card-header form {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .dropdown-item {
+    padding: 12px 20px;
+  }
+}
+
+</style>
+
 
 @endsection

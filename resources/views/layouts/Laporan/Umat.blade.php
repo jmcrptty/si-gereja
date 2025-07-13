@@ -32,117 +32,145 @@
         </div>
     </div>
 
-    <div class="mb-4 card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <i class="fas fa-table me-1"></i>
-                    Data Umat Diterima Tahun {{ $tahun }}
-                </div>
-                <div class="gap-3 d-flex align-items-center">
-                    <form action="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.laporan.umat' : 'sekretaris.laporan.umat') }}" method="GET" class="gap-2 d-flex" id="searchForm">
-                        <div class="input-group" style="width: 350px;">
-                            <input type="text"
-                                   name="search"
-                                   class="form-control"
-                                   placeholder="Cari umat"
-                                   value="{{ request('search') }}">
-                            <button class="btn btn-outline-secondary" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                        <select name="tahun" class="form-select" onchange="this.form.submit()">
-                            @for($y = date('Y'); $y >= 2020; $y--)
-                                <option value="{{ $y }}" {{ (int) request('tahun', date('Y')) === $y ? 'selected' : '' }}>
-                                    {{ $y }}
-                                </option>
-                            @endfor
-                        </select>
-                    </form>
-
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDownloadPDF">
-                        <i class="fas fa-file-pdf"></i> Download PDF
-                    </button>
+<!-- Filter + Table Section -->
+<div class="mb-4 card">
+    <div class="card-header">
+        <div class="row gy-2 gx-3">
+            <!-- Label -->
+            <div class="col-12">
+                <div class="d-flex align-items-center filter-label">
+                    <i class="fas fa-table me-2"></i>
+                    <strong>Data Umat Diterima Tahun {{ $tahun }}</strong>
                 </div>
             </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th width="5%">No</th>
-                            <th>Nama Lengkap</th>
-                            <th>Lingkungan</th>
-                            <th width="15%">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($umat as $index => $u)
-                        <tr>
-                            <td>{{ $umat->firstItem() + $index }}</td>
-                            <td>{{ $u->nama_lengkap }}</td>
-                            <td>{{ $u->lingkungan }}</td>
-                            <td class="text-center">
-                                <a href="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.umat.show' : 'sekretaris.umat.show', $u->id) }}"
-                                class="btn btn-sm bg-primary"
-                                title="Lihat">
-                                    <i class="fa-solid fa-eye"></i> Lihat
-                                </a>
 
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="4" class="text-center">Tidak ada data umat diterima untuk tahun {{ $tahun }}</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+            <!-- Form dan Tombol -->
+            <div class="col-12">
+                <div class="row gx-2 gy-2">
+                    <!-- Form Filter -->
+                    <div class="col-12 col-lg-9">
+                        <form 
+                            action="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.laporan.umat' : 'sekretaris.laporan.umat') }}" 
+                            method="GET"
+                            class="row gx-2 gy-2 align-items-center">
 
-            @if($umat->hasPages())
-            <div class="mt-3">
-                {{ $umat->appends(request()->except('page'))->links('pagination::bootstrap-5') }}
+                            <!-- Input Search -->
+                            <div class="col-12 col-md">
+                                <div class="input-group">
+                                    <input type="text"
+                                           name="search"
+                                           class="form-control"
+                                           placeholder="Cari umat"
+                                           autocomplete="off"
+                                           value="{{ request('search') }}">
+                                           
+                                    <button class="btn btn-outline-secondary" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Tahun -->
+                            <div class="col-12 col-md-auto">
+                                <select name="tahun" class="form-select form-select-auto w-100" onchange="this.form.submit()">
+                                    @for($y = date('Y'); $y >= 2020; $y--)
+                                        <option value="{{ $y }}" {{ (int) request('tahun', date('Y')) === $y ? 'selected' : '' }}>
+                                            {{ $y }}
+                                        </option>
+                                    @endfor
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Tombol Download -->
+                    <div class="col-12 col-lg-3 text-lg-end">
+                        <button class="btn btn-danger w-100 w-lg-auto" data-bs-toggle="modal" data-bs-target="#modalDownloadPDF">
+                            <i class="fas fa-file-pdf me-1"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
             </div>
-            @endif
         </div>
     </div>
 
-    <!-- Modal Konfirmasi -->
-    <div class="modal fade" id="modalDownloadPDF" tabindex="-1" aria-labelledby="modalDownloadPDFLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalDownloadPDFLabel">Konfirmasi Download</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-          </div>
-          <div class="modal-body">
-            Anda yakin ingin mengunduh laporan umat tahun {{ $tahun }} dalam bentuk PDF?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-
-           @php
-                $role = Auth::user()->role;
-                $routePrefix = $role === 'sekretaris' ? 'sekretaris' : 'pastorparoki';
-            @endphp
-
-            <form id="formDownloadPDF"
-                action="{{ route($routePrefix . '.laporan.umat.download') }}"
-                method="POST"
-                target="_blank"
-                onsubmit="closeModal()">
-                @csrf
-                <input type="hidden" name="tahun" value="{{ $tahun }}">
-                <input type="hidden" name="search" value="{{ request('search') }}">
-                <button type="submit" class="btn btn-primary">Ya, Unduh</button>
-            </form>
-          </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="5%">No</th>
+                        <th>Nama Lengkap</th>
+                        <th>Lingkungan</th>
+                        <th width="15%">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($umat as $index => $u)
+                    <tr>
+                        <td>{{ $umat->firstItem() + $index }}</td>
+                        <td>{{ $u->nama_lengkap }}</td>
+                        <td>{{ $u->lingkungan }}</td>
+                        <td class="text-center">
+                            <a href="{{ route(auth()->user()->role === 'pastor paroki' ? 'pastorparoki.umat.show' : 'sekretaris.umat.show', $u->id) }}"
+                               class="btn btn-sm bg-primary"
+                               title="Lihat">
+                                <i class="fa-solid fa-eye"></i> Lihat
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4" class="text-center">Tidak ada data umat diterima untuk tahun {{ $tahun }}</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
-      </div>
+
+        @if($umat->hasPages())
+        <div class="mt-3">
+            {{ $umat->appends(request()->except('page'))->links('pagination::bootstrap-5') }}
+        </div>
+        @endif
     </div>
 </div>
+
+
+<!-- Modal Konfirmasi -->
+<div class="modal fade" id="modalDownloadPDF" tabindex="-1" aria-labelledby="modalDownloadPDFLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalDownloadPDFLabel">Konfirmasi Download</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body">
+        Anda yakin ingin mengunduh laporan umat tahun {{ $tahun }} dalam bentuk PDF?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+
+        @php
+            $role = Auth::user()->role;
+            $routePrefix = $role === 'sekretaris' ? 'sekretaris' : 'pastorparoki';
+        @endphp
+
+        <form id="formDownloadPDF"
+              action="{{ route($routePrefix . '.laporan.umat.download') }}"
+              method="POST"
+              target="_blank"
+              onsubmit="closeModal()">
+            @csrf
+            <input type="hidden" name="tahun" value="{{ $tahun }}">
+            <input type="hidden" name="search" value="{{ request('search') }}">
+            <button type="submit" class="btn btn-primary">Ya, Unduh</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 @push('styles')
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -168,6 +196,34 @@
     .dataTables_wrapper .dataTables_filter {
         display: none;
     }
+    /* Dropdown select ukuran dinamis */
+.form-select-auto {
+  width: auto;
+  min-width: 120px;
+}
+
+/* Responsif filter di mobile */
+@media (max-width: 991.98px) {
+  .form-select-auto {
+    width: 100%;
+  }
+
+  .filter-label {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) \
+  .card-header form {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem;
+  }
+
+  .w-lg-auto {
+    width: 100% !important;
+  }
+  
 </style>
 @endpush
 
