@@ -130,6 +130,7 @@ public function downloadSakramenPdf(Request $request)
             ->join('umat', 'umat.id', '=', 'baptis.umat_id')
             ->where('baptis.status_penerimaan', 'Diterima')
             ->whereYear('baptis.tanggal_terima', $year)
+            ->where('baptis.gereja_tempat_baptis', 'Gereja Katedral Santo Fransiskus Xaverius Merauke')
             ->when($search, function ($q) use ($search) {
                 $q->where(function ($s) use ($search) {
                     $s->where('umat.nama_lengkap', 'like', "%$search%")
@@ -152,6 +153,7 @@ public function downloadSakramenPdf(Request $request)
             ->join('umat', 'umat.id', '=', 'komuni.umat_id')
             ->where('komuni.status_penerimaan', 'Diterima')
             ->whereYear('komuni.tanggal_terima', $year)
+            ->where('komuni.gereja_tempat_komuni', 'Gereja Katedral Santo Fransiskus Xaverius Merauke')
             ->when($search, function ($q) use ($search) {
                 $q->where(function ($s) use ($search) {
                     $s->where('umat.nama_lengkap', 'like', "%$search%")
@@ -174,6 +176,7 @@ public function downloadSakramenPdf(Request $request)
             ->join('umat', 'umat.id', '=', 'krisma.umat_id')
             ->where('krisma.status_penerimaan', 'Diterima')
             ->whereYear('krisma.tanggal_terima', $year)
+            ->where('krisma.gereja_tempat_krisma', 'Gereja Katedral Santo Fransiskus Xaverius Merauke')
             ->when($search, function ($q) use ($search) {
                 $q->where(function ($s) use ($search) {
                     $s->where('umat.nama_lengkap', 'like', "%$search%")
@@ -218,44 +221,43 @@ public function downloadSakramenPdf(Request $request)
 
     $sorted = $data->sortByDesc('tanggal_terima')->values();
 
-    // 🔍 INI BAGIAN TAMBAHANNYA
     if (is_null($sakramen_id)) {
-        // Jika user memilih "semua sakramen", pakai view khusus
-        $pdf = PDF::loadView('layouts.laporan.pdf.semua_sakramen', [
+        return PDF::loadView('layouts.laporan.pdf.semua_sakramen', [
             'data' => $sorted,
             'year' => $year
-        ])->setPaper('a4', 'portrait');
-
-        return $pdf->stream("laporan_semua_sakramen_{$year}.pdf");
+        ])->setPaper('a4', 'portrait')
+        ->stream("laporan_semua_sakramen_{$year}.pdf");
     }
 
-    // Kalau hanya 1 jenis sakramen
-    $pdf = PDF::loadView('layouts.Laporan.pdf.sakramen', [
+    return PDF::loadView('layouts.laporan.pdf.sakramen', [
         'data' => $sorted,
         'year' => $year,
         'sakramen' => ucfirst($sakramen_id)
-    ])->setPaper('a4', 'portrait');
-
-    return $pdf->stream("laporan_sakramen_{$sakramen_id}_{$year}.pdf");
+    ])->setPaper('a4', 'portrait')
+    ->stream("laporan_sakramen_{$sakramen_id}_{$year}.pdf");
 }
 
 
 
 
+
     public function sakramen(Request $request)
-    {
-        $year = $request->get('year', date('Y'));
-        $sakramen_id = $request->get('sakramen_id');
-        $search = $request->get('search');
+{
+    $year = $request->get('year', date('Y'));
+    $sakramen_id = $request->get('sakramen_id');
+    $search = $request->get('search');
 
-        $sakramen_list = collect([
-            (object)['id' => 'baptis', 'nama_sakramen' => 'Baptis'],
-            (object)['id' => 'komuni', 'nama_sakramen' => 'Komuni'],
-            (object)['id' => 'krisma', 'nama_sakramen' => 'Krisma'],
-            (object)['id' => 'pernikahan', 'nama_sakramen' => 'Pernikahan'],
-        ]);
+    $sakramen_list = collect([
+        (object)['id' => 'baptis', 'nama_sakramen' => 'Baptis'],
+        (object)['id' => 'komuni', 'nama_sakramen' => 'Komuni'],
+        (object)['id' => 'krisma', 'nama_sakramen' => 'Krisma'],
+        (object)['id' => 'pernikahan', 'nama_sakramen' => 'Pernikahan'],
+    ]);
 
-        // Query Baptis
+    $queries = [];
+    $bindings = [];
+
+    if (is_null($sakramen_id) || $sakramen_id === 'baptis') {
         $baptis = DB::table('baptis')
             ->join('umat', 'umat.id', '=', 'baptis.umat_id')
             ->select(
@@ -272,7 +274,11 @@ public function downloadSakramenPdf(Request $request)
             ->whereYear('baptis.tanggal_terima', $year)
             ->where('baptis.gereja_tempat_baptis', 'Gereja Katedral Santo Fransiskus Xaverius Merauke');
 
-        // Query Komuni
+        $queries[] = $baptis->toSql();
+        $bindings = array_merge($bindings, $baptis->getBindings());
+    }
+
+    if (is_null($sakramen_id) || $sakramen_id === 'komuni') {
         $komuni = DB::table('komuni')
             ->join('umat', 'umat.id', '=', 'komuni.umat_id')
             ->select(
@@ -289,7 +295,11 @@ public function downloadSakramenPdf(Request $request)
             ->whereYear('komuni.tanggal_terima', $year)
             ->where('komuni.gereja_tempat_komuni', 'Gereja Katedral Santo Fransiskus Xaverius Merauke');
 
-        // Query Krisma
+        $queries[] = $komuni->toSql();
+        $bindings = array_merge($bindings, $komuni->getBindings());
+    }
+
+    if (is_null($sakramen_id) || $sakramen_id === 'krisma') {
         $krisma = DB::table('krisma')
             ->join('umat', 'umat.id', '=', 'krisma.umat_id')
             ->select(
@@ -306,82 +316,78 @@ public function downloadSakramenPdf(Request $request)
             ->whereYear('krisma.tanggal_terima', $year)
             ->where('krisma.gereja_tempat_krisma', 'Gereja Katedral Santo Fransiskus Xaverius Merauke');
 
-        // Query Pernikahan (tidak ada gereja tempat, tetap disertakan) PERNIKAHAN
-        $pernikahan = DB::table('pernikahans')
-        ->leftJoin('umat as pria', 'pernikahans.umat_id_pria', '=', 'pria.id')
-        ->leftJoin('umat as wanita', 'pernikahans.umat_id_wanita', '=', 'wanita.id')
-        ->select(
-            'pernikahans.id as pernikahan_id',
-
-            DB::raw("COALESCE(pria.nama_lengkap, pernikahans.nama_lengkap_pria, '-') || ' & ' || COALESCE(wanita.nama_lengkap, pernikahans.nama_lengkap_wanita, '-') as nama_lengkap"),
-
-            DB::raw("
-                CASE
-                    WHEN pria.lingkungan IS NOT NULL AND wanita.lingkungan IS NOT NULL THEN pria.lingkungan || ' & ' || wanita.lingkungan
-                    WHEN pria.lingkungan IS NOT NULL THEN pria.lingkungan
-                    WHEN wanita.lingkungan IS NOT NULL THEN wanita.lingkungan
-                    ELSE '-'
-                END as lingkungan
-            "),
-
-            DB::raw("'Pernikahan' as nama_sakramen"),
-            'pernikahans.tanggal_terima',
-            DB::raw('NULL as tempat_terima'),
-            DB::raw('NULL as keterangan'),
-            DB::raw('pernikahans.tanggal_terima as tanggal_sort')
-        )
-        ->where('pernikahans.status_penerimaan', 'Diterima')
-        ->whereYear('pernikahans.tanggal_terima', $year);
-
-
-        if ($sakramen_id === 'baptis') {
-            $query = $baptis;
-        } elseif ($sakramen_id === 'komuni') {
-            $query = $komuni;
-        } elseif ($sakramen_id === 'krisma') {
-            $query = $krisma;
-        } elseif ($sakramen_id === 'pernikahan') {
-            $query = $pernikahan;
-        } else {
-            $query = $baptis->unionAll($komuni)->unionAll($krisma)->unionAll($pernikahan);
-        }
-
-        $query = DB::table(DB::raw("({$query->toSql()}) as x"))
-            ->mergeBindings($baptis)
-            ->when($search, function ($q) use ($search) {
-                $q->where(function ($sub) use ($search) {
-                    $sub->where('nama_lengkap', 'like', "%{$search}%")
-                        ->orWhere('lingkungan', 'like', "%{$search}%");
-                });
-            })
-            ->orderByDesc('tanggal_sort');
-
-        $perPage = 10;
-        $page = $request->get('page', 1);
-        $total = $query->count();
-        $results = $query->forPage($page, $perPage)->get();
-
-        $penerimaan = new \Illuminate\Pagination\LengthAwarePaginator(
-            $results,
-            $total,
-            $perPage,
-            $page,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
-
-        $totalPenerimaan = $total;
-
-        // dd($penerimaan);
-
-        return view('layouts.Laporan.Sakramen', compact(
-            'penerimaan',
-            'sakramen_list',
-            'year',
-            'sakramen_id',
-            'search',
-            'totalPenerimaan'
-        ));
+        $queries[] = $krisma->toSql();
+        $bindings = array_merge($bindings, $krisma->getBindings());
     }
+
+    if (is_null($sakramen_id) || $sakramen_id === 'pernikahan') {
+        $pernikahan = DB::table('pernikahans')
+            ->leftJoin('umat as pria', 'pernikahans.umat_id_pria', '=', 'pria.id')
+            ->leftJoin('umat as wanita', 'pernikahans.umat_id_wanita', '=', 'wanita.id')
+            ->select(
+                DB::raw("NULL as umat_id"),
+                DB::raw("COALESCE(pria.nama_lengkap, pernikahans.nama_lengkap_pria, '-') || ' & ' || COALESCE(wanita.nama_lengkap, pernikahans.nama_lengkap_wanita, '-') as nama_lengkap"),
+                DB::raw("
+                    CASE
+                        WHEN pria.lingkungan IS NOT NULL AND wanita.lingkungan IS NOT NULL THEN pria.lingkungan || ' & ' || wanita.lingkungan
+                        WHEN pria.lingkungan IS NOT NULL THEN pria.lingkungan
+                        WHEN wanita.lingkungan IS NOT NULL THEN wanita.lingkungan
+                        ELSE '-'
+                    END as lingkungan
+                "),
+                DB::raw("'Pernikahan' as nama_sakramen"),
+                'pernikahans.tanggal_terima',
+                DB::raw('NULL as tempat_terima'),
+                DB::raw('NULL as keterangan'),
+                DB::raw('pernikahans.tanggal_terima as tanggal_sort')
+            )
+            ->where('pernikahans.status_penerimaan', 'Diterima')
+            ->whereYear('pernikahans.tanggal_terima', $year);
+
+        $queries[] = $pernikahan->toSql();
+        $bindings = array_merge($bindings, $pernikahan->getBindings());
+    }
+
+    $unionSql = implode(' union all ', $queries);
+    $baseQuery = DB::table(DB::raw("({$unionSql}) as x"))->setBindings($bindings);
+
+    // Filter search
+    if ($search) {
+        $baseQuery->where(function ($q) use ($search) {
+            $q->where('nama_lengkap', 'like', "%{$search}%")
+              ->orWhere('lingkungan', 'like', "%{$search}%");
+        });
+    }
+
+    $baseQuery->orderByDesc('tanggal_sort');
+
+    // Pagination
+    $perPage = 10;
+    $page = $request->get('page', 1);
+    $total = $baseQuery->count();
+    $results = $baseQuery->forPage($page, $perPage)->get();
+
+    $penerimaan = new \Illuminate\Pagination\LengthAwarePaginator(
+        $results,
+        $total,
+        $perPage,
+        $page,
+        ['path' => $request->url(), 'query' => $request->query()]
+    );
+
+    $totalPenerimaan = $total;
+
+    return view('layouts.Laporan.Sakramen', compact(
+        'penerimaan',
+        'sakramen_list',
+        'year',
+        'sakramen_id',
+        'search',
+        'totalPenerimaan'
+    ));
+}
+
+
 
     public function tambahTanggalPernikahan(Request $request, Pernikahan $pernikahan)
     {

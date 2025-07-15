@@ -94,8 +94,7 @@
 
 <!-- Garis Pembatas Bawah -->
 <div class="kop-line"></div>
-    <h2>Laporan Sakramen Tahun {{ $year }}</h2>
-    <p>Jenis Sakramen: {{ $sakramen }}</p>
+    <h2>Laporan Sakramen {{ $sakramen }} Tahun {{ $year }}</h2>
     <table>
         <thead>
             <tr>
