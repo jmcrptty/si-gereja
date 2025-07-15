@@ -189,6 +189,9 @@ Route::middleware(['auth', 'roles:ketua lingkungan'])->prefix('ketualingkungan')
     Route::get('/pernikahan/file/{type}/{filename}', [SekretarisController::class, 'downloadFilePernikahan'])->name('pernikahan.downloadFile');
     Route::resource('/umat', UmatController::class);
 
+    Route::get('manajemen_akun/{user}', [KetlingController::class, 'editAkunKetling'])->name('edit.akun');
+    Route::post('manajemen_akun', [KetlingController::class, 'storeEditAkunKetling'])->name('store.edit.akun');
+
 });
 
 // pastor paroki
