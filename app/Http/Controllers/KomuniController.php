@@ -87,7 +87,7 @@ class KomuniController extends Controller
         $baptis = Baptis::where('umat_id', $umat_id)->first();
         $request_valid = $request->validate([
             // Data Sakramen Baptis
-            'tanggal_baptis' => ['required', 'date'],
+            'tanggal_terima' => ['required', 'date'],
             'surat_baptis' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:25000'],
             'nama_baptis' => ['required', 'string'],
             'gereja_tempat_baptis' => ['required', 'string'],
@@ -98,8 +98,8 @@ class KomuniController extends Controller
         ],
         [
             // Data Sakramen Baptis
-            'tanggal_baptis.required' => 'Tanggal pembaptisan wajib diisi.',
-            'tanggal_baptis.date' => 'Format tanggal pembaptisan tidak valid.',
+            'tanggal_terima.required' => 'Tanggal pembaptisan wajib diisi.',
+            'tanggal_terima.date' => 'Format tanggal pembaptisan tidak valid.',
 
             'surat_baptis.file' => 'File surat Baptis harus berupa dokumen atau gambar.',
             'surat_baptis.required' => 'Mohon isi file surat Baptis',
@@ -149,7 +149,7 @@ class KomuniController extends Controller
 
         if(!$sudahBaptis){
             # jika belum baptis buat record baru
-            $tanggal_terima_baptis = $request_valid['tanggal_baptis'];
+            $tanggal_terima_baptis = $request_valid['tanggal_terima'];
             if($request->hasFile('fotokopi_ktp_ortu') ){
             $ktpOrtuPath = $request->file('fotokopi_ktp_ortu')->store('umats/fotokopi_ktp_ortu', 'local');
             }
@@ -169,7 +169,7 @@ class KomuniController extends Controller
         else{
             # jika sudah baptis update tanggal dan surat baptis
             Baptis::where('umat_id', $umat_id)->update([
-                // 'tanggal_baptis' => $request_valid['tanggal_baptis'],
+                'tanggal_terima' => $request_valid['tanggal_terima'],
                 'surat_baptis' => $suratBaptisPath,
             ]);
         }

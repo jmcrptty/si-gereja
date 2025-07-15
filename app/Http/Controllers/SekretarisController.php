@@ -192,10 +192,16 @@ class SekretarisController extends Controller
 
     public function setujuPenerimaanBaptis(Baptis $baptis)
     {
-        $baptis->update([
-            'status_penerimaan' => 'Diterima',
-            'tanggal_terima' => now()
-        ]);
+        if (is_null($baptis->tanggal_terima)) {
+            $baptis->update([
+                'status_penerimaan' => 'Diterima',
+                'tanggal_terima' => now()
+            ]);
+        } else {
+            $baptis->update([
+                'status_penerimaan' => 'Diterima'
+            ]);
+        }
 
         return redirect()->route('sekretaris.penerimaansakramen')->with('status', 'Umat telah menerima sakramen!');
     }
@@ -226,10 +232,16 @@ class SekretarisController extends Controller
             return back()->with('status_error', 'Gagal memverifikasi karena umat belum menerima sakramen baptis.');
         }
 
-        $komuni->update([
-            'status_penerimaan' => 'Diterima',
-            'tanggal_terima' => now()
-        ]);
+        if(is_null($komuni->tanggal_terima)){
+            $komuni->update([
+                'status_penerimaan' => 'Diterima',
+                'tanggal_terima' => now()
+            ]);
+        }else{
+            $komuni->update([
+                'status_penerimaan' => 'Diterima'
+            ]);
+        }
 
         return redirect()->route('sekretaris.penerimaansakramen')->with('status', 'Umat telah menerima sakramen!');
     }
@@ -270,10 +282,16 @@ class SekretarisController extends Controller
             return back()->with('status_error', 'Gagal memverifikasi karena umat belum menerima sakramen komuni.');
         }
 
-        $krisma->update([
-            'status_penerimaan' => 'Diterima',
-            'tanggal_terima' => now()
-        ]);
+        if(is_null($krisma->tanggal_terima)){
+            $krisma->update([
+                'status_penerimaan' => 'Diterima',
+                'tanggal_terima' => now()
+            ]);
+        }else{
+            $krisma->update([
+                'status_penerimaan' => 'Diterima'
+            ]);
+        }
 
         return redirect()->route('sekretaris.penerimaansakramen')->with('status', 'Umat telah menerima sakramen!');
     }

@@ -108,12 +108,12 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <label for="tanggal_baptis" class="form-label">Tanggal Pembaptisan</label>
+                                <label for="tanggal_terima" class="form-label">Tanggal Pembaptisan</label>
                                 @if ($data_baptis?->tanggal_terima)
-                                    <input type="date" class="form-control pseudo-disabled" id="tanggal_baptis" name="tanggal_baptis" value="{{ \Carbon\Carbon::parse($data_baptis->tanggal_terima)->format('Y-m-d') }}">
+                                    <input type="date" class="form-control pseudo-disabled" id="tanggal_terima" name="tanggal_terima" value="{{ \Carbon\Carbon::parse($data_baptis->tanggal_terima)->format('Y-m-d') }}">
                                 @else
-                                    <input type="date" class="form-control @error ('tanggal_baptis')is-invalid @enderror" id="tanggal_baptis" name="tanggal_baptis" value="{{ old('tanggal_baptis') }}" required>
-                                    @error('tanggal_baptis')
+                                    <input type="date" class="form-control @error ('tanggal_terima')is-invalid @enderror" id="tanggal_terima" name="tanggal_terima" value="{{ old('tanggal_terima') }}" required>
+                                    @error('tanggal_terima')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 @endif
