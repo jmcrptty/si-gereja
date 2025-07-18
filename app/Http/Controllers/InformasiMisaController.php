@@ -34,7 +34,7 @@ class InformasiMisaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'jenis_misa' => 'required|in:Harian,Jumat Pertama,Minggu',
+            'jenis_misa' => 'required|in:Harian,Jumat_Pertama,Minggu',
             'jadwal_misa' => 'required|string',
         ]);
 

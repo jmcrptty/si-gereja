@@ -10,7 +10,7 @@ class CreateInformasiMisaTable extends Migration
     {
         Schema::create('informasi_misa', function (Blueprint $table) {
             $table->id();
-            $table->enum('jenis_misa', ['Harian', 'Jumat Pertama', 'Minggu']); // Jenis misa
+            $table->enum('jenis_misa', ['Harian', 'Jumat_Pertama', 'Minggu']); // Jenis misa
             $table->text('jadwal_misa'); // Jadwal misa disimpan dalam format teks
             $table->timestamps(); // Timestamps untuk created_at dan updated_at
         });

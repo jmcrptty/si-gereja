@@ -35,6 +35,25 @@ class DatabaseSeeder extends Seeder
             'Stella Maris',
         ];
 
+        foreach ($daftarLingkungan as $lingkungan) {
+    // Buat nama akun ketua lingkungan
+    $namaKetua = 'Ketua Lingkungan ' . $lingkungan;
+
+    // Buat email dari nama lingkungan, hilangkan karakter aneh dan spasi
+    $email = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', str_replace(' ', '', $lingkungan))) . '@gmail.com';
+
+    // Cek jika belum ada user dengan email ini agar tidak duplikat
+    if (!User::where('email', $email)->exists()) {
+        User::create([
+            'name' => $namaKetua,
+            'email' => $email,
+            'password' => Hash::make('password'), // Default password
+            'role' => 'ketua lingkungan',
+            'lingkungan' => $lingkungan,
+        ]);
+    }
+}
+
         // Users dengan role dan lingkungan
         User::create([
             'name' => 'Pastor Paroki',
@@ -44,21 +63,21 @@ class DatabaseSeeder extends Seeder
             'lingkungan' => null,
         ]);
 
-        User::create([
-            'name' => 'Ketua Lingkungan St.Petrus',
-            'email' => 'st.petrus@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 'ketua lingkungan',
-            'lingkungan' => $daftarLingkungan[14], // Santo Petrus
-        ]);
+        // User::create([
+        //     'name' => 'Ketua Lingkungan St.Petrus',
+        //     'email' => 'st.petrus@gmail.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'ketua lingkungan',
+        //     'lingkungan' => $daftarLingkungan[14], // Santo Petrus
+        // ]);
 
-        User::create([
-            'name' => 'Ketua Lingkungan St.Yohanes',
-            'email' => 'st.yohanes@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 'ketua lingkungan',
-            'lingkungan' => $daftarLingkungan[9], // Santo Yohanes
-        ]);
+        // User::create([
+        //     'name' => 'Ketua Lingkungan St.Yohanes',
+        //     'email' => 'st.yohanes@gmail.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'ketua lingkungan',
+        //     'lingkungan' => $daftarLingkungan[9], // Santo Yohanes
+        // ]);
 
         User::create([
             'name' => 'Sekretaris',

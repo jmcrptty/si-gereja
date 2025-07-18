@@ -15,7 +15,7 @@ class InformasiMisaSeeder extends Seeder
                 'jadwal_misa' => 'Misa Pagi: 08:00 - 09:00, Misa Sore: 17:00 - 18:00',
             ],
             [
-                'jenis_misa' => 'Jumat Pertama',
+                'jenis_misa' => 'Jumat_Pertama',
                 'jadwal_misa' => 'Misa Pagi: 08:00 - 09:00, Misa Malam: 19:00 - 20:00',
             ],
             [

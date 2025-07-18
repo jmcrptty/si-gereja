@@ -22,7 +22,7 @@
                     <label for="jenis_misa" class="form-label">Jenis Misa</label>
                     <select id="jenis_misa" name="jenis_misa" class="form-select">
                         <option value="Harian" {{ $default->jenis_misa == 'Harian' ? 'selected' : '' }}>Misa Harian</option>
-                        <option value="Jumat Pertama" {{ $default->jenis_misa == 'Jumat Pertama' ? 'selected' : '' }}>Misa Jumat Pertama</option>
+                        <option value="Jumat_Pertama" {{ $default->jenis_misa == 'Jumat Pertama' ? 'selected' : '' }}>Misa Jumat Pertama</option>
                         <option value="Minggu" {{ $default->jenis_misa == 'Minggu' ? 'selected' : '' }}>Misa Minggu</option>
                     </select>
                 </div>

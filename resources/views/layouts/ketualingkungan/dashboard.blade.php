@@ -13,7 +13,7 @@
                         <h2 class="h4 fw-bold text-dark mb-2">Dashboard Lingkungan {{ $lingkungan }}</h2>
                         <p class="text-muted mb-0">
                             <i class="bi bi-person-circle me-2"></i>
-                            Selamat datang, {{ Auth::user()->name }} (Ketua Lingkungan)
+                            Selamat datang, {{ Auth::user()->name }} 
                         </p>
                     </div>
                     <form method="GET" action="{{ route('dashboard') }}" class="mt-3 mt-md-0">

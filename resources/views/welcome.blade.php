@@ -537,7 +537,7 @@
               <i class="bi bi-heart"></i>
             </div>
             <h5 class="mb-2 h5 text-muted">
-              {{ isset($informasiMisa['Jumat_Pertama']) ? $informasiMisa['Jumat_Pertama']->jenis_misa : 'Jumat Pertama' }}
+              {{ isset($informasiMisa['Jumat_Pertama']) ? $informasiMisa['Jumat_Pertama']->jenis_misa : 'Jumat_Pertama' }}
             </h5>
             <p class="card-text small">
               {{ isset($informasiMisa['Jumat_Pertama']) ? $informasiMisa['Jumat_Pertama']->jadwal_misa : '19:30 WIT' }}
